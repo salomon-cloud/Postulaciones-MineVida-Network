@@ -1,0 +1,762 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        background: #050506;
+    }
+
+    body {
+        @apply min-h-screen bg-graphite-950 text-slate-100 antialiased;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        overflow-x: hidden;
+    }
+
+    [x-cloak] {
+        display: none !important;
+    }
+}
+
+@layer components {
+    .lumoryx-bg {
+        background:
+            radial-gradient(circle at 16% 0%, rgba(215, 178, 31, 0.08), transparent 28%),
+            radial-gradient(circle at 88% 10%, rgba(255, 255, 255, 0.035), transparent 24%),
+            linear-gradient(135deg, #050506, #0b0b0d 48%, #060607);
+    }
+
+    .lumoryx-minecraft-bg {
+        background:
+            linear-gradient(rgba(5, 5, 6, 0.78), rgba(5, 5, 6, 0.94)),
+            linear-gradient(135deg, #070708, #111114);
+    }
+
+    .lumoryx-public-bg {
+        background-color: #050506;
+        background-image:
+            linear-gradient(rgba(5, 5, 6, 0.22), rgba(5, 5, 6, 0.56)),
+            radial-gradient(circle at 18% 8%, rgba(215, 178, 31, 0.1), transparent 28%),
+            radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.03), transparent 26%),
+            url("/images/lumo_fondo.png");
+        background-position: center, 18% 8%, 82% 18%, center;
+        background-repeat: no-repeat;
+        background-size: auto, auto, auto, cover;
+        background-attachment: fixed, fixed, fixed, fixed;
+    }
+
+    .lumoryx-public-header {
+        @apply fixed inset-x-0 top-0 z-50 border-b border-white/10 backdrop-blur-xl;
+        background:
+            linear-gradient(180deg, rgba(5, 5, 6, 0.86), rgba(5, 5, 6, 0.68)),
+            radial-gradient(circle at 50% 0%, rgba(250, 204, 21, 0.08), transparent 34%);
+        box-shadow: 0 12px 34px rgba(0, 0, 0, 0.28);
+    }
+
+    .lumoryx-public-nav-link {
+        @apply rounded-full px-4 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/[.06] hover:text-white;
+    }
+
+    .lumoryx-public-nav-link-active {
+        @apply bg-amber-300/10 text-white ring-1 ring-amber-300/35;
+    }
+
+    .lumoryx-public-header .lumoryx-button-secondary {
+        background: rgba(255, 255, 255, 0.045);
+        border-color: rgba(255, 255, 255, 0.14);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .lumoryx-public-header .lumoryx-button-secondary:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(250, 204, 21, 0.28);
+    }
+
+    .lumoryx-public-main {
+        padding-top: 5.45rem;
+    }
+
+    .lumoryx-page-frame {
+        @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+    }
+
+    .lumoryx-shell {
+        @apply mx-auto flex min-h-screen w-full max-w-7xl overflow-x-clip;
+    }
+
+    .lumoryx-sidebar {
+        @apply fixed inset-y-0 left-0 z-40 w-72 -translate-x-full overflow-hidden border-r border-white/10 bg-graphite-925/95 px-5 py-5 shadow-panel backdrop-blur transition lg:translate-x-0;
+        height: 100dvh;
+        max-height: 100dvh;
+        isolation: isolate;
+    }
+
+    .lumoryx-sidebar::before {
+        @apply absolute inset-0;
+        content: "";
+        z-index: 0;
+        background-image: url("/images/slidebar.png");
+        background-position: center 66%;
+        background-repeat: no-repeat;
+        background-size: auto 132%;
+        opacity: 0.82;
+        filter: saturate(1.1) contrast(1.14) brightness(1.28);
+        pointer-events: none;
+    }
+
+    .lumoryx-sidebar::after {
+        @apply absolute inset-0;
+        content: "";
+        z-index: 0;
+        background:
+            linear-gradient(180deg, rgba(5, 5, 6, 0.34), rgba(5, 5, 6, 0.52) 42%, rgba(5, 5, 6, 0.74)),
+            radial-gradient(circle at 42% 0%, rgba(250, 204, 21, 0.2), transparent 34%);
+        pointer-events: none;
+    }
+
+    .lumoryx-sidebar > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .lumoryx-brand-logo-link {
+        @apply flex min-w-0 items-center;
+    }
+
+    .lumoryx-brand-logo {
+        @apply block h-auto w-auto object-contain;
+        max-width: 150px;
+        max-height: 48px;
+        filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.34));
+    }
+
+    .lumoryx-brand-logo-large {
+        max-width: 210px;
+        max-height: 70px;
+    }
+
+    .lumoryx-brand-mark {
+        @apply grid h-11 w-11 place-items-center overflow-hidden rounded-md border border-amber-300/20 bg-graphite-850 text-lg font-black text-amber-100 shadow-panel;
+    }
+
+    .lumoryx-user-chip {
+        @apply flex min-w-0 items-center gap-3 rounded-lg border px-3.5 py-3 shadow-panel backdrop-blur-md;
+        background:
+            linear-gradient(135deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.028)),
+            radial-gradient(circle at 0% 0%, rgba(250, 204, 21, 0.08), transparent 34%);
+        border-color: rgba(255, 255, 255, 0.12);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 18px 42px rgba(0, 0, 0, 0.24);
+        overflow-wrap: anywhere;
+    }
+
+    .lumoryx-user-chip-dropdown {
+        @apply cursor-pointer transition hover:border-amber-200/25 hover:bg-white/[.055];
+    }
+
+    .lumoryx-user-avatar-shell {
+        @apply relative grid h-12 w-12 shrink-0 place-items-center overflow-visible rounded-md;
+        background: linear-gradient(135deg, rgba(250, 204, 21, 0.12), rgba(255, 255, 255, 0.03));
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 12px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    .lumoryx-user-avatar {
+        @apply h-full w-full rounded-md object-cover;
+    }
+
+    .lumoryx-user-avatar-fallback {
+        @apply grid h-full w-full place-items-center rounded-md text-lg font-black text-amber-100;
+        background: rgba(5, 5, 6, 0.42);
+        text-shadow: 0 10px 20px rgba(250, 204, 21, 0.14);
+    }
+
+    .lumoryx-user-presence {
+        @apply absolute -bottom-1 -right-1 h-3.5 w-3.5 rounded-full border-2 border-graphite-950 bg-emerald-300;
+        box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.12);
+    }
+
+    .lumoryx-user-name {
+        @apply block max-w-40 truncate text-sm font-black leading-5 text-white;
+    }
+
+    .lumoryx-user-meta {
+        @apply mt-1 inline-flex max-w-40 items-center gap-1.5 truncate rounded-full border border-white/10 px-2 py-0.5 text-[11px] font-semibold text-slate-300;
+        background: rgba(5, 5, 6, 0.24);
+    }
+
+    .lumoryx-user-meta-dot {
+        @apply h-1.5 w-1.5 shrink-0 rounded-full bg-amber-200;
+    }
+
+    .lumoryx-user-chevron {
+        @apply ml-auto shrink-0;
+        width: 0.45rem;
+        height: 0.45rem;
+        border-right: 2px solid rgba(226, 232, 240, 0.56);
+        border-bottom: 2px solid rgba(226, 232, 240, 0.56);
+        transform: rotate(45deg) translateY(-1px);
+    }
+
+    .lumoryx-user-menu {
+        @apply absolute right-0 z-50 mt-2 w-56 rounded-lg border border-white/10 p-2 shadow-panel backdrop-blur-md;
+        background:
+            linear-gradient(180deg, rgba(17, 17, 20, 0.96), rgba(10, 10, 12, 0.96)),
+            radial-gradient(circle at 0% 0%, rgba(250, 204, 21, 0.08), transparent 36%);
+    }
+
+    .lumoryx-nav-link {
+        @apply flex min-w-0 items-center justify-between gap-3 rounded-md border border-transparent px-3 py-2.5 text-sm font-medium text-slate-300 transition hover:border-white/10 hover:bg-white/[.055] hover:text-white;
+    }
+
+    .lumoryx-nav-link-active {
+        @apply border-amber-300/20 bg-white/[.075] text-white shadow-panel;
+        box-shadow: inset 3px 0 0 rgba(215, 178, 31, 0.72);
+    }
+
+    .lumoryx-panel {
+        @apply min-w-0 rounded-lg border border-white/10 bg-graphite-900/80 shadow-panel backdrop-blur;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035), 0 14px 36px rgba(0, 0, 0, 0.26);
+        overflow-wrap: anywhere;
+    }
+
+    .lumoryx-glow-border {
+        @apply border border-amber-300/20;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045), 0 14px 36px rgba(0, 0, 0, 0.28);
+    }
+
+    .lumoryx-panel-glow {
+        @apply lumoryx-panel border-amber-300/15;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045), 0 18px 44px rgba(0, 0, 0, 0.28);
+    }
+
+    .lumoryx-card {
+        @apply min-w-0 rounded-lg border border-white/10 bg-white/[.035] p-5 transition hover:border-amber-300/20 hover:bg-white/[.055];
+        overflow-wrap: anywhere;
+    }
+
+    .lumoryx-stat-card {
+        @apply min-w-0 rounded-lg border border-white/10 bg-white/[.04] p-5;
+        overflow-wrap: anywhere;
+    }
+
+    .lumoryx-kicker {
+        @apply text-xs font-semibold uppercase tracking-wider text-amber-200;
+    }
+
+    .lumoryx-title {
+        @apply text-3xl font-black tracking-normal text-white sm:text-4xl;
+    }
+
+    .lumoryx-muted {
+        @apply text-sm leading-6 text-slate-400;
+    }
+
+    .lumoryx-input {
+        @apply w-full min-w-0 rounded-md border-white/10 bg-graphite-950/55 text-sm text-slate-100 placeholder:text-slate-500 shadow-inner focus:border-amber-300 focus:ring-amber-300;
+    }
+
+    .lumoryx-label {
+        @apply text-sm font-medium text-slate-200;
+    }
+
+    .lumoryx-button {
+        @apply inline-flex min-w-0 items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-graphite-950;
+    }
+
+    .lumoryx-button-primary {
+        @apply lumoryx-button bg-amber-400 text-graphite-950 shadow-panel hover:bg-amber-300;
+    }
+
+    .lumoryx-button-secondary {
+        @apply lumoryx-button border border-white/10 bg-white/[.055] text-slate-100 hover:border-amber-300/25 hover:bg-white/[.085];
+    }
+
+    .lumoryx-button-discord {
+        @apply lumoryx-button bg-[#5865F2] text-white shadow-panel hover:bg-[#4752C4] focus:ring-[#5865F2];
+    }
+
+    .lumoryx-button-danger {
+        @apply lumoryx-button bg-rose-500/90 text-white hover:bg-rose-400;
+    }
+
+    .lumoryx-button-success {
+        @apply lumoryx-button bg-emerald-500/90 text-graphite-950 hover:bg-emerald-400;
+    }
+
+    .lumoryx-button-blue {
+        @apply lumoryx-button bg-slate-300 text-graphite-950 hover:bg-slate-200;
+    }
+
+    .lumoryx-button-purple {
+        @apply lumoryx-button bg-amber-500/90 text-graphite-950 hover:bg-amber-400;
+    }
+
+    .lumoryx-button-cyan {
+        @apply lumoryx-button bg-amber-400 text-graphite-950 hover:bg-amber-300;
+    }
+
+    .lumoryx-table {
+        @apply min-w-full divide-y divide-white/10 text-sm;
+        min-width: 760px;
+    }
+
+    .lumoryx-table thead {
+        @apply bg-white/[.035] text-left text-xs uppercase tracking-wider text-slate-400;
+    }
+
+    .lumoryx-table th {
+        @apply px-4 py-3 font-semibold;
+        vertical-align: top;
+    }
+
+    .lumoryx-table td {
+        @apply px-4 py-4;
+        vertical-align: top;
+        overflow-wrap: anywhere;
+    }
+
+    .lumoryx-table tbody {
+        @apply divide-y divide-white/10;
+    }
+
+    .lumoryx-table tbody tr {
+        @apply transition hover:bg-white/[.035];
+    }
+
+    .lumoryx-modal-backdrop {
+        @apply fixed inset-0 z-50 grid place-items-center bg-black/75 p-4 backdrop-blur-sm;
+    }
+
+    .lumoryx-modal {
+        @apply w-full max-w-lg rounded-lg border border-white/10 bg-graphite-900 p-5 shadow-panel;
+    }
+
+    .lumoryx-confirm-backdrop {
+        @apply fixed inset-0 z-[80] grid place-items-center bg-black/75 p-4 backdrop-blur-md;
+    }
+
+    .lumoryx-confirm-backdrop[hidden] {
+        display: none;
+    }
+
+    .lumoryx-confirm-card {
+        @apply relative w-full max-w-lg overflow-hidden rounded-lg border border-white/10 p-5 shadow-panel sm:p-6;
+        background:
+            linear-gradient(180deg, rgba(24, 24, 27, 0.98), rgba(10, 10, 12, 0.98)),
+            radial-gradient(circle at 0% 0%, rgba(250, 204, 21, 0.1), transparent 36%);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 30px 90px rgba(0, 0, 0, 0.5);
+    }
+
+    .lumoryx-confirm-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(115deg, rgba(255, 255, 255, 0.06), transparent 30%),
+            radial-gradient(circle at 100% 0%, rgba(244, 63, 94, 0.12), transparent 30%);
+        pointer-events: none;
+    }
+
+    .lumoryx-confirm-card > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .lumoryx-confirm-icon {
+        @apply grid h-12 w-12 shrink-0 place-items-center rounded-md border text-sm font-black shadow-inner;
+        background: rgba(244, 63, 94, 0.12);
+        border-color: rgba(253, 164, 175, 0.22);
+        color: rgb(254, 205, 211);
+    }
+
+    .lumoryx-confirm-card.is-success::before {
+        background:
+            linear-gradient(115deg, rgba(255, 255, 255, 0.06), transparent 30%),
+            radial-gradient(circle at 100% 0%, rgba(52, 211, 153, 0.12), transparent 30%);
+    }
+
+    .lumoryx-confirm-card.is-success .lumoryx-confirm-icon {
+        background: rgba(52, 211, 153, 0.12);
+        border-color: rgba(110, 231, 183, 0.24);
+        color: rgb(167, 243, 208);
+    }
+
+    .lumoryx-confirm-card.is-success [data-confirm-accept] {
+        @apply bg-emerald-500/90 text-graphite-950 hover:bg-emerald-400;
+    }
+
+    .lumoryx-confirm-card.is-warning .lumoryx-confirm-icon {
+        background: rgba(250, 204, 21, 0.12);
+        border-color: rgba(253, 230, 138, 0.24);
+        color: rgb(254, 243, 199);
+    }
+
+    .lumoryx-divider {
+        @apply border-t border-white/10;
+    }
+
+    .lumoryx-hero-media {
+        background:
+            linear-gradient(90deg, rgba(8, 8, 10, 0.95), rgba(8, 8, 10, 0.72)),
+            radial-gradient(circle at 80% 20%, rgba(215, 178, 31, 0.12), transparent 30%),
+            linear-gradient(135deg, rgba(20, 20, 24, 0.86), rgba(5, 5, 6, 0.94));
+    }
+
+    .lumoryx-minecraft-grid {
+        background-image:
+            linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+        background-size: 32px 32px;
+    }
+
+    .lumoryx-status-dot {
+        @apply h-2 w-2 rounded-full bg-amber-300;
+    }
+
+    .lumoryx-icon-tile {
+        @apply grid shrink-0 place-items-center rounded-md border border-white/10 bg-graphite-950/55 shadow-inner;
+    }
+
+    .lumoryx-choice-card {
+        @apply min-w-0 rounded-lg border border-white/10 bg-white/[.035] p-5 text-left transition hover:border-amber-300/25 hover:bg-white/[.055];
+        overflow-wrap: anywhere;
+    }
+
+    .lumoryx-soft-panel {
+        @apply rounded-lg border border-white/10 bg-white/[.035];
+        overflow-wrap: anywhere;
+    }
+
+    .lumoryx-public-panel {
+        @apply relative min-w-0 overflow-hidden rounded-lg border border-white/10 shadow-panel backdrop-blur-sm;
+        background:
+            linear-gradient(180deg, rgba(10, 10, 12, 0.24), rgba(5, 5, 6, 0.16)),
+            radial-gradient(circle at 50% 0%, rgba(215, 178, 31, 0.09), transparent 38%),
+            radial-gradient(circle at 90% 92%, rgba(88, 101, 242, 0.1), transparent 32%);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 22px 56px rgba(0, 0, 0, 0.24);
+        overflow-wrap: anywhere;
+    }
+
+    .lumoryx-public-panel::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(115deg, rgba(255, 255, 255, 0.045), transparent 34%),
+            linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.1));
+        pointer-events: none;
+    }
+
+    .lumoryx-public-panel > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .lumoryx-hero-pill {
+        @apply rounded-full border px-5 py-2 text-sm font-bold uppercase text-amber-100 shadow-panel;
+        background: rgba(250, 204, 21, 0.12);
+        border-color: rgba(253, 230, 138, 0.34);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 14px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .lumoryx-hero-brand-name {
+        @apply text-3xl font-black uppercase sm:text-4xl;
+        background: linear-gradient(180deg, #ffffff 0%, #eee8dc 44%, #9dea34 45%, #56bd16 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.34)) drop-shadow(0 14px 24px rgba(0, 0, 0, 0.32));
+    }
+
+    .lumoryx-hero-brand-sub {
+        @apply text-xl font-black uppercase text-amber-200 sm:text-2xl;
+        text-shadow: 0 3px 0 rgba(0, 0, 0, 0.42), 0 12px 24px rgba(250, 204, 21, 0.12);
+    }
+
+    .lumoryx-hero-copy {
+        color: rgba(226, 232, 240, 0.9);
+        text-shadow: 0 12px 28px rgba(0, 0, 0, 0.34);
+    }
+
+    .lumoryx-public-panel .lumoryx-button-discord {
+        @apply border border-white/10 text-white;
+        background: linear-gradient(135deg, rgba(88, 101, 242, 0.72), rgba(71, 82, 196, 0.58));
+        border-color: rgba(255, 255, 255, 0.18);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 18px 42px rgba(24, 28, 92, 0.24);
+    }
+
+    .lumoryx-public-panel .lumoryx-button-discord:hover {
+        background: linear-gradient(135deg, rgba(88, 101, 242, 0.84), rgba(71, 82, 196, 0.7));
+    }
+
+    .lumoryx-public-panel .lumoryx-public-cta {
+        backdrop-filter: blur(10px);
+    }
+
+    .lumoryx-public-requirement {
+        @apply rounded-lg border p-4 text-left backdrop-blur-sm transition hover:border-amber-200/30;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.025));
+        border-color: rgba(255, 255, 255, 0.13);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 12px 30px rgba(0, 0, 0, 0.16);
+    }
+
+    .lumoryx-public-requirement:hover {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.038));
+    }
+
+    .lumoryx-public-requirement-icon {
+        @apply grid h-10 w-10 shrink-0 place-items-center rounded-md text-sm font-black text-amber-100;
+        background: rgba(5, 5, 6, 0.44);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .lumoryx-public-requirement-title {
+        @apply text-sm font-bold leading-5 text-white;
+    }
+
+    .lumoryx-home-hero {
+        @apply relative overflow-hidden;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .lumoryx-home-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(circle at 22% 24%, rgba(250, 204, 21, 0.12), transparent 28%),
+            radial-gradient(circle at 78% 34%, rgba(88, 101, 242, 0.14), transparent 30%),
+            linear-gradient(90deg, rgba(5, 5, 6, 0.18), rgba(5, 5, 6, 0.5));
+        pointer-events: none;
+    }
+
+    .lumoryx-home-hero > .lumoryx-page-frame {
+        @apply relative;
+        z-index: 1;
+    }
+
+    .lumoryx-home-hero-layout {
+        min-height: 0 !important;
+        align-items: flex-start !important;
+    }
+
+    .lumoryx-home-eyebrow {
+        @apply inline-flex items-center gap-2 rounded-full border border-amber-200/20 px-4 py-2 text-xs font-black uppercase text-amber-100 backdrop-blur-sm;
+        background: rgba(250, 204, 21, 0.08);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 16px 34px rgba(0, 0, 0, 0.22);
+    }
+
+    .lumoryx-home-title-accent {
+        @apply mt-2 block text-4xl uppercase sm:text-5xl;
+        background: linear-gradient(180deg, #ffffff 0%, #efe9dd 42%, #9dea34 43%, #58c318 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 4px 0 rgba(0, 0, 0, 0.34)) drop-shadow(0 18px 26px rgba(0, 0, 0, 0.34));
+    }
+
+    .lumoryx-home-primary-action {
+        @apply min-h-14 rounded-md px-6 text-base;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 18px 42px rgba(24, 28, 92, 0.24);
+    }
+
+    .lumoryx-home-secondary-action {
+        @apply inline-flex min-h-14 min-w-0 items-center justify-center gap-3 rounded-md border border-white/10 px-5 text-sm font-bold transition hover:border-amber-200/30 hover:bg-white/[.07];
+        background: rgba(5, 5, 6, 0.38);
+        backdrop-filter: blur(12px);
+    }
+
+    .lumoryx-home-console {
+        @apply relative min-w-0 rounded-lg border border-white/10 p-5 backdrop-blur-md sm:p-6;
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02)),
+            radial-gradient(circle at 20% 0%, rgba(250, 204, 21, 0.1), transparent 32%);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 24px 52px rgba(0, 0, 0, 0.24);
+    }
+
+    .lumoryx-home-console-row {
+        @apply flex items-center justify-between gap-4 rounded-md border border-white/10 px-4 py-3 text-sm text-slate-400;
+        background: rgba(5, 5, 6, 0.26);
+    }
+
+    .lumoryx-home-console-row strong {
+        @apply text-right font-black text-white;
+    }
+
+    .lumoryx-discord-widget-card {
+        @apply relative min-w-0 overflow-hidden rounded-lg border border-white/10 p-4 backdrop-blur-md;
+        background:
+            linear-gradient(180deg, rgba(88, 101, 242, 0.1), rgba(5, 5, 6, 0.32)),
+            radial-gradient(circle at 80% 0%, rgba(250, 204, 21, 0.08), transparent 30%);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 24px 52px rgba(0, 0, 0, 0.24);
+        width: min(100%, 430px);
+    }
+
+    .lumoryx-discord-widget {
+        @apply block w-full rounded-md border border-white/10;
+        height: 330px;
+        min-height: 300px;
+        background: rgba(5, 5, 6, 0.42);
+    }
+
+    .lumoryx-home-band {
+        @apply border-y border-white/10 py-8 backdrop-blur-md;
+        background:
+            linear-gradient(90deg, rgba(5, 5, 6, 0.46), rgba(5, 5, 6, 0.2), rgba(5, 5, 6, 0.46)),
+            radial-gradient(circle at 50% 0%, rgba(250, 204, 21, 0.08), transparent 36%);
+    }
+
+    .lumoryx-home-section-kicker {
+        @apply text-xs font-black uppercase text-amber-100;
+    }
+
+    .lumoryx-home-requirement {
+        @apply flex min-w-0 items-center gap-3 rounded-lg border border-white/10 px-4 py-3 backdrop-blur-sm;
+        background: rgba(255, 255, 255, 0.035);
+        min-width: min(100%, 13rem);
+    }
+
+    .lumoryx-home-areas {
+        @apply py-10 sm:py-12;
+        background:
+            linear-gradient(180deg, rgba(5, 5, 6, 0.5), rgba(5, 5, 6, 0.32)),
+            radial-gradient(circle at 80% 30%, rgba(86, 189, 22, 0.08), transparent 32%);
+    }
+
+    .lumoryx-home-area {
+        @apply flex min-w-0 items-start gap-4 rounded-lg border border-white/10 p-5 transition hover:border-amber-200/25 hover:bg-white/[.055];
+        background: rgba(5, 5, 6, 0.28);
+        backdrop-filter: blur(10px);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .lumoryx-home-area-icon {
+        @apply grid h-12 w-12 shrink-0 place-items-center rounded-md text-sm font-black text-amber-100;
+        background: rgba(250, 204, 21, 0.08);
+        border: 1px solid rgba(250, 204, 21, 0.16);
+    }
+
+    .lumoryx-home-discord-section {
+        @apply border-t border-white/10 py-10 sm:py-12;
+        background:
+            linear-gradient(180deg, rgba(5, 5, 6, 0.38), rgba(5, 5, 6, 0.56)),
+            radial-gradient(circle at 22% 22%, rgba(88, 101, 242, 0.12), transparent 30%),
+            radial-gradient(circle at 82% 70%, rgba(250, 204, 21, 0.08), transparent 28%);
+    }
+
+    .lumoryx-discord-compact-layout {
+        @apply grid gap-7 lg:grid-cols-[1fr_auto] lg:items-center;
+    }
+
+    .lumoryx-public-footer {
+        @apply relative border-t border-white/10 py-8 backdrop-blur-md;
+        background:
+            linear-gradient(180deg, rgba(5, 5, 6, 0.34), rgba(5, 5, 6, 0.7)),
+            radial-gradient(circle at 12% 18%, rgba(86, 189, 22, 0.1), transparent 30%),
+            radial-gradient(circle at 86% 4%, rgba(250, 204, 21, 0.12), transparent 28%);
+    }
+
+    .lumoryx-public-footer::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+        background-size: 34px 34px;
+        mask-image: linear-gradient(180deg, transparent, black 18%, black 82%, transparent);
+        -webkit-mask-image: linear-gradient(180deg, transparent, black 18%, black 82%, transparent);
+        pointer-events: none;
+    }
+
+    .lumoryx-public-footer > .lumoryx-page-frame {
+        @apply relative;
+        z-index: 1;
+    }
+
+    .lumoryx-footer-minimal {
+        @apply flex flex-col gap-6 border-b border-white/10 pb-6 lg:flex-row lg:items-center lg:justify-between;
+    }
+
+    .lumoryx-footer-heading {
+        @apply text-xs font-black uppercase text-amber-100;
+        text-shadow: 0 10px 24px rgba(0, 0, 0, 0.36);
+    }
+
+    .lumoryx-footer-ipbar {
+        @apply flex min-w-0 flex-wrap items-center gap-3 rounded-full border px-4 py-3 backdrop-blur-sm;
+        background: rgba(5, 5, 6, 0.18);
+        border-color: rgba(255, 255, 255, 0.12);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 16px 34px rgba(0, 0, 0, 0.14);
+    }
+
+    .lumoryx-footer-ip {
+        @apply min-w-0 max-w-full truncate text-sm font-black text-white sm:text-base;
+        text-shadow: 0 10px 22px rgba(250, 204, 21, 0.12);
+    }
+
+    .lumoryx-footer-copy {
+        @apply shrink-0 rounded-full border border-amber-200/20 px-3 py-1.5 text-xs font-bold text-amber-100 transition hover:border-amber-200/40 hover:bg-amber-200/10 hover:text-white;
+        background: rgba(250, 204, 21, 0.06);
+    }
+
+    .lumoryx-footer-chip {
+        @apply inline-flex items-center rounded-full border border-white/10 px-3 py-2 text-xs font-bold text-slate-200;
+        background: rgba(255, 255, 255, 0.035);
+    }
+
+    .lumoryx-footer-status {
+        @apply inline-flex items-center gap-2 rounded-full border px-3 py-2 text-xs font-black;
+        background: rgba(255, 255, 255, 0.035);
+    }
+
+    .lumoryx-footer-status::before {
+        content: "";
+        @apply h-2 w-2 rounded-full;
+    }
+
+    .lumoryx-footer-status.is-open {
+        @apply border-emerald-300/25 bg-emerald-300/10 text-emerald-100;
+    }
+
+    .lumoryx-footer-status.is-open::before {
+        @apply bg-emerald-300;
+    }
+
+    .lumoryx-footer-status.is-closed {
+        @apply border-rose-300/25 bg-rose-300/10 text-rose-100;
+    }
+
+    .lumoryx-footer-status.is-closed::before {
+        @apply bg-rose-300;
+    }
+
+    .lumoryx-footer-link {
+        @apply inline-flex rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-slate-300 transition hover:border-amber-200/25 hover:bg-white/[.055] hover:text-white;
+        background: rgba(255, 255, 255, 0.018);
+    }
+
+    .lumoryx-footer-social {
+        @apply inline-flex min-w-0 items-center gap-2 rounded-full border border-white/10 px-3 py-2 text-sm font-bold text-slate-200 transition hover:border-amber-200/25 hover:bg-white/[.055] hover:text-white;
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    .lumoryx-footer-social-icon {
+        @apply grid h-7 w-7 shrink-0 place-items-center rounded-full text-[10px] font-black text-amber-100;
+        background: rgba(250, 204, 21, 0.09);
+        border: 1px solid rgba(250, 204, 21, 0.16);
+    }
+
+    .lumoryx-footer-bottom {
+        @apply flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between;
+    }
+
+    .lumoryx-break {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+}
