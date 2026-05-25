@@ -241,3 +241,51 @@ function initConfirmDialog() {
 }
 
 initConfirmDialog();
+
+function initOfflineExperience() {
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+    }
+
+    const overlay = document.createElement('div');
+    overlay.className = 'lumoryx-offline-overlay';
+    overlay.hidden = true;
+    overlay.setAttribute('role', 'alert');
+    overlay.setAttribute('aria-live', 'assertive');
+    overlay.innerHTML = `
+        <div class="lumoryx-offline-card">
+            <span class="lumoryx-offline-kicker"><span></span> Sin conexion</span>
+            <h2>No hay internet</h2>
+            <p>El sistema no puede comunicarse con MineVida Network. Revisa tu conexion y vuelve a intentarlo.</p>
+            <div class="lumoryx-offline-actions">
+                <button class="lumoryx-button-primary" type="button" data-offline-retry>Reintentar</button>
+                <a class="lumoryx-button-secondary" href="/offline">Ver pantalla offline</a>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const setOfflineState = () => {
+        const offline = navigator.onLine === false;
+        overlay.hidden = !offline;
+        document.body.classList.toggle('lumoryx-is-offline', offline);
+    };
+
+    overlay.querySelector('[data-offline-retry]')?.addEventListener('click', () => {
+        if (navigator.onLine) {
+            window.location.reload();
+            return;
+        }
+
+        setOfflineState();
+    });
+
+    window.addEventListener('online', setOfflineState);
+    window.addEventListener('offline', setOfflineState);
+    setOfflineState();
+}
+
+initOfflineExperience();

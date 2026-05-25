@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Models\Setting;
 use App\Services\DiscordNotificationService;
+use App\Services\DiscordSystemLogService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -43,7 +44,11 @@ class SelectedApplicantsController extends Controller
         ]);
     }
 
-    public function publish(Request $request, DiscordNotificationService $discord): RedirectResponse
+    public function publish(
+        Request $request,
+        DiscordNotificationService $discord,
+        DiscordSystemLogService $systemLogs,
+    ): RedirectResponse
     {
         $this->authorize('updateStatus', Application::class);
 
@@ -100,6 +105,21 @@ class SelectedApplicantsController extends Controller
         });
 
         $discord->queueSelectedApplicantsAnnouncement($applications);
+        $systemLogs->queue(
+            'selected',
+            'Seleccionados anunciados',
+            'Se publico el anuncio de personas seleccionadas en Discord.',
+            [
+                'Cantidad' => $applications->count(),
+                'Usuarios' => $applications
+                    ->map(fn (Application $application) => $application->minecraft_nick.' - '.$application->user?->discord_username)
+                    ->take(15)
+                    ->implode("\n"),
+            ],
+            'success',
+            $request->user(),
+            $request,
+        );
 
         return back()->with('success', 'Seleccionados anunciados correctamente.');
     }

@@ -5,7 +5,7 @@
             <h1 class="mt-2 text-3xl font-black text-white sm:text-4xl">Notificaciones</h1>
             <p class="mt-2 max-w-3xl text-slate-400">Revisa los cambios importantes de tus postulaciones en un solo lugar.</p>
         </div>
-        <x-lumoryx.user-chip />
+        <x-lumoryx.user-dropdown />
     </div>
 
     <section class="mt-8">

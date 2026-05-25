@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\DiscordSystemLogService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -51,7 +52,7 @@ class AdminUserController extends Controller
         ]);
     }
 
-    public function updateRole(Request $request, User $user): RedirectResponse
+    public function updateRole(Request $request, User $user, DiscordSystemLogService $systemLogs): RedirectResponse
     {
         $validated = $request->validate([
             'role' => ['required', Rule::in(array_map(fn (UserRole $role) => $role->value, UserRole::cases()))],
@@ -61,7 +62,21 @@ class AdminUserController extends Controller
             return back()->with('error', 'No puedes quitarte el rol Owner a ti mismo.');
         }
 
+        $oldRole = $user->role;
         $user->update(['role' => UserRole::from($validated['role'])]);
+
+        $systemLogs->queue(
+            'users',
+            'Rol de usuario actualizado',
+            'Se cambio el rol de un usuario dentro del sistema.',
+            [
+                'Usuario' => $user->name.' ('.$user->discord_id.')',
+                'Cambio' => $oldRole->label().' -> '.$user->role->label(),
+            ],
+            'warning',
+            $request->user(),
+            $request,
+        );
 
         return back()->with('success', 'Rol actualizado.');
     }

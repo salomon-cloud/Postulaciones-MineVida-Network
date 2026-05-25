@@ -109,8 +109,8 @@
         content: "";
         z-index: 0;
         background:
-            linear-gradient(180deg, rgba(5, 5, 6, 0.34), rgba(5, 5, 6, 0.52) 42%, rgba(5, 5, 6, 0.74)),
-            radial-gradient(circle at 42% 0%, rgba(250, 204, 21, 0.2), transparent 34%);
+            linear-gradient(180deg, rgba(5, 5, 6, 0.5), rgba(5, 5, 6, 0.6) 42%, rgba(5, 5, 6, 0.78)),
+            radial-gradient(circle at 42% 0%, rgba(250, 204, 21, 0.16), transparent 34%);
         pointer-events: none;
     }
 
@@ -142,15 +142,11 @@
     .lumoryx-user-chip {
         @apply flex min-w-0 items-center gap-3 rounded-lg border px-3.5 py-3 shadow-panel backdrop-blur-md;
         background:
-            linear-gradient(135deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.028)),
-            radial-gradient(circle at 0% 0%, rgba(250, 204, 21, 0.08), transparent 34%);
-        border-color: rgba(255, 255, 255, 0.12);
+            linear-gradient(135deg, rgba(250, 204, 21, 0.12), rgba(255, 255, 255, 0.035)),
+            rgba(14, 14, 16, 0.88);
+        border-color: rgba(250, 204, 21, 0.16);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 18px 42px rgba(0, 0, 0, 0.24);
         overflow-wrap: anywhere;
-    }
-
-    .lumoryx-user-chip-dropdown {
-        @apply cursor-pointer transition hover:border-amber-200/25 hover:bg-white/[.055];
     }
 
     .lumoryx-user-avatar-shell {
@@ -188,34 +184,42 @@
         @apply h-1.5 w-1.5 shrink-0 rounded-full bg-amber-200;
     }
 
-    .lumoryx-user-chevron {
-        @apply ml-auto shrink-0;
-        width: 0.45rem;
-        height: 0.45rem;
-        border-right: 2px solid rgba(226, 232, 240, 0.56);
-        border-bottom: 2px solid rgba(226, 232, 240, 0.56);
-        transform: rotate(45deg) translateY(-1px);
-    }
-
-    .lumoryx-user-menu {
-        @apply absolute right-0 z-50 mt-2 w-56 rounded-lg border border-white/10 p-2 shadow-panel backdrop-blur-md;
-        background:
-            linear-gradient(180deg, rgba(17, 17, 20, 0.96), rgba(10, 10, 12, 0.96)),
-            radial-gradient(circle at 0% 0%, rgba(250, 204, 21, 0.08), transparent 36%);
-    }
-
     .lumoryx-nav-link {
-        @apply flex min-w-0 items-center justify-between gap-3 rounded-md border border-transparent px-3 py-2.5 text-sm font-medium text-slate-300 transition hover:border-white/10 hover:bg-white/[.055] hover:text-white;
+        @apply flex min-w-0 items-center justify-between gap-3 rounded-md border border-transparent px-3 py-2.5 text-sm font-bold text-slate-300 transition hover:border-amber-200/15 hover:bg-white/[.055] hover:text-white;
     }
 
     .lumoryx-nav-link-active {
-        @apply border-amber-300/20 bg-white/[.075] text-white shadow-panel;
-        box-shadow: inset 3px 0 0 rgba(215, 178, 31, 0.72);
+        @apply border-amber-300/20 bg-white/[.06] text-white shadow-panel;
+        background:
+            linear-gradient(90deg, rgba(250, 204, 21, 0.07), rgba(255, 255, 255, 0.035)),
+            rgba(255, 255, 255, 0.025);
+        box-shadow: inset 3px 0 0 rgba(215, 178, 31, 0.78), inset 0 1px 0 rgba(255, 255, 255, 0.045), 0 12px 28px rgba(0, 0, 0, 0.18);
+    }
+
+    .lumoryx-nav-icon {
+        @apply grid h-8 w-8 shrink-0 place-items-center rounded-md border text-[10px] font-black text-slate-300;
+        background: rgba(5, 5, 6, 0.35);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .lumoryx-nav-link-active .lumoryx-nav-icon {
+        @apply text-amber-100;
+        background: rgba(250, 204, 21, 0.1);
+        border-color: rgba(250, 204, 21, 0.22);
+    }
+
+    .lumoryx-nav-badge {
+        @apply shrink-0 rounded-md border px-2 py-0.5 text-xs font-black text-amber-100;
+        background: rgba(250, 204, 21, 0.12);
+        border-color: rgba(250, 204, 21, 0.16);
     }
 
     .lumoryx-panel {
-        @apply min-w-0 rounded-lg border border-white/10 bg-graphite-900/80 shadow-panel backdrop-blur;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035), 0 14px 36px rgba(0, 0, 0, 0.26);
+        @apply min-w-0 rounded-lg border border-white/10 shadow-panel backdrop-blur;
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.014)),
+            rgba(17, 17, 19, 0.86);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.042), 0 16px 42px rgba(0, 0, 0, 0.26);
         overflow-wrap: anywhere;
     }
 
@@ -226,21 +230,58 @@
 
     .lumoryx-panel-glow {
         @apply lumoryx-panel border-amber-300/15;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045), 0 18px 44px rgba(0, 0, 0, 0.28);
+        background:
+            linear-gradient(180deg, rgba(250, 204, 21, 0.025), rgba(255, 255, 255, 0.014)),
+            rgba(17, 17, 19, 0.88);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 18px 46px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(250, 204, 21, 0.018);
     }
 
     .lumoryx-card {
-        @apply min-w-0 rounded-lg border border-white/10 bg-white/[.035] p-5 transition hover:border-amber-300/20 hover:bg-white/[.055];
+        @apply min-w-0 rounded-lg border p-5 transition;
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.038), rgba(255, 255, 255, 0.016)),
+            rgba(255, 255, 255, 0.014);
+        border-color: rgba(255, 255, 255, 0.105);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.038), 0 12px 30px rgba(0, 0, 0, 0.16);
         overflow-wrap: anywhere;
+    }
+
+    .lumoryx-card:hover {
+        border-color: rgba(250, 204, 21, 0.2);
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.048), rgba(255, 255, 255, 0.02)),
+            rgba(255, 255, 255, 0.018);
+        transform: translateY(-1px);
     }
 
     .lumoryx-stat-card {
-        @apply min-w-0 rounded-lg border border-white/10 bg-white/[.04] p-5;
+        @apply relative min-w-0 overflow-hidden rounded-lg border p-5;
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.042), rgba(255, 255, 255, 0.016)),
+            rgba(255, 255, 255, 0.014);
+        border-color: rgba(255, 255, 255, 0.105);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.042), 0 12px 30px rgba(0, 0, 0, 0.17);
         overflow-wrap: anywhere;
     }
 
+    .lumoryx-stat-card::before {
+        content: "";
+        position: absolute;
+        left: 1rem;
+        top: 0;
+        width: 3rem;
+        height: 1px;
+        background: linear-gradient(90deg, rgba(250, 204, 21, 0.74), transparent);
+        opacity: 0.72;
+    }
+
+    .lumoryx-stat-card::after {
+        display: none;
+    }
+
     .lumoryx-kicker {
-        @apply text-xs font-semibold uppercase tracking-wider text-amber-200;
+        @apply text-xs font-black uppercase tracking-wider text-amber-200;
+        text-shadow: 0 8px 18px rgba(250, 204, 21, 0.1);
     }
 
     .lumoryx-title {
@@ -252,7 +293,8 @@
     }
 
     .lumoryx-input {
-        @apply w-full min-w-0 rounded-md border-white/10 bg-graphite-950/55 text-sm text-slate-100 placeholder:text-slate-500 shadow-inner focus:border-amber-300 focus:ring-amber-300;
+        @apply w-full min-w-0 rounded-md border-white/10 bg-graphite-950/55 text-sm text-slate-100 placeholder:text-slate-500 shadow-inner transition focus:border-amber-300 focus:ring-amber-300;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
     }
 
     .lumoryx-label {
@@ -264,11 +306,30 @@
     }
 
     .lumoryx-button-primary {
-        @apply lumoryx-button bg-amber-400 text-graphite-950 shadow-panel hover:bg-amber-300;
+        @apply lumoryx-button border border-amber-200/30 text-graphite-950 shadow-panel;
+        background: linear-gradient(180deg, #fde68a, #facc15 54%, #e0aa10);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 14px 30px rgba(250, 204, 21, 0.13), 0 10px 24px rgba(0, 0, 0, 0.22);
+    }
+
+    .lumoryx-button-primary:hover {
+        background: linear-gradient(180deg, #fef3c7, #facc15 48%, #eab308);
     }
 
     .lumoryx-button-secondary {
-        @apply lumoryx-button border border-white/10 bg-white/[.055] text-slate-100 hover:border-amber-300/25 hover:bg-white/[.085];
+        @apply lumoryx-button border text-slate-100;
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.03)),
+            rgba(255, 255, 255, 0.018);
+        border-color: rgba(255, 255, 255, 0.13);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.055), 0 10px 24px rgba(0, 0, 0, 0.16);
+    }
+
+    .lumoryx-button-secondary:hover {
+        border-color: rgba(250, 204, 21, 0.34);
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.04)),
+            rgba(255, 255, 255, 0.022);
+        color: #fff;
     }
 
     .lumoryx-button-discord {
@@ -276,23 +337,33 @@
     }
 
     .lumoryx-button-danger {
-        @apply lumoryx-button bg-rose-500/90 text-white hover:bg-rose-400;
+        @apply lumoryx-button border border-rose-200/20 text-white;
+        background: linear-gradient(180deg, rgba(251, 113, 133, 0.95), rgba(225, 29, 72, 0.92));
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 14px 30px rgba(244, 63, 94, 0.13);
     }
 
     .lumoryx-button-success {
-        @apply lumoryx-button bg-emerald-500/90 text-graphite-950 hover:bg-emerald-400;
+        @apply lumoryx-button border border-emerald-200/20 text-graphite-950;
+        background: linear-gradient(180deg, rgba(167, 243, 208, 0.98), rgba(16, 185, 129, 0.92));
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 14px 30px rgba(16, 185, 129, 0.13);
     }
 
     .lumoryx-button-blue {
-        @apply lumoryx-button bg-slate-300 text-graphite-950 hover:bg-slate-200;
+        @apply lumoryx-button border border-sky-200/25 text-sky-50;
+        background: linear-gradient(180deg, rgba(56, 189, 248, 0.36), rgba(2, 132, 199, 0.28));
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.13), 0 14px 30px rgba(14, 165, 233, 0.1);
     }
 
     .lumoryx-button-purple {
-        @apply lumoryx-button bg-amber-500/90 text-graphite-950 hover:bg-amber-400;
+        @apply lumoryx-button border border-amber-200/25 text-amber-50;
+        background: linear-gradient(180deg, rgba(250, 204, 21, 0.28), rgba(180, 121, 12, 0.2));
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 14px 30px rgba(250, 204, 21, 0.08);
     }
 
     .lumoryx-button-cyan {
-        @apply lumoryx-button bg-amber-400 text-graphite-950 hover:bg-amber-300;
+        @apply lumoryx-button border border-teal-200/25 text-teal-50;
+        background: linear-gradient(180deg, rgba(45, 212, 191, 0.32), rgba(13, 148, 136, 0.24));
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 14px 30px rgba(45, 212, 191, 0.08);
     }
 
     .lumoryx-table {
@@ -301,7 +372,10 @@
     }
 
     .lumoryx-table thead {
-        @apply bg-white/[.035] text-left text-xs uppercase tracking-wider text-slate-400;
+        @apply text-left text-xs uppercase tracking-wider text-slate-400;
+        background:
+            linear-gradient(90deg, rgba(250, 204, 21, 0.06), rgba(255, 255, 255, 0.03)),
+            rgba(255, 255, 255, 0.026);
     }
 
     .lumoryx-table th {
@@ -414,7 +488,12 @@
     }
 
     .lumoryx-icon-tile {
-        @apply grid shrink-0 place-items-center rounded-md border border-white/10 bg-graphite-950/55 shadow-inner;
+        @apply grid shrink-0 place-items-center rounded-md border shadow-inner;
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012)),
+            rgba(5, 5, 6, 0.56);
+        border-color: rgba(255, 255, 255, 0.12);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 10px 22px rgba(0, 0, 0, 0.18);
     }
 
     .lumoryx-choice-card {
@@ -423,7 +502,10 @@
     }
 
     .lumoryx-soft-panel {
-        @apply rounded-lg border border-white/10 bg-white/[.035];
+        @apply rounded-lg border border-white/10;
+        background:
+            linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.018)),
+            rgba(255, 255, 255, 0.018);
         overflow-wrap: anywhere;
     }
 
@@ -757,6 +839,48 @@
     .lumoryx-break {
         overflow-wrap: anywhere;
         word-break: break-word;
+    }
+
+    .lumoryx-offline-overlay {
+        @apply fixed inset-0 z-[90] grid place-items-center px-4 backdrop-blur-md;
+        background:
+            linear-gradient(rgba(5, 5, 6, 0.76), rgba(5, 5, 6, 0.9)),
+            radial-gradient(circle at 22% 12%, rgba(250, 204, 21, 0.14), transparent 32%),
+            radial-gradient(circle at 78% 82%, rgba(86, 189, 22, 0.1), transparent 30%);
+    }
+
+    .lumoryx-offline-overlay[hidden] {
+        display: none;
+    }
+
+    .lumoryx-offline-card {
+        @apply w-full max-w-xl rounded-xl border border-white/10 p-7 shadow-panel sm:p-9;
+        background:
+            linear-gradient(135deg, rgba(250, 204, 21, 0.1), rgba(255, 255, 255, 0.035)),
+            rgba(10, 10, 12, 0.88);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 28px 80px rgba(0, 0, 0, 0.44);
+    }
+
+    .lumoryx-offline-kicker {
+        @apply inline-flex items-center gap-2 rounded-full border border-amber-200/25 px-3 py-1.5 text-xs font-black uppercase text-amber-100;
+        background: rgba(250, 204, 21, 0.08);
+    }
+
+    .lumoryx-offline-kicker span {
+        @apply h-2 w-2 rounded-full bg-amber-300;
+        box-shadow: 0 0 0 4px rgba(250, 204, 21, 0.12);
+    }
+
+    .lumoryx-offline-card h2 {
+        @apply mt-4 text-4xl font-black leading-tight text-white sm:text-5xl;
+    }
+
+    .lumoryx-offline-card p {
+        @apply mt-4 max-w-lg text-base leading-7 text-slate-300;
+    }
+
+    .lumoryx-offline-actions {
+        @apply mt-7 flex flex-col gap-3 sm:flex-row;
     }
 
 }

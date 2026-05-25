@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use App\Models\User;
+use App\Services\DiscordSystemLogService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,7 @@ class DiscordController extends Controller
         return $provider->redirect();
     }
 
-    public function callback(Request $request): RedirectResponse
+    public function callback(Request $request, DiscordSystemLogService $systemLogs): RedirectResponse
     {
         if ($request->filled('error')) {
             return redirect()->route('home')->with('error', 'El login con Discord fue cancelado o rechazado.');
@@ -72,15 +73,46 @@ class DiscordController extends Controller
         Auth::login($user, remember: true);
         $request->session()->regenerate();
 
+        $systemLogs->queue(
+            'auth',
+            'Sesion iniciada con Discord',
+            'Un usuario inicio sesion en el sistema.',
+            [
+                'Usuario' => $user->name,
+                'Discord ID' => $user->discord_id,
+                'Rol' => $user->role->label(),
+            ],
+            'discord',
+            $user,
+            $request,
+        );
+
         return redirect()->intended(route('dashboard'))->with('success', 'Sesion iniciada con Discord.');
     }
 
-    public function logout(Request $request): RedirectResponse
+    public function logout(Request $request, DiscordSystemLogService $systemLogs): RedirectResponse
     {
+        $user = $request->user();
+
         Auth::logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
+        if ($user) {
+            $systemLogs->queue(
+                'auth',
+                'Sesion cerrada',
+                'Un usuario cerro sesion en el sistema.',
+                [
+                    'Usuario' => $user->name,
+                    'Discord ID' => $user->discord_id,
+                ],
+                'info',
+                $user,
+                $request,
+            );
+        }
 
         return redirect()->route('home')->with('success', 'Sesion cerrada correctamente.');
     }

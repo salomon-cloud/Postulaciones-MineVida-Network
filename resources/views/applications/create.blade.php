@@ -5,7 +5,7 @@
             <h1 class="mt-2 text-3xl font-black text-white sm:text-4xl">Elige un area</h1>
             <p class="mt-3 max-w-3xl text-base leading-7 text-slate-300">Selecciona el equipo al que deseas postularte. Cada area tiene sus propias preguntas y requisitos.</p>
         </div>
-        <x-lumoryx.user-chip />
+        <x-lumoryx.user-dropdown />
     </div>
 
     <section class="lumoryx-panel mt-8 p-5 sm:p-6">

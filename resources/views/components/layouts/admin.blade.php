@@ -18,18 +18,18 @@
 
                 <p class="mt-9 px-3 text-[11px] font-semibold uppercase tracking-wider text-slate-500">Menu</p>
                 <nav class="mt-4 flex-1 space-y-2 overflow-y-auto pr-1">
-                    <x-lumoryx.sidebar-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">Dashboard</x-lumoryx.sidebar-link>
-                    <x-lumoryx.sidebar-link :href="route('admin.applications.index')" :active="request()->routeIs('admin.applications.*')">Postulaciones</x-lumoryx.sidebar-link>
-                    <x-lumoryx.sidebar-link :href="route('admin.interviews.index')" :active="request()->routeIs('admin.interviews.*')">Entrevistas</x-lumoryx.sidebar-link>
+                    <x-lumoryx.sidebar-link icon="DB" :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">Dashboard</x-lumoryx.sidebar-link>
+                    <x-lumoryx.sidebar-link icon="AP" :href="route('admin.applications.index')" :active="request()->routeIs('admin.applications.*')">Postulaciones</x-lumoryx.sidebar-link>
+                    <x-lumoryx.sidebar-link icon="EN" :href="route('admin.interviews.index')" :active="request()->routeIs('admin.interviews.*')">Entrevistas</x-lumoryx.sidebar-link>
                     @if (auth()->user()->isOwner())
-                        <x-lumoryx.sidebar-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">Usuarios</x-lumoryx.sidebar-link>
+                        <x-lumoryx.sidebar-link icon="US" :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">Usuarios</x-lumoryx.sidebar-link>
                     @endif
                     @if (auth()->user()->isAdmin())
-                        <x-lumoryx.sidebar-link :href="route('admin.selected.index')" :active="request()->routeIs('admin.selected.*')">Seleccionados</x-lumoryx.sidebar-link>
-                        <x-lumoryx.sidebar-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">Categorias</x-lumoryx.sidebar-link>
+                        <x-lumoryx.sidebar-link icon="SE" :href="route('admin.selected.index')" :active="request()->routeIs('admin.selected.*')">Seleccionados</x-lumoryx.sidebar-link>
+                        <x-lumoryx.sidebar-link icon="CA" :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">Categorias</x-lumoryx.sidebar-link>
                     @endif
                     @if (auth()->user()->isOwner())
-                        <x-lumoryx.sidebar-link :href="route('admin.settings.edit')" :active="request()->routeIs('admin.settings.*')">Ajustes</x-lumoryx.sidebar-link>
+                        <x-lumoryx.sidebar-link icon="AJ" :href="route('admin.settings.edit')" :active="request()->routeIs('admin.settings.*')">Ajustes</x-lumoryx.sidebar-link>
                     @endif
                 </nav>
                 <div class="shrink-0 pt-5">

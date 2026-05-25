@@ -5,7 +5,7 @@
             <h1 class="mt-2 text-3xl font-black text-white sm:text-4xl">Hola, {{ auth()->user()->name }}</h1>
             <p class="mt-2 max-w-3xl text-slate-400">Administra tus postulaciones y revisa el estado de tus procesos.</p>
         </div>
-        <x-lumoryx.user-chip />
+        <x-lumoryx.user-dropdown />
     </div>
 
     <section class="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">

@@ -44,6 +44,9 @@ return [
         'internal_token' => env('INTERNAL_BOT_API_TOKEN'),
         'staff_channel_id' => env('DISCORD_STAFF_CHANNEL_ID'),
         'embed_icon_url' => env('DISCORD_EMBED_ICON_URL'),
+        'system_logs_enabled' => env('DISCORD_SYSTEM_LOGS_ENABLED', false),
+        'system_log_channel_id' => env('DISCORD_SYSTEM_LOG_CHANNEL_ID', ''),
+        'system_log_events' => env('DISCORD_SYSTEM_LOG_EVENTS', 'applications,status,interviews,categories,settings,users,selected,auth,discord'),
     ],
 
 ];

@@ -27,6 +27,9 @@ class Setting extends Model
             'discord_selected_message' => '',
             'discord_open_message' => '',
             'discord_closed_message' => '',
+            'discord_system_logs_enabled' => config('services.lumoryx_bot.system_logs_enabled') ? '1' : '0',
+            'discord_system_log_channel_id' => (string) config('services.lumoryx_bot.system_log_channel_id', ''),
+            'discord_system_log_events' => (string) config('services.lumoryx_bot.system_log_events', 'applications,status,interviews,categories,settings,users,selected,auth,discord'),
         ];
     }
 

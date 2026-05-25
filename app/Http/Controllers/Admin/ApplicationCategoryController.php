@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Models\ApplicationCategory;
 use App\Models\ApplicationQuestion;
+use App\Services\DiscordSystemLogService;
 use App\Support\ApplicationCatalog;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -42,7 +43,7 @@ class ApplicationCategoryController extends Controller
         ]);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, DiscordSystemLogService $systemLogs): RedirectResponse
     {
         $data = $this->categoryData($request);
 
@@ -53,6 +54,20 @@ class ApplicationCategoryController extends Controller
 
             return $category;
         });
+
+        $systemLogs->queue(
+            'categories',
+            'Categoria creada',
+            'Se creo una nueva categoria de postulacion.',
+            [
+                'Categoria' => $category->name,
+                'Slug' => $category->slug,
+                'Estado' => $category->is_open ? 'Abierta' : 'Cerrada',
+            ],
+            'success',
+            $request->user(),
+            $request,
+        );
 
         return redirect()
             ->route('admin.categories.edit', $category)
@@ -69,7 +84,11 @@ class ApplicationCategoryController extends Controller
         ]);
     }
 
-    public function update(Request $request, ApplicationCategory $category): RedirectResponse
+    public function update(
+        Request $request,
+        ApplicationCategory $category,
+        DiscordSystemLogService $systemLogs,
+    ): RedirectResponse
     {
         $data = $this->categoryData($request, $category);
 
@@ -79,10 +98,24 @@ class ApplicationCategoryController extends Controller
 
         $category->update($data);
 
+        $systemLogs->queue(
+            'categories',
+            'Categoria actualizada',
+            'Se editaron datos o fases de una categoria.',
+            [
+                'Categoria' => $category->name,
+                'Slug' => $category->slug,
+                'Fases' => count($category->steps ?: []),
+            ],
+            'warning',
+            $request->user(),
+            $request,
+        );
+
         return back()->with('success', 'Categoria actualizada.');
     }
 
-    public function destroy(ApplicationCategory $category): RedirectResponse
+    public function destroy(Request $request, ApplicationCategory $category, DiscordSystemLogService $systemLogs): RedirectResponse
     {
         if ($category->applications()->exists()) {
             $category->update([
@@ -90,25 +123,68 @@ class ApplicationCategoryController extends Controller
                 'closed_message' => $category->closed_message ?: 'Esta categoria fue cerrada temporalmente por el equipo.',
             ]);
 
+            $systemLogs->queue(
+                'categories',
+                'Categoria cerrada por seguridad',
+                'La categoria tenia postulaciones, asi que se cerro en lugar de archivarse.',
+                [
+                    'Categoria' => $category->name,
+                    'Postulaciones' => $category->applications()->count(),
+                ],
+                'danger',
+                $request->user(),
+                $request,
+            );
+
             return back()->with('info', 'La categoria tiene postulaciones, asi que se cerro en lugar de eliminarse.');
         }
 
         $category->delete();
 
+        $systemLogs->queue(
+            'categories',
+            'Categoria archivada',
+            'Se archivo una categoria sin postulaciones.',
+            [
+                'Categoria' => $category->name,
+                'Slug' => $category->slug,
+            ],
+            'danger',
+            $request->user(),
+            $request,
+        );
+
         return redirect()->route('admin.categories.index')->with('success', 'Categoria archivada. Puedes rehabilitarla cuando quieras.');
     }
 
-    public function restore(int $category): RedirectResponse
+    public function restore(Request $request, int $category, DiscordSystemLogService $systemLogs): RedirectResponse
     {
         $category = ApplicationCategory::withTrashed()->findOrFail($category);
 
         $category->restore();
         $category->update(['is_open' => true]);
 
+        $systemLogs->queue(
+            'categories',
+            'Categoria rehabilitada',
+            'Se rehabilito una categoria archivada y quedo abierta.',
+            [
+                'Categoria' => $category->name,
+                'Slug' => $category->slug,
+            ],
+            'success',
+            $request->user(),
+            $request,
+        );
+
         return back()->with('success', 'Categoria rehabilitada y abierta.');
     }
 
-    public function updateAvailability(Request $request, ApplicationCategory $category): RedirectResponse
+    public function updateAvailability(
+        Request $request,
+        ApplicationCategory $category,
+        DiscordSystemLogService $systemLogs,
+    ): RedirectResponse
     {
         $validated = $request->validate([
             'is_open' => ['required', 'boolean'],
@@ -124,26 +200,84 @@ class ApplicationCategoryController extends Controller
             'closed_message' => $isOpen ? null : ($validated['closed_message'] ?? 'Esta categoria esta cerrada temporalmente.'),
         ]);
 
+        $systemLogs->queue(
+            'categories',
+            $isOpen ? 'Categoria reabierta' : 'Categoria cerrada temporalmente',
+            $isOpen
+                ? 'Los usuarios ya pueden enviar postulaciones en esta categoria.'
+                : 'La categoria se cerro temporalmente para los usuarios.',
+            [
+                'Categoria' => $category->name,
+                'Reapertura' => $category->closed_until?->format('d/m/Y H:i') ?: 'Sin fecha',
+                'Mensaje' => $category->closed_message ?: '-',
+            ],
+            $isOpen ? 'success' : 'danger',
+            $request->user(),
+            $request,
+        );
+
         return back()->with('success', $isOpen ? 'Categoria reabierta.' : 'Categoria cerrada temporalmente.');
     }
 
-    public function storeQuestion(Request $request, ApplicationCategory $category): RedirectResponse
+    public function storeQuestion(
+        Request $request,
+        ApplicationCategory $category,
+        DiscordSystemLogService $systemLogs,
+    ): RedirectResponse
     {
-        $category->questions()->create($this->questionData($request, $category));
+        $question = $category->questions()->create($this->questionData($request, $category));
+
+        $systemLogs->queue(
+            'categories',
+            'Pregunta agregada',
+            'Se agrego una pregunta a una categoria.',
+            [
+                'Categoria' => $category->name,
+                'Pregunta' => $question->label,
+                'Fase' => 'Fase '.$question->step,
+            ],
+            'success',
+            $request->user(),
+            $request,
+        );
 
         return back()->with('success', 'Pregunta agregada.');
     }
 
-    public function updateQuestion(Request $request, ApplicationCategory $category, ApplicationQuestion $question): RedirectResponse
+    public function updateQuestion(
+        Request $request,
+        ApplicationCategory $category,
+        ApplicationQuestion $question,
+        DiscordSystemLogService $systemLogs,
+    ): RedirectResponse
     {
         abort_unless($question->category_id === $category->id, 404);
 
         $question->update($this->questionData($request, $category, $question));
 
+        $systemLogs->queue(
+            'categories',
+            'Pregunta actualizada',
+            'Se editaron datos de una pregunta.',
+            [
+                'Categoria' => $category->name,
+                'Pregunta' => $question->label,
+                'Fase' => 'Fase '.$question->step,
+            ],
+            'warning',
+            $request->user(),
+            $request,
+        );
+
         return back()->with('success', 'Pregunta actualizada.');
     }
 
-    public function destroyQuestion(ApplicationCategory $category, ApplicationQuestion $question): RedirectResponse
+    public function destroyQuestion(
+        Request $request,
+        ApplicationCategory $category,
+        ApplicationQuestion $question,
+        DiscordSystemLogService $systemLogs,
+    ): RedirectResponse
     {
         abort_unless($question->category_id === $category->id, 404);
 
@@ -152,6 +286,20 @@ class ApplicationCategoryController extends Controller
         }
 
         $question->delete();
+
+        $systemLogs->queue(
+            'categories',
+            'Pregunta eliminada',
+            'Se elimino una pregunta de una categoria.',
+            [
+                'Categoria' => $category->name,
+                'Pregunta' => $question->label,
+                'Clave' => $question->key,
+            ],
+            'danger',
+            $request->user(),
+            $request,
+        );
 
         return back()->with('success', 'Pregunta eliminada.');
     }

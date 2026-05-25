@@ -13,6 +13,10 @@ use Illuminate\Support\Collection;
 
 class DiscordNotificationService
 {
+    public function __construct(private DiscordSystemLogService $systemLogs)
+    {
+    }
+
     public function queueStaffApplication(Application $application): void
     {
         $staffNotification = DiscordNotification::query()->create([
@@ -55,6 +59,15 @@ class DiscordNotificationService
             '',
             $this->statusDmMessage($application),
         );
+
+        $this->systemLogs->logApplicationEvent(
+            'discord',
+            'DM de estado encolado',
+            'Se encolo un mensaje privado de Discord para informar el estado de una postulacion.',
+            $application,
+            'discord',
+            extraFields: ['Tipo' => $type],
+        );
     }
 
     public function queueApplicationsWindowAnnouncement(bool $isOpen): void
@@ -79,6 +92,17 @@ class DiscordNotificationService
                 $this->applicationsWindowAnnouncementMessage($isOpen),
             );
         }
+
+        $this->systemLogs->queue(
+            'discord',
+            $isOpen ? 'Anuncio de apertura encolado' : 'Anuncio de cierre encolado',
+            'Se encolo un anuncio automatico para canales de Discord.',
+            [
+                'Canales' => implode("\n", $channelIds),
+                'Mencion' => $roleId !== '' ? '<@&'.$roleId.'>' : 'Sin mencion',
+            ],
+            $isOpen ? 'success' : 'danger',
+        );
     }
 
     public function queueSelectedApplicantsAnnouncement(iterable $applications): bool
@@ -109,6 +133,18 @@ class DiscordNotificationService
                 $this->selectedApplicantsAnnouncementMessage($applications),
             );
         }
+
+        $this->systemLogs->queue(
+            'discord',
+            'Anuncio de seleccionados encolado',
+            'Se encolo el anuncio de seleccionados para Discord.',
+            [
+                'Canales' => implode("\n", $channelIds),
+                'Seleccionados' => $applications->count(),
+                'Mencion' => $roleId !== '' ? '<@&'.$roleId.'>' : 'Sin mencion',
+            ],
+            'success',
+        );
 
         return true;
     }

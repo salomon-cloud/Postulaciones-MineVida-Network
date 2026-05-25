@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Services\DiscordSystemLogService;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateSettingsRequest extends FormRequest
@@ -38,6 +39,24 @@ class UpdateSettingsRequest extends FormRequest
             'discord_selected_message' => ['nullable', 'string', 'max:1000'],
             'discord_open_message' => ['nullable', 'string', 'max:1000'],
             'discord_closed_message' => ['nullable', 'string', 'max:1000'],
+            'discord_system_logs_enabled' => ['boolean'],
+            'discord_system_log_channel_id' => [
+                'nullable',
+                function (string $attribute, mixed $value, \Closure $fail): void {
+                    if (
+                        $this->boolean('discord_system_logs_enabled')
+                        && blank($value)
+                        && blank(config('services.lumoryx_bot.system_log_channel_id'))
+                    ) {
+                        $fail('Indica al menos un canal de logs o configura DISCORD_SYSTEM_LOG_CHANNEL_ID en el entorno.');
+
+                        return;
+                    }
+
+                    $this->validateSnowflakeList($value, $fail, 'canales de logs');
+                },
+            ],
+            'discord_system_log_events' => ['nullable', 'string', 'max:500'],
             'minimum_age' => ['required', 'integer', 'min:10', 'max:30'],
             'reapply_cooldown_days' => ['required', 'integer', 'min:0', 'max:365'],
         ];
@@ -56,6 +75,9 @@ class UpdateSettingsRequest extends FormRequest
             'discord_selected_message' => $this->cleanText('discord_selected_message'),
             'discord_open_message' => $this->cleanText('discord_open_message'),
             'discord_closed_message' => $this->cleanText('discord_closed_message'),
+            'discord_system_logs_enabled' => $this->boolean('discord_system_logs_enabled'),
+            'discord_system_log_channel_id' => $this->cleanSnowflakeList('discord_system_log_channel_id'),
+            'discord_system_log_events' => $this->cleanEventList('discord_system_log_events'),
         ]);
     }
 
@@ -67,6 +89,7 @@ class UpdateSettingsRequest extends FormRequest
             'discord_selected_message.max' => 'El mensaje de seleccionados no puede superar los 1000 caracteres.',
             'discord_open_message.max' => 'El mensaje de apertura no puede superar los 1000 caracteres.',
             'discord_closed_message.max' => 'El mensaje de cierre no puede superar los 1000 caracteres.',
+            'discord_system_log_events.max' => 'La lista de eventos de logs es demasiado larga.',
         ];
     }
 
@@ -111,5 +134,17 @@ class UpdateSettingsRequest extends FormRequest
         $value = trim(strip_tags((string) $this->input($key, '')));
 
         return $value !== '' ? $value : null;
+    }
+
+    private function cleanEventList(string $key): ?string
+    {
+        $allowed = array_keys(DiscordSystemLogService::eventOptions());
+        $events = collect((array) $this->input($key, []))
+            ->map(fn (string $event) => trim($event))
+            ->filter(fn (string $event) => in_array($event, $allowed, true))
+            ->unique()
+            ->values();
+
+        return $events->isNotEmpty() ? $events->implode("\n") : null;
     }
 }

@@ -82,8 +82,8 @@
 
                     <div class="mt-5 grid gap-2 sm:grid-cols-2">
                         <button class="lumoryx-button-secondary justify-center px-3 py-2" type="submit" name="status" value="pending">Pendiente</button>
-                        <button class="lumoryx-button-secondary justify-center px-3 py-2" type="submit" name="status" value="in_review">En revision</button>
-                        <button class="lumoryx-button-secondary justify-center px-3 py-2" type="submit" name="status" value="interview">Entrevista</button>
+                        <button class="lumoryx-button-purple justify-center px-3 py-2" type="submit" name="status" value="in_review">En revision</button>
+                        <button class="lumoryx-button-blue justify-center px-3 py-2" type="submit" name="status" value="interview">Entrevista</button>
                         <button class="lumoryx-button-secondary justify-center px-3 py-2" type="submit" name="status" value="cancelled">Cancelar</button>
                         <button class="lumoryx-button-success justify-center px-3 py-2" type="submit" name="status" value="accepted">Aceptar</button>
                         <button class="lumoryx-button-danger justify-center px-3 py-2" type="submit" name="status" value="rejected">Rechazar</button>

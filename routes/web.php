@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', LandingController::class)->name('home');
 
+Route::view('/offline', 'offline')->name('offline');
+
 Route::get('/login', fn () => redirect()->route('login.discord'))->name('login');
 
 Route::middleware('guest')->group(function () {

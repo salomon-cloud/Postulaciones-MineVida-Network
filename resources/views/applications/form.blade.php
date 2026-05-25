@@ -19,7 +19,7 @@
             <h1 class="mt-2 text-3xl font-black text-white sm:text-4xl">Formulario de postulacion</h1>
             <p class="mt-2 max-w-3xl text-slate-400">Completa cada fase con calma. Asi el proceso se siente mas ligero y el equipo recibe respuestas mejor ordenadas.</p>
         </div>
-        <x-lumoryx.user-chip />
+        <x-lumoryx.user-dropdown />
     </div>
 
     <form

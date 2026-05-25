@@ -5,7 +5,7 @@
             <h1 class="mt-2 text-3xl font-black text-white sm:text-4xl">{{ $category->name }} esta cerrada</h1>
             <p class="mt-3 max-w-3xl text-base leading-7 text-slate-300">Esta categoria no esta recibiendo solicitudes nuevas por ahora.</p>
         </div>
-        <x-lumoryx.user-chip />
+        <x-lumoryx.user-dropdown />
     </div>
 
     <section class="mt-8 grid gap-5 lg:grid-cols-[.36fr_.64fr]">

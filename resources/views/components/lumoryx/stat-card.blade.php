@@ -10,11 +10,11 @@
     ][$tone] ?? ['bg' => 'border-amber-300/15', 'bar' => 'bg-amber-300/80', 'text' => 'text-amber-200'];
 @endphp
 
-<div {{ $attributes->merge(['class' => 'rounded-lg border bg-white/[.035] p-5 '.$tones['bg']]) }}>
+<div {{ $attributes->merge(['class' => 'lumoryx-stat-card '.$tones['bg']]) }}>
     <div class="flex min-w-0 items-center gap-4">
         <div class="lumoryx-icon-tile h-12 w-12 {{ $tones['text'] }} text-base font-black">{{ $icon ?? str($label)->substr(0, 1)->upper() }}</div>
         <div class="min-w-0">
-            <p class="text-sm font-semibold text-white">{{ $label }}</p>
+            <p class="text-sm font-black text-white">{{ $label }}</p>
             <p class="truncate text-3xl font-black text-white">{{ $value }}</p>
             @if ($hint)
                 <p class="text-xs text-slate-400">{{ $hint }}</p>

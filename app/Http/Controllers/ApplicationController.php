@@ -8,6 +8,7 @@ use App\Models\Application;
 use App\Models\ApplicationLog;
 use App\Models\Setting;
 use App\Services\DiscordNotificationService;
+use App\Services\DiscordSystemLogService;
 use App\Support\ApplicationTimeline;
 use App\Support\ApplicationCatalog;
 use Illuminate\Http\RedirectResponse;
@@ -89,7 +90,11 @@ class ApplicationController extends Controller
         ]);
     }
 
-    public function store(StoreApplicationRequest $request, DiscordNotificationService $discord): RedirectResponse
+    public function store(
+        StoreApplicationRequest $request,
+        DiscordNotificationService $discord,
+        DiscordSystemLogService $systemLogs,
+    ): RedirectResponse
     {
         $application = DB::transaction(function () use ($request) {
             $application = $request->user()->applications()->create([
@@ -116,6 +121,15 @@ class ApplicationController extends Controller
         });
 
         $discord->queueStaffApplication($application);
+        $systemLogs->logApplicationEvent(
+            'applications',
+            'Nueva postulacion enviada',
+            'Un usuario envio una nueva solicitud y quedo pendiente de revision.',
+            $application,
+            'warning',
+            $request->user(),
+            $request,
+        );
 
         return redirect()
             ->route('applications.show', $application)
@@ -137,7 +151,7 @@ class ApplicationController extends Controller
         ]);
     }
 
-    public function cancel(Request $request, Application $application): RedirectResponse
+    public function cancel(Request $request, Application $application, DiscordSystemLogService $systemLogs): RedirectResponse
     {
         $this->authorize('cancel', $application);
 
@@ -156,6 +170,18 @@ class ApplicationController extends Controller
             'ip_address' => $request->ip(),
             'user_agent' => str((string) $request->userAgent())->limit(512)->toString(),
         ]);
+
+        $application->refresh()->load('user');
+        $systemLogs->logApplicationEvent(
+            'applications',
+            'Postulacion cancelada por el usuario',
+            'El usuario cancelo su postulacion desde el panel.',
+            $application,
+            'danger',
+            $request->user(),
+            $request,
+            ['Estado anterior' => $oldStatus->label()],
+        );
 
         return redirect()->route('applications.show', $application)->with('success', 'Postulacion cancelada.');
     }

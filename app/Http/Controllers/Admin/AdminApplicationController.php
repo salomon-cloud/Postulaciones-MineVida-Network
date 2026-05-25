@@ -13,6 +13,7 @@ use App\Models\ApplicationInterview;
 use App\Models\Setting;
 use App\Models\User;
 use App\Services\DiscordNotificationService;
+use App\Services\DiscordSystemLogService;
 use App\Support\ApplicationTimeline;
 use App\Support\ApplicationCatalog;
 use Illuminate\Http\RedirectResponse;
@@ -93,6 +94,7 @@ class AdminApplicationController extends Controller
         UpdateApplicationStatusRequest $request,
         Application $application,
         DiscordNotificationService $discord,
+        DiscordSystemLogService $systemLogs,
     ): RedirectResponse {
         $this->authorize('updateStatus', Application::class);
 
@@ -130,18 +132,35 @@ class AdminApplicationController extends Controller
 
         $application->refresh()->load('user');
         $discord->queueStatusDm($application);
+        $systemLogs->logApplicationEvent(
+            'status',
+            'Estado de postulacion actualizado',
+            'Un administrador cambio el estado de una postulacion.',
+            $application,
+            $newStatus->isFinal() ? ($newStatus === ApplicationStatus::Accepted ? 'success' : 'danger') : 'warning',
+            $request->user(),
+            $request,
+            [
+                'Cambio' => $oldStatus->label().' -> '.$newStatus->label(),
+                'Respuesta' => $request->validated('admin_response') ?: 'Sin respuesta personalizada.',
+            ],
+        );
 
         return back()->with('success', 'Estado actualizado correctamente.');
     }
 
-    public function storeInterview(UpsertApplicationInterviewRequest $request, Application $application): RedirectResponse
+    public function storeInterview(
+        UpsertApplicationInterviewRequest $request,
+        Application $application,
+        DiscordSystemLogService $systemLogs,
+    ): RedirectResponse
     {
         $this->authorize('updateStatus', Application::class);
 
         $validated = $request->validated();
         $oldStatus = $application->status;
 
-        DB::transaction(function () use ($request, $application, $validated, $oldStatus) {
+        $interview = DB::transaction(function () use ($request, $application, $validated, $oldStatus) {
             $interview = $application->interviews()->create([
                 ...$validated,
                 'created_by' => $request->user()->id,
@@ -166,7 +185,25 @@ class AdminApplicationController extends Controller
                 'ip_address' => $request->ip(),
                 'user_agent' => str((string) $request->userAgent())->limit(512)->toString(),
             ]);
+
+            return $interview;
         });
+
+        $application->refresh()->load('user');
+        $systemLogs->logApplicationEvent(
+            'interviews',
+            'Entrevista programada',
+            'Se programo una entrevista para una postulacion.',
+            $application,
+            'discord',
+            $request->user(),
+            $request,
+            [
+                'Fecha' => $interview->scheduled_at?->format('d/m/Y H:i') ?: '-',
+                'Lugar' => $interview->location ?: '-',
+                'Entrevistador' => $interview->interviewer?->name ?: 'Sin asignar',
+            ],
+        );
 
         return back()->with('success', 'Entrevista programada correctamente.');
     }
@@ -175,6 +212,7 @@ class AdminApplicationController extends Controller
         UpsertApplicationInterviewRequest $request,
         Application $application,
         ApplicationInterview $interview,
+        DiscordSystemLogService $systemLogs,
     ): RedirectResponse {
         $this->authorize('updateStatus', Application::class);
 
@@ -208,10 +246,35 @@ class AdminApplicationController extends Controller
             ]);
         });
 
+        $application->refresh()->load('user');
+        $interview->refresh();
+        $systemLogs->logApplicationEvent(
+            'interviews',
+            'Entrevista actualizada',
+            'Se actualizo el estado o informacion de una entrevista.',
+            $application,
+            match ($interview->status) {
+                ApplicationInterview::STATUS_COMPLETED => 'success',
+                ApplicationInterview::STATUS_CANCELLED => 'danger',
+                default => 'discord',
+            },
+            $request->user(),
+            $request,
+            [
+                'Cambio entrevista' => $oldStatus.' -> '.$interview->status,
+                'Fecha' => $interview->scheduled_at?->format('d/m/Y H:i') ?: '-',
+                'Notas' => $interview->result_notes ?: 'Sin notas.',
+            ],
+        );
+
         return back()->with('success', 'Entrevista actualizada correctamente.');
     }
 
-    public function storeNote(StoreApplicationNoteRequest $request, Application $application): RedirectResponse
+    public function storeNote(
+        StoreApplicationNoteRequest $request,
+        Application $application,
+        DiscordSystemLogService $systemLogs,
+    ): RedirectResponse
     {
         $this->authorize('note', Application::class);
 
@@ -227,6 +290,17 @@ class AdminApplicationController extends Controller
             'ip_address' => $request->ip(),
             'user_agent' => str((string) $request->userAgent())->limit(512)->toString(),
         ]);
+
+        $application->load('user');
+        $systemLogs->logApplicationEvent(
+            'applications',
+            'Nota interna agregada',
+            'Un miembro del equipo agrego una nota interna a una postulacion.',
+            $application,
+            'info',
+            $request->user(),
+            $request,
+        );
 
         return back()->with('success', 'Nota interna guardada.');
     }

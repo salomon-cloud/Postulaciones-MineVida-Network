@@ -5,7 +5,7 @@
             <h1 class="mt-2 text-3xl font-black text-white sm:text-4xl">Perfil</h1>
             <p class="mt-2 max-w-3xl text-slate-400">Consulta tu informacion de Discord y el resumen de tus procesos.</p>
         </div>
-        <x-lumoryx.user-chip />
+        <x-lumoryx.user-dropdown />
     </div>
 
     <section class="mt-8 grid gap-5 xl:grid-cols-[.38fr_.62fr]">

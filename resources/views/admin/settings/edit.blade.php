@@ -1,12 +1,18 @@
 @php
     $announcementChannels = old('discord_announcement_channel_id', $settings['discord_announcement_channel_id']);
     $selectedChannels = old('discord_selected_channel_id', $settings['discord_selected_channel_id']);
+    $systemLogChannels = old('discord_system_log_channel_id', $settings['discord_system_log_channel_id']);
+    $rawSystemLogEvents = old('discord_system_log_events', $settings['discord_system_log_events']);
+    $systemLogSelectedEvents = collect(is_array($rawSystemLogEvents) ? $rawSystemLogEvents : (preg_split('/[\s,;]+/', (string) $rawSystemLogEvents) ?: []))
+        ->filter()
+        ->values();
     $channelCount = fn ($value) => collect(preg_split('/[\s,;]+/', (string) $value) ?: [])
         ->filter()
         ->unique()
         ->count();
     $announcementChannelCount = $channelCount($announcementChannels);
     $selectedChannelCount = $channelCount($selectedChannels);
+    $systemLogChannelCount = $channelCount($systemLogChannels);
 @endphp
 
 <x-layouts.admin :title="'Configuracion | '.config('app.name', 'MineVida Network')">
@@ -25,7 +31,7 @@
             </div>
             <div class="rounded-lg border border-white/10 bg-white/[.035] p-4">
                 <p class="text-xs font-black uppercase tracking-wide text-slate-500">Canales</p>
-                <p class="mt-2 text-lg font-black text-white">{{ $announcementChannelCount + $selectedChannelCount }}</p>
+                <p class="mt-2 text-lg font-black text-white">{{ $announcementChannelCount + $selectedChannelCount + $systemLogChannelCount }}</p>
             </div>
             <div class="rounded-lg border border-white/10 bg-white/[.035] p-4">
                 <p class="text-xs font-black uppercase tracking-wide text-slate-500">Discord</p>
@@ -100,6 +106,53 @@
 
                 <div class="mt-5 rounded-lg border border-amber-300/20 bg-amber-300/10 p-4 text-sm leading-6 text-amber-50">
                     Si esta activo, el login revisa que la cuenta de Discord este dentro del servidor. Si tambien usas <span class="font-bold">guilds.join</span>, el bot puede intentar unirlo automaticamente.
+                </div>
+            </div>
+
+            <div class="lumoryx-panel p-5 sm:p-6 xl:col-span-2">
+                <div class="grid gap-6 xl:grid-cols-[320px_1fr]">
+                    <div>
+                        <div class="lumoryx-icon-tile h-12 w-12 text-sm font-black text-amber-100">LOG</div>
+                        <h2 class="mt-4 text-2xl font-black text-white">Logs del sistema</h2>
+                        <p class="mt-2 text-sm leading-6 text-slate-400">
+                            Envia registros privados a Discord cuando pase algo importante dentro del sistema de postulaciones.
+                        </p>
+
+                        <label class="mt-5 flex items-center justify-between gap-4 rounded-lg border border-white/10 bg-white/[.035] p-4">
+                            <span>
+                                <span class="block font-bold text-white">Activar auditoria</span>
+                                <span class="mt-1 block text-xs leading-5 text-slate-500">Si lo apagas, no se enviaran logs a Discord.</span>
+                            </span>
+                            <input class="rounded border-white/10 bg-graphite-950 text-amber-300 focus:ring-amber-300" type="checkbox" name="discord_system_logs_enabled" value="1" @checked(old('discord_system_logs_enabled', $settings['discord_system_logs_enabled']))>
+                        </label>
+                    </div>
+
+                    <div class="grid gap-5 lg:grid-cols-[1fr_1.2fr]">
+                        <div>
+                            <label class="lumoryx-label" for="discord_system_log_channel_id">Canales privados de logs</label>
+                            <textarea class="lumoryx-input mt-2 min-h-40" id="discord_system_log_channel_id" name="discord_system_log_channel_id" rows="6" inputmode="numeric" placeholder="123456789012345678&#10;987654321098765432">{{ $systemLogChannels }}</textarea>
+                            <p class="mt-2 text-xs text-slate-500">
+                                Si lo dejas vacio, se usara <span class="font-semibold text-slate-300">DISCORD_SYSTEM_LOG_CHANNEL_ID</span> del .env.
+                            </p>
+                            @error('discord_system_log_channel_id')<p class="mt-2 text-sm text-rose-200">{{ $message }}</p>@enderror
+                        </div>
+
+                        <div>
+                            <p class="lumoryx-label">Eventos que se enviaran</p>
+                            <div class="mt-2 grid gap-2 sm:grid-cols-2">
+                                @foreach ($systemLogEvents as $eventKey => $eventLabel)
+                                    <label class="flex items-start gap-3 rounded-lg border border-white/10 bg-white/[.025] p-3 text-sm text-slate-300">
+                                        <input class="mt-1 rounded border-white/10 bg-graphite-950 text-amber-300 focus:ring-amber-300" type="checkbox" name="discord_system_log_events[]" value="{{ $eventKey }}" @checked($systemLogSelectedEvents->contains($eventKey))>
+                                        <span>
+                                            <span class="block font-bold text-white">{{ $eventLabel }}</span>
+                                            <span class="text-xs text-slate-500">{{ $eventKey }}</span>
+                                        </span>
+                                    </label>
+                                @endforeach
+                            </div>
+                            @error('discord_system_log_events')<p class="mt-2 text-sm text-rose-200">{{ $message }}</p>@enderror
+                        </div>
+                    </div>
                 </div>
             </div>
 

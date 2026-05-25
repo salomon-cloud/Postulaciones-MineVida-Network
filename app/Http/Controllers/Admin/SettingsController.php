@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateSettingsRequest;
 use App\Models\Setting;
 use App\Services\DiscordNotificationService;
+use App\Services\DiscordSystemLogService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -29,11 +30,19 @@ class SettingsController extends Controller
                 'discord_selected_message' => Setting::value('discord_selected_message', ''),
                 'discord_open_message' => Setting::value('discord_open_message', ''),
                 'discord_closed_message' => Setting::value('discord_closed_message', ''),
+                'discord_system_logs_enabled' => Setting::bool('discord_system_logs_enabled', (bool) config('services.lumoryx_bot.system_logs_enabled', false)),
+                'discord_system_log_channel_id' => Setting::value('discord_system_log_channel_id', ''),
+                'discord_system_log_events' => Setting::value('discord_system_log_events', (string) config('services.lumoryx_bot.system_log_events', '')),
             ],
+            'systemLogEvents' => DiscordSystemLogService::eventOptions(),
         ]);
     }
 
-    public function update(UpdateSettingsRequest $request, DiscordNotificationService $discord): RedirectResponse
+    public function update(
+        UpdateSettingsRequest $request,
+        DiscordNotificationService $discord,
+        DiscordSystemLogService $systemLogs,
+    ): RedirectResponse
     {
         $wasOpen = Setting::bool('applications_open', true);
         $validated = $request->validated();
@@ -45,6 +54,21 @@ class SettingsController extends Controller
         if ($wasOpen !== (bool) $validated['applications_open']) {
             $discord->queueApplicationsWindowAnnouncement((bool) $validated['applications_open']);
         }
+
+        $systemLogs->queue(
+            'settings',
+            'Configuracion actualizada',
+            'Se guardaron cambios en la configuracion general del sistema.',
+            [
+                'Postulaciones' => (bool) $validated['applications_open'] ? 'Abiertas' : 'Cerradas',
+                'Edad minima' => $validated['minimum_age'].' anos',
+                'Cooldown' => $validated['reapply_cooldown_days'].' dias',
+                'Logs Discord' => (bool) $validated['discord_system_logs_enabled'] ? 'Activos' : 'Inactivos',
+            ],
+            'warning',
+            $request->user(),
+            $request,
+        );
 
         return back()->with('success', 'Configuracion actualizada.');
     }

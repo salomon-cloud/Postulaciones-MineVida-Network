@@ -4,7 +4,7 @@
             <h1 class="text-3xl font-black text-white sm:text-4xl">Mis postulaciones</h1>
             <p class="mt-2 max-w-3xl text-slate-400">Consulta el estado de tus procesos y las novedades mas recientes.</p>
         </div>
-        <x-lumoryx.user-chip />
+        <x-lumoryx.user-dropdown />
     </div>
 
     @php

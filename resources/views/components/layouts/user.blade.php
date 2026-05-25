@@ -19,12 +19,12 @@
                 </div>
 
                 <nav class="mt-8 flex-1 space-y-2 overflow-y-auto pr-1">
-                    <x-lumoryx.sidebar-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">Inicio</x-lumoryx.sidebar-link>
-                    <x-lumoryx.sidebar-link :href="route('applications.index')" :active="request()->routeIs('applications.index', 'applications.show')" :badge="$applicationCount ?: null">Mis postulaciones</x-lumoryx.sidebar-link>
-                    <x-lumoryx.sidebar-link :href="route('applications.create')" :active="request()->routeIs('applications.create', 'applications.create.type')">Postulaciones</x-lumoryx.sidebar-link>
-                    <x-lumoryx.sidebar-link :href="route('user.notifications')" :active="request()->routeIs('user.notifications')">Notificaciones</x-lumoryx.sidebar-link>
-                    <x-lumoryx.sidebar-link :href="route('user.profile')" :active="request()->routeIs('user.profile')">Perfil</x-lumoryx.sidebar-link>
-                    <x-lumoryx.sidebar-link :href="route('user.settings')" :active="request()->routeIs('user.settings')">Ajustes</x-lumoryx.sidebar-link>
+                    <x-lumoryx.sidebar-link icon="IN" :href="route('dashboard')" :active="request()->routeIs('dashboard')">Inicio</x-lumoryx.sidebar-link>
+                    <x-lumoryx.sidebar-link icon="MP" :href="route('applications.index')" :active="request()->routeIs('applications.index', 'applications.show')" :badge="$applicationCount ?: null">Mis postulaciones</x-lumoryx.sidebar-link>
+                    <x-lumoryx.sidebar-link icon="PO" :href="route('applications.create')" :active="request()->routeIs('applications.create', 'applications.create.type')">Postulaciones</x-lumoryx.sidebar-link>
+                    <x-lumoryx.sidebar-link icon="NO" :href="route('user.notifications')" :active="request()->routeIs('user.notifications')">Notificaciones</x-lumoryx.sidebar-link>
+                    <x-lumoryx.sidebar-link icon="PF" :href="route('user.profile')" :active="request()->routeIs('user.profile')">Perfil</x-lumoryx.sidebar-link>
+                    <x-lumoryx.sidebar-link icon="AJ" :href="route('user.settings')" :active="request()->routeIs('user.settings')">Ajustes</x-lumoryx.sidebar-link>
                 </nav>
 
                 <div class="shrink-0 space-y-4 pt-5">
