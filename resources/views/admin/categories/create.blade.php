@@ -8,7 +8,7 @@
         <x-lumoryx.button variant="secondary" href="{{ route('admin.categories.index') }}">Volver</x-lumoryx.button>
     </div>
 
-    <form class="lumoryx-panel mt-6 grid gap-5 p-5 sm:p-6 lg:grid-cols-2" method="POST" action="{{ route('admin.categories.store') }}">
+    <form class="lumoryx-panel mt-6 grid gap-5 p-5 sm:p-6 lg:grid-cols-2" method="POST" action="{{ route('admin.categories.store') }}" enctype="multipart/form-data">
         @csrf
 
         <x-lumoryx.input name="name" label="Nombre" value="{{ old('name') }}" placeholder="Soporte" required />
@@ -24,6 +24,12 @@
 
         <x-lumoryx.input name="icon" label="Icono corto" value="{{ old('icon') }}" maxlength="8" placeholder="SP" />
         <x-lumoryx.input name="accent_color" label="Color" value="{{ old('accent_color', '#facc15') }}" placeholder="#facc15" />
+        <div class="lg:col-span-2 rounded-lg border border-white/10 bg-white/[.025] p-4">
+            <label class="lumoryx-label" for="category_image">Imagen de la categoria</label>
+            <input class="lumoryx-input mt-2" id="category_image" name="category_image" type="file" accept="image/png,image/jpeg,image/webp">
+            <p class="mt-2 text-xs leading-5 text-slate-500">Opcional. Se recomienda una imagen horizontal tipo banner. Formatos: JPG, PNG o WEBP, maximo 4 MB.</p>
+            @error('category_image')<p class="mt-2 text-sm text-rose-200">{{ $message }}</p>@enderror
+        </div>
         <x-lumoryx.input name="minimum_age" label="Edad minima propia" type="number" min="10" max="80" value="{{ old('minimum_age') }}" placeholder="Opcional" />
         <x-lumoryx.input name="sort_order" label="Orden" type="number" min="0" value="{{ old('sort_order', 50) }}" required />
 

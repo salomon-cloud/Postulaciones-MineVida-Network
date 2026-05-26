@@ -5,10 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? config('app.name', 'MineVida Network') }}</title>
+    <script>
+        window.lumoryxConfig = @json(['appName' => config('app.name', 'MineVida Network')]);
+    </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-    <div class="lumoryx-bg min-h-screen overflow-x-hidden" x-data="{ sidebar: false }">
+    @php
+        $sidebarBackground = config('community.sidebar_background_path', 'images/slidebar.png');
+    @endphp
+
+    <div
+        class="lumoryx-bg min-h-screen overflow-x-hidden"
+        x-data="{ sidebar: false }"
+        style="--lumoryx-sidebar-bg-image: url('{{ asset($sidebarBackground) }}');"
+    >
         @guest
             <header class="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
                 <x-lumoryx.brand />

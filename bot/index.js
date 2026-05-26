@@ -24,6 +24,7 @@ app.use(helmet());
 app.use(express.json({ limit: '32kb' }));
 
 const reconnectDelayMs = Number(process.env.DISCORD_RECONNECT_DELAY_MS || 15000);
+const productName = process.env.BOT_PRODUCT_NAME || 'Postulations Discord Bot';
 const currentDir = path.dirname(fileURLToPath(import.meta.url));
 const embedIconAttachmentName = 'minevida-logo.png';
 const embedIconAttachmentUrl = `attachment://${embedIconAttachmentName}`;
@@ -202,7 +203,7 @@ app.use((error, _req, res, _next) => {
 });
 
 client.on('clientReady', () => {
-  console.log(`Lumoryx bot ready as ${client.user.tag}`);
+  console.log(`${productName} ready as ${client.user.tag}`);
 });
 
 client.on('error', (error) => {
@@ -280,7 +281,7 @@ const host = process.env.BOT_HOST || '127.0.0.1';
 const port = Number(process.env.BOT_PORT || 3001);
 
 app.listen(port, host, () => {
-  console.log(`Lumoryx internal bot API listening on http://${host}:${port}`);
+  console.log(`${productName} internal API listening on http://${host}:${port}`);
 });
 
 await loginDiscord();

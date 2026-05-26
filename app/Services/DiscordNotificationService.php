@@ -222,9 +222,6 @@ class DiscordNotificationService
                     'inline' => false,
                 ],
             ],
-            'image' => [
-                'url' => $statusData['image'],
-            ],
             'footer' => [
                 'text' => $networkName.' - Sistema oficial',
                 'icon_url' => $botIcon,
@@ -234,6 +231,12 @@ class DiscordNotificationService
 
         if ($avatarUrl) {
             $embed['thumbnail'] = ['url' => $avatarUrl];
+        }
+
+        if (filled($statusData['image'] ?? null)) {
+            $embed['image'] = [
+                'url' => $statusData['image'],
+            ];
         }
 
         if ($application->admin_response) {
@@ -424,7 +427,7 @@ class DiscordNotificationService
                 'color' => 0xfacc15,
                 'title' => 'POSTULACION RECIBIDA',
                 'label' => 'Pendiente',
-                'image' => 'https://media.discordapp.net/attachments/1474622121228632178/1506471581780807680/postulaciones.png?ex=6a0e627d&is=6a0d10fd&hm=c4bccc8c7c5aecf4780cfb779d9e910a6b58a75fbb7b0a4d5677b432dc1e45c7&=&format=webp&quality=lossless&width=939&height=939',
+                'image' => config('community.discord_status_images.pending', ''),
                 'text' => implode("\n", [
                     '**Tu postulacion fue enviada correctamente.**',
                     '',
@@ -445,7 +448,7 @@ class DiscordNotificationService
                 'color' => 0xeab308,
                 'title' => 'POSTULACION EN REVISION',
                 'label' => 'En revision',
-                'image' => 'https://media.discordapp.net/attachments/1474622121228632178/1506471581780807680/postulaciones.png?ex=6a0e627d&is=6a0d10fd&hm=c4bccc8c7c5aecf4780cfb779d9e910a6b58a75fbb7b0a4d5677b432dc1e45c7&=&format=webp&quality=lossless&width=939&height=939',
+                'image' => config('community.discord_status_images.in_review', ''),
                 'text' => implode("\n", [
                     '**Tu postulacion paso a revision del equipo.**',
                     '',
@@ -466,7 +469,7 @@ class DiscordNotificationService
                 'color' => 0x38bdf8,
                 'title' => 'SIGUIENTE ETAPA: ENTREVISTA',
                 'label' => 'Entrevista',
-                'image' => 'https://media.discordapp.net/attachments/1474622121228632178/1506471581780807680/postulaciones.png?ex=6a0e627d&is=6a0d10fd&hm=c4bccc8c7c5aecf4780cfb779d9e910a6b58a75fbb7b0a4d5677b432dc1e45c7&=&format=webp&quality=lossless&width=939&height=939',
+                'image' => config('community.discord_status_images.interview', ''),
                 'text' => implode("\n", [
                     '**Tu postulacion avanzo a la etapa de entrevista.**',
                     '',
@@ -487,7 +490,7 @@ class DiscordNotificationService
                 'color' => 0x22c55e,
                 'title' => 'POSTULACION ACEPTADA',
                 'label' => 'Aceptada',
-                'image' => 'https://media.discordapp.net/attachments/1474622121228632178/1506471581780807680/postulaciones.png?ex=6a0e627d&is=6a0d10fd&hm=c4bccc8c7c5aecf4780cfb779d9e910a6b58a75fbb7b0a4d5677b432dc1e45c7&=&format=webp&quality=lossless&width=939&height=939',
+                'image' => config('community.discord_status_images.accepted', ''),
                 'text' => implode("\n", [
                     '**Felicidades. Tu postulacion fue aceptada.**',
                     '',
@@ -508,7 +511,7 @@ class DiscordNotificationService
                 'color' => 0xef4444,
                 'title' => 'POSTULACION NO ACEPTADA',
                 'label' => 'Rechazada',
-                'image' => 'https://media.discordapp.net/attachments/1474622121228632178/1506471581780807680/postulaciones.png?ex=6a0e627d&is=6a0d10fd&hm=c4bccc8c7c5aecf4780cfb779d9e910a6b58a75fbb7b0a4d5677b432dc1e45c7&=&format=webp&quality=lossless&width=939&height=939',
+                'image' => config('community.discord_status_images.rejected', ''),
                 'text' => implode("\n", [
                     '**Gracias por tu interes en formar parte del equipo.**',
                     '',
@@ -529,7 +532,7 @@ class DiscordNotificationService
                 'color' => 0x94a3b8,
                 'title' => 'POSTULACION ACTUALIZADA',
                 'label' => $status->label(),
-                'image' => 'https://dummyimage.com/900x220/111827/94a3b8&text=POSTULACION+ACTUALIZADA',
+                'image' => '',
                 'text' => 'Tu postulacion tuvo una actualizacion.',
                 'steps' => '> Revisa el panel para ver mas detalles.',
             ],

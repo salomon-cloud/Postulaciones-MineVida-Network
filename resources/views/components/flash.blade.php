@@ -10,7 +10,9 @@
     @endif
 @endforeach
 
-@php($flashErrors = $errors ?? null)
+@php
+    $flashErrors = $errors ?? null;
+@endphp
 
 @if ($flashErrors?->any())
     <div class="mb-5 rounded-lg border border-rose-400/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-100 shadow-panel backdrop-blur">

@@ -59,8 +59,17 @@
 
         <div class="grid gap-6 xl:grid-cols-[.3fr_.7fr]">
             <aside class="lumoryx-soft-panel p-5">
+                @if (! empty($definition['image_url']))
+                    <div class="lumoryx-category-media mb-5 rounded-lg border border-white/10">
+                        <img src="{{ $definition['image_url'] }}" alt="">
+                    </div>
+                @endif
                 <div class="flex items-start gap-4 xl:block">
-                    <div class="lumoryx-icon-tile h-12 w-12 text-sm font-black text-amber-100 xl:h-14 xl:w-14">{{ str($definition['label'])->substr(0, 2)->upper() }}</div>
+                    @if (! empty($definition['image_url']))
+                        <div class="lumoryx-icon-tile h-12 w-12 text-sm font-black text-amber-100 xl:h-14 xl:w-14">{{ str($definition['label'])->substr(0, 2)->upper() }}</div>
+                    @else
+                        <div class="lumoryx-icon-tile h-12 w-12 text-sm font-black text-amber-100 xl:h-14 xl:w-14">{{ str($definition['label'])->substr(0, 2)->upper() }}</div>
+                    @endif
                     <div class="min-w-0 xl:mt-5">
                         <h2 class="text-xl font-black text-white">{{ $definition['label'] }}</h2>
                         <p class="mt-3 text-sm leading-6 text-slate-400">{{ $definition['summary'] }}</p>

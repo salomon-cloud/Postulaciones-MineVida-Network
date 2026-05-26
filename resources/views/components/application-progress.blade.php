@@ -40,8 +40,10 @@
 
 <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
     @foreach ($steps as $index => $step)
-        @php($isActive = $index <= $activeIndex)
-        @php($classes = $isActive ? $stepClass($index) : ['bg-white/10', 'text-slate-500'])
+        @php
+            $isActive = $index <= $activeIndex;
+            $classes = $isActive ? $stepClass($index) : ['bg-white/10', 'text-slate-500'];
+        @endphp
         <div class="min-w-0">
             <div class="h-1.5 rounded-full {{ $classes[0] }}"></div>
             <p class="mt-2 truncate text-[11px] font-medium {{ $classes[1] }}">{{ $step }}</p>

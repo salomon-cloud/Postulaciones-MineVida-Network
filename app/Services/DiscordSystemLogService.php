@@ -6,6 +6,7 @@ use App\Jobs\SendDiscordChannelMessageJob;
 use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Throwable;
 
 class DiscordSystemLogService
 {
@@ -60,7 +61,11 @@ class DiscordSystemLogService
         ];
 
         foreach ($channelIds as $channelId) {
-            SendDiscordChannelMessageJob::dispatch($channelId, '', ['embeds' => [$embed]]);
+            try {
+                SendDiscordChannelMessageJob::dispatch($channelId, '', ['embeds' => [$embed]]);
+            } catch (Throwable $exception) {
+                report($exception);
+            }
         }
     }
 

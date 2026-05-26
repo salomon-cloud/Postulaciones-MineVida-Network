@@ -30,8 +30,14 @@ class ApplicationFlowTest extends TestCase
         Setting::putValue('discord_selected_channel_id', '');
         Setting::putValue('discord_selected_role_id', '');
         Setting::putValue('discord_selected_message', '');
+        Setting::putValue('discord_system_logs_enabled', false);
+        Setting::putValue('discord_system_log_channel_id', '');
+        Setting::putValue('discord_system_log_events', '');
 
         config(['services.lumoryx_bot.embed_icon_url' => null]);
+        config(['services.lumoryx_bot.system_logs_enabled' => false]);
+        config(['services.lumoryx_bot.system_log_channel_id' => '']);
+        config(['services.lumoryx_bot.system_log_events' => '']);
     }
 
     public function test_guest_cannot_submit_application(): void

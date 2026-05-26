@@ -59,7 +59,7 @@
             </div>
         </section>
 
-        <section class="grid gap-4 xl:grid-cols-2">
+        <section class="lumoryx-admin-category-grid">
             @forelse ($categories as $category)
                 @php
                     $isArchived = $category->trashed();
@@ -74,11 +74,20 @@
                     $stepsCount = count($category->steps ?: []);
                 @endphp
 
-                <article class="group relative min-w-0 overflow-hidden rounded-lg border border-white/10 bg-white/[.035] shadow-panel transition hover:border-amber-300/25 hover:bg-white/[.055]">
+                <article class="lumoryx-admin-category-card group">
                     <div class="absolute inset-x-0 top-0 h-1" style="background: linear-gradient(90deg, {{ $accent }}, rgba(255,255,255,.08));"></div>
-                    <div class="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-white/[.035] blur-3xl transition group-hover:bg-amber-300/10"></div>
 
-                    <div class="relative p-5 sm:p-6">
+                    <div class="lumoryx-category-media">
+                        @if ($category->imageUrl())
+                            <img src="{{ $category->imageUrl() }}" alt="">
+                        @else
+                            <div class="lumoryx-category-media-empty">
+                                <span class="lumoryx-category-media-badge">{{ $category->icon ?: str($category->name)->substr(0, 2)->upper() }}</span>
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="relative flex flex-1 flex-col p-5 sm:p-6">
                         <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                             <div class="flex min-w-0 items-start gap-4">
                                 <span class="grid h-14 w-14 shrink-0 place-items-center rounded-md border border-white/10 bg-graphite-950/70 text-sm font-black text-amber-100 shadow-inner">
@@ -98,7 +107,7 @@
                             @endif
                         </div>
 
-                        <p class="lumoryx-break mt-5 min-h-12 text-sm leading-6 text-slate-400">{{ $category->summary }}</p>
+                        <p class="lumoryx-category-summary mt-5 text-sm leading-6 text-slate-400">{{ $category->summary }}</p>
 
                         @if ($isClosed)
                             <div class="mt-5 rounded-lg border border-rose-300/20 bg-rose-300/10 p-4 text-sm leading-6 text-rose-100">
@@ -130,7 +139,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-6 flex flex-col gap-3 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
+                        <div class="mt-auto flex flex-col gap-3 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
                             <div class="text-xs leading-5 text-slate-500">
                                 @if ($category->applications_count)
                                     Conserva historial de postulaciones.

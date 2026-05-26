@@ -2,7 +2,7 @@
 
 @php
     $brandName = config('app.name', 'MineVida Network');
-    $logoPath = 'images/MineVidaLogo.png';
+    $logoPath = config('community.logo_path', 'images/MineVidaLogo.png');
 @endphp
 
 <a

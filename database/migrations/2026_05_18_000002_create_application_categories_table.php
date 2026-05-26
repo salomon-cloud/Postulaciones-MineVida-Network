@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('icon', 8)->nullable();
             $table->string('accent_color', 24)->nullable();
+            $table->string('image_path')->nullable();
             $table->unsignedTinyInteger('minimum_age')->nullable();
             $table->boolean('is_open')->default(true)->index();
             $table->unsignedInteger('sort_order')->default(0)->index();

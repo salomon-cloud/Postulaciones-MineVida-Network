@@ -38,7 +38,7 @@
             linear-gradient(rgba(5, 5, 6, 0.22), rgba(5, 5, 6, 0.56)),
             radial-gradient(circle at 18% 8%, rgba(215, 178, 31, 0.1), transparent 28%),
             radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.03), transparent 26%),
-            url("/images/lumo_fondo.png");
+            var(--lumoryx-public-bg-image, url("/images/lumo_fondo.png"));
         background-position: center, 18% 8%, 82% 18%, center;
         background-repeat: no-repeat;
         background-size: auto, auto, auto, cover;
@@ -95,7 +95,7 @@
         @apply absolute inset-0;
         content: "";
         z-index: 0;
-        background-image: url("/images/slidebar.png");
+        background-image: var(--lumoryx-sidebar-bg-image, url("/images/slidebar.png"));
         background-position: center 66%;
         background-repeat: no-repeat;
         background-size: auto 132%;
@@ -496,9 +496,114 @@
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 10px 22px rgba(0, 0, 0, 0.18);
     }
 
+    .lumoryx-category-grid {
+        @apply grid gap-4 sm:grid-cols-2 2xl:grid-cols-3;
+    }
+
     .lumoryx-choice-card {
-        @apply min-w-0 rounded-lg border border-white/10 bg-white/[.035] p-5 text-left transition hover:border-amber-300/25 hover:bg-white/[.055];
+        @apply min-w-0 rounded-lg border border-white/10 bg-white/[.035] text-left transition hover:border-amber-300/25 hover:bg-white/[.055];
+        display: flex;
+        min-height: 21rem;
+        flex-direction: column;
+        overflow: hidden;
         overflow-wrap: anywhere;
+    }
+
+    .lumoryx-category-media {
+        position: relative;
+        height: 8.75rem;
+        min-height: 8.75rem;
+        overflow: hidden;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        background:
+            radial-gradient(circle at 28% 18%, rgba(250, 204, 21, 0.14), transparent 30%),
+            linear-gradient(135deg, rgba(24, 24, 27, 0.92), rgba(5, 5, 6, 0.92));
+    }
+
+    .lumoryx-category-media img {
+        display: block;
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+        object-position: center;
+        padding: 0.75rem;
+        transition: transform 300ms ease, filter 300ms ease;
+    }
+
+    .lumoryx-choice-card:hover .lumoryx-category-media img,
+    .lumoryx-admin-category-card:hover .lumoryx-category-media img {
+        transform: scale(1.04);
+        filter: saturate(1.06);
+    }
+
+    .lumoryx-category-media::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+            linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.5)),
+            radial-gradient(circle at 0% 0%, rgba(250, 204, 21, 0.12), transparent 34%);
+        pointer-events: none;
+    }
+
+    .lumoryx-category-media-empty {
+        display: grid;
+        height: 100%;
+        place-items: center;
+        background-image:
+            linear-gradient(rgba(255, 255, 255, 0.024) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px);
+        background-size: 28px 28px;
+    }
+
+    .lumoryx-category-media-badge {
+        @apply grid h-16 w-16 place-items-center rounded-md border text-lg font-black text-amber-100 shadow-inner;
+        background: rgba(5, 5, 6, 0.5);
+        border-color: rgba(250, 204, 21, 0.2);
+    }
+
+    .lumoryx-category-card-body {
+        @apply flex flex-1 flex-col p-5;
+    }
+
+    .lumoryx-category-summary {
+        display: -webkit-box;
+        min-height: 4.5rem;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+    }
+
+    .lumoryx-admin-category-grid {
+        @apply grid gap-4 2xl:grid-cols-2;
+    }
+
+    .lumoryx-admin-category-card {
+        @apply relative min-w-0 overflow-hidden rounded-lg border border-white/10 bg-white/[.035] shadow-panel transition hover:border-amber-300/25 hover:bg-white/[.055];
+        display: flex;
+        min-height: 31rem;
+        flex-direction: column;
+        overflow-wrap: anywhere;
+    }
+
+    .lumoryx-admin-category-card .lumoryx-category-media {
+        height: 10rem;
+        min-height: 10rem;
+    }
+
+    @media (max-width: 640px) {
+        .lumoryx-choice-card {
+            min-height: auto;
+        }
+
+        .lumoryx-category-media {
+            height: 8rem;
+            min-height: 8rem;
+        }
+
+        .lumoryx-admin-category-card {
+            min-height: auto;
+        }
     }
 
     .lumoryx-soft-panel {
@@ -733,12 +838,16 @@
         @apply grid gap-7 lg:grid-cols-[1fr_auto] lg:items-center;
     }
 
+    .lumoryx-discord-widget-empty {
+        @apply grid place-items-center p-8 text-center;
+    }
+
     .lumoryx-public-footer {
-        @apply relative border-t border-white/10 py-8 backdrop-blur-md;
+        @apply relative border-t border-white/10 py-10 backdrop-blur-md sm:py-12;
         background:
-            linear-gradient(180deg, rgba(5, 5, 6, 0.34), rgba(5, 5, 6, 0.7)),
-            radial-gradient(circle at 12% 18%, rgba(86, 189, 22, 0.1), transparent 30%),
-            radial-gradient(circle at 86% 4%, rgba(250, 204, 21, 0.12), transparent 28%);
+            linear-gradient(180deg, rgba(5, 5, 6, 0.58), rgba(5, 5, 6, 0.84)),
+            radial-gradient(circle at 10% 8%, rgba(250, 204, 21, 0.12), transparent 26%),
+            radial-gradient(circle at 88% 24%, rgba(86, 189, 22, 0.1), transparent 30%);
     }
 
     .lumoryx-public-footer::before {
@@ -749,8 +858,8 @@
             linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
             linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
         background-size: 34px 34px;
-        mask-image: linear-gradient(180deg, transparent, black 18%, black 82%, transparent);
-        -webkit-mask-image: linear-gradient(180deg, transparent, black 18%, black 82%, transparent);
+        mask-image: linear-gradient(180deg, transparent, black 15%, black 84%, transparent);
+        -webkit-mask-image: linear-gradient(180deg, transparent, black 15%, black 84%, transparent);
         pointer-events: none;
     }
 
@@ -759,8 +868,20 @@
         z-index: 1;
     }
 
-    .lumoryx-footer-minimal {
-        @apply flex flex-col gap-6 border-b border-white/10 pb-6 lg:flex-row lg:items-center lg:justify-between;
+    .lumoryx-footer-grid {
+        @apply grid gap-8;
+    }
+
+    @media (min-width: 1024px) {
+        .lumoryx-footer-grid {
+            grid-template-columns: minmax(0, 1.1fr) minmax(10rem, 0.55fr) minmax(13rem, 0.7fr) minmax(0, 1.45fr);
+        }
+    }
+
+    .lumoryx-footer-brand,
+    .lumoryx-footer-column,
+    .lumoryx-footer-insights {
+        @apply min-w-0;
     }
 
     .lumoryx-footer-heading {
@@ -768,21 +889,146 @@
         text-shadow: 0 10px 24px rgba(0, 0, 0, 0.36);
     }
 
-    .lumoryx-footer-ipbar {
-        @apply flex min-w-0 flex-wrap items-center gap-3 rounded-full border px-4 py-3 backdrop-blur-sm;
-        background: rgba(5, 5, 6, 0.18);
-        border-color: rgba(255, 255, 255, 0.12);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 16px 34px rgba(0, 0, 0, 0.14);
+    .lumoryx-footer-action-card {
+        @apply flex min-w-0 items-center gap-3 rounded-lg border border-white/10 px-3.5 py-3 text-left transition;
+        background:
+            linear-gradient(135deg, rgba(250, 204, 21, 0.07), rgba(255, 255, 255, 0.025)),
+            rgba(9, 9, 10, 0.48);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.055), 0 16px 34px rgba(0, 0, 0, 0.18);
+    }
+
+    a.lumoryx-footer-action-card:hover {
+        @apply border-amber-200/30 text-white;
+        transform: translateY(-1px);
+    }
+
+    .lumoryx-footer-action-icon {
+        @apply grid h-10 w-10 shrink-0 place-items-center rounded-md text-xs font-black text-amber-100;
+        background: rgba(250, 204, 21, 0.09);
+        border: 1px solid rgba(250, 204, 21, 0.16);
     }
 
     .lumoryx-footer-ip {
-        @apply min-w-0 max-w-full truncate text-sm font-black text-white sm:text-base;
+        @apply block min-w-0 max-w-full truncate text-sm font-black text-amber-100;
         text-shadow: 0 10px 22px rgba(250, 204, 21, 0.12);
     }
 
-    .lumoryx-footer-copy {
-        @apply shrink-0 rounded-full border border-amber-200/20 px-3 py-1.5 text-xs font-bold text-amber-100 transition hover:border-amber-200/40 hover:bg-amber-200/10 hover:text-white;
+    .lumoryx-footer-copy,
+    .lumoryx-footer-mini-button {
+        @apply ml-auto shrink-0 rounded-md border border-amber-200/20 px-3 py-1.5 text-xs font-black text-amber-100 transition hover:border-amber-200/40 hover:bg-amber-200/10 hover:text-white;
         background: rgba(250, 204, 21, 0.06);
+    }
+
+    .lumoryx-footer-social-row {
+        @apply mt-5 flex flex-wrap gap-2;
+    }
+
+    .lumoryx-footer-social {
+        @apply grid h-9 w-9 place-items-center rounded-md border border-white/10 text-[11px] font-black text-amber-100 transition hover:border-amber-200/30 hover:bg-amber-200/10 hover:text-white;
+        background: rgba(255, 255, 255, 0.025);
+    }
+
+    .lumoryx-footer-link-list {
+        @apply mt-4 grid gap-2;
+    }
+
+    .lumoryx-footer-list-link {
+        @apply flex min-w-0 items-center gap-3 rounded-md px-2 py-2 text-sm font-bold text-slate-300 transition hover:bg-white/[.055] hover:text-white;
+    }
+
+    .lumoryx-footer-list-icon {
+        @apply grid h-7 w-7 shrink-0 place-items-center rounded-md text-[10px] font-black text-amber-100;
+        background: rgba(250, 204, 21, 0.06);
+        border: 1px solid rgba(250, 204, 21, 0.13);
+    }
+
+    .lumoryx-footer-panel {
+        @apply rounded-lg border border-white/10;
+        background:
+            linear-gradient(135deg, rgba(250, 204, 21, 0.045), transparent 48%),
+            rgba(10, 10, 12, 0.5);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 20px 44px rgba(0, 0, 0, 0.16);
+    }
+
+    .lumoryx-footer-insights {
+        @apply min-w-0;
+    }
+
+    .lumoryx-footer-panel-head {
+        @apply flex items-center justify-between gap-4 border-b border-white/10 px-4 py-3;
+    }
+
+    .lumoryx-footer-panel-link {
+        @apply rounded-full border border-amber-200/20 px-3 py-1 text-xs font-black text-amber-100 transition hover:border-amber-200/40 hover:bg-amber-200/10 hover:text-white;
+    }
+
+    .lumoryx-footer-metric-grid {
+        @apply grid divide-y divide-white/10 sm:grid-cols-2 sm:divide-x sm:divide-y-0;
+    }
+
+    .lumoryx-footer-metric {
+        @apply flex min-w-0 gap-3 p-4;
+    }
+
+    .lumoryx-footer-metric-grid .lumoryx-footer-metric:nth-child(n+3) {
+        @apply border-t border-white/10 sm:border-t;
+    }
+
+    .lumoryx-footer-metric-icon {
+        @apply grid h-9 w-9 shrink-0 place-items-center rounded-md text-[10px] font-black text-amber-100;
+        background: rgba(250, 204, 21, 0.08);
+        border: 1px solid rgba(250, 204, 21, 0.16);
+    }
+
+    .lumoryx-footer-metric-icon.is-online {
+        @apply rounded-full border-emerald-300/25 bg-emerald-400 text-transparent;
+        box-shadow: 0 0 0 6px rgba(52, 211, 153, 0.12);
+    }
+
+    .lumoryx-footer-metric-icon.is-closed {
+        @apply rounded-full border-rose-300/25 bg-rose-400 text-transparent;
+        box-shadow: 0 0 0 6px rgba(251, 113, 133, 0.12);
+    }
+
+    .lumoryx-footer-accepted-list {
+        @apply grid gap-3 p-4;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 11.75rem), 1fr));
+    }
+
+    .lumoryx-footer-accepted {
+        @apply flex min-w-0 items-center gap-3 rounded-md border border-white/10 p-3;
+        background: rgba(255, 255, 255, 0.025);
+    }
+
+    .lumoryx-footer-accepted-panel {
+        @apply overflow-hidden;
+    }
+
+    .lumoryx-footer-avatar {
+        @apply grid h-10 w-10 shrink-0 place-items-center rounded-md object-cover text-xs font-black text-amber-100;
+        background: rgba(250, 204, 21, 0.08);
+        border: 1px solid rgba(250, 204, 21, 0.16);
+    }
+
+    .lumoryx-footer-role-chip {
+        @apply inline-flex rounded-full border border-amber-200/20 px-2 py-0.5 text-[11px] font-black text-amber-100;
+        background: rgba(250, 204, 21, 0.07);
+    }
+
+    .lumoryx-footer-empty {
+        @apply col-span-full rounded-md border border-dashed border-white/10 px-4 py-5 text-sm text-slate-500;
+    }
+
+    .lumoryx-footer-server {
+        @apply px-4 py-3;
+    }
+
+    .lumoryx-footer-server-row {
+        @apply mt-3 grid gap-4 sm:grid-cols-3 sm:items-center;
+    }
+
+    .lumoryx-footer-server-state {
+        @apply flex items-center gap-3;
     }
 
     .lumoryx-footer-chip {
@@ -816,24 +1062,36 @@
         @apply bg-rose-300;
     }
 
-    .lumoryx-footer-link {
-        @apply inline-flex rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-slate-300 transition hover:border-amber-200/25 hover:bg-white/[.055] hover:text-white;
-        background: rgba(255, 255, 255, 0.018);
-    }
-
-    .lumoryx-footer-social {
-        @apply inline-flex min-w-0 items-center gap-2 rounded-full border border-white/10 px-3 py-2 text-sm font-bold text-slate-200 transition hover:border-amber-200/25 hover:bg-white/[.055] hover:text-white;
-        background: rgba(255, 255, 255, 0.02);
-    }
-
     .lumoryx-footer-social-icon {
         @apply grid h-7 w-7 shrink-0 place-items-center rounded-full text-[10px] font-black text-amber-100;
         background: rgba(250, 204, 21, 0.09);
         border: 1px solid rgba(250, 204, 21, 0.16);
     }
 
+    .lumoryx-footer-process {
+        @apply mt-8 rounded-lg border border-white/10 p-4;
+        background:
+            linear-gradient(90deg, rgba(250, 204, 21, 0.06), rgba(255, 255, 255, 0.02), rgba(86, 189, 22, 0.04)),
+            rgba(10, 10, 12, 0.42);
+    }
+
+    .lumoryx-footer-process-grid {
+        @apply mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4;
+    }
+
+    .lumoryx-footer-process-step {
+        @apply flex min-w-0 gap-3 rounded-md border border-white/10 p-3;
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    .lumoryx-footer-process-icon {
+        @apply grid h-9 w-9 shrink-0 place-items-center rounded-md text-xs font-black text-amber-100;
+        background: rgba(250, 204, 21, 0.08);
+        border: 1px solid rgba(250, 204, 21, 0.16);
+    }
+
     .lumoryx-footer-bottom {
-        @apply flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between;
+        @apply mt-8 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between;
     }
 
     .lumoryx-break {

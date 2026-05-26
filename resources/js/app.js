@@ -243,6 +243,8 @@ function initConfirmDialog() {
 initConfirmDialog();
 
 function initOfflineExperience() {
+    const appName = window.lumoryxConfig?.appName || 'el sistema';
+
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('/sw.js').catch(() => {});
@@ -258,7 +260,7 @@ function initOfflineExperience() {
         <div class="lumoryx-offline-card">
             <span class="lumoryx-offline-kicker"><span></span> Sin conexion</span>
             <h2>No hay internet</h2>
-            <p>El sistema no puede comunicarse con MineVida Network. Revisa tu conexion y vuelve a intentarlo.</p>
+            <p>El sistema no puede comunicarse con ${appName}. Revisa tu conexion y vuelve a intentarlo.</p>
             <div class="lumoryx-offline-actions">
                 <button class="lumoryx-button-primary" type="button" data-offline-retry>Reintentar</button>
                 <a class="lumoryx-button-secondary" href="/offline">Ver pantalla offline</a>

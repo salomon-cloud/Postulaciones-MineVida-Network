@@ -10,6 +10,7 @@ use App\Services\DiscordSystemLogService;
 use App\Support\ApplicationCatalog;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -325,6 +326,8 @@ class ApplicationCategoryController extends Controller
             'description' => ['nullable', 'string', 'max:1000'],
             'icon' => ['nullable', 'string', 'max:8'],
             'accent_color' => ['nullable', 'regex:/^#?[0-9A-Fa-f]{6}$/'],
+            'category_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            'remove_image' => ['nullable', 'boolean'],
             'minimum_age' => ['nullable', 'integer', 'min:10', 'max:80'],
             'sort_order' => ['required', 'integer', 'min:0', 'max:9999'],
             'is_open' => ['nullable', 'boolean'],
@@ -336,18 +339,51 @@ class ApplicationCategoryController extends Controller
         ]);
 
         $validated['is_open'] = $request->has('is_open') ? $request->boolean('is_open') : ($category?->is_open ?? true);
-        $validated['closed_until'] = $validated['is_open'] ? null : ($validated['closed_until'] ?? null);
+        $validated['closed_until'] = $validated['is_open'] ? null : ($validated['closed_until'] ?? $category?->closed_until);
         $validated['closed_message'] = $validated['is_open'] ? null : ($validated['closed_message'] ?? $category?->closed_message);
         $validated['accent_color'] = $validated['accent_color']
             ? '#'.ltrim($validated['accent_color'], '#')
             : null;
         $validated['steps'] = $this->normalizeSteps($request->input('steps', $category?->steps ?: ApplicationCatalog::defaultSteps()));
+        $validated['image_path'] = $this->imagePath($request, $category);
+
+        unset($validated['category_image'], $validated['remove_image']);
 
         if ($category) {
             $this->moveQuestionsIntoValidSteps($category, count($validated['steps']));
         }
 
         return $validated;
+    }
+
+    private function imagePath(Request $request, ?ApplicationCategory $category = null): ?string
+    {
+        $currentPath = $category?->image_path;
+
+        if ($request->boolean('remove_image')) {
+            $this->deleteCategoryImage($currentPath);
+
+            return null;
+        }
+
+        if (! $request->hasFile('category_image')) {
+            return $currentPath;
+        }
+
+        $path = $request->file('category_image')->store('categories', 'public');
+
+        if ($path) {
+            $this->deleteCategoryImage($currentPath);
+        }
+
+        return $path ?: $currentPath;
+    }
+
+    private function deleteCategoryImage(?string $path): void
+    {
+        if ($path && str_starts_with($path, 'categories/')) {
+            Storage::disk('public')->delete($path);
+        }
     }
 
     private function questionData(Request $request, ApplicationCategory $category, ?ApplicationQuestion $question = null): array

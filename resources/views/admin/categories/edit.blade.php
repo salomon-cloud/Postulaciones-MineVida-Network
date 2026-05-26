@@ -72,7 +72,7 @@
 
         @if ($activeTab === 'info')
             <section class="grid gap-6 xl:grid-cols-[1fr_.34fr]">
-                <form class="lumoryx-panel p-5 sm:p-6" method="POST" action="{{ route('admin.categories.update', $category) }}">
+                <form class="lumoryx-panel p-5 sm:p-6" method="POST" action="{{ route('admin.categories.update', $category) }}" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
 
@@ -93,6 +93,31 @@
                         <x-lumoryx.input name="icon" label="Icono corto" value="{{ old('icon', $category->icon) }}" maxlength="8" placeholder="ST" />
                         <div class="lg:col-span-2">
                             <x-lumoryx.textarea name="summary" label="Resumen para el usuario" rows="4" required>{{ old('summary', $category->summary) }}</x-lumoryx.textarea>
+                        </div>
+                        <div class="lg:col-span-2 rounded-lg border border-white/10 bg-white/[.025] p-4">
+                            <div class="grid gap-4 md:grid-cols-[220px_1fr] md:items-center">
+                                <div class="lumoryx-category-media rounded-lg border border-white/10">
+                                    @if ($category->imageUrl())
+                                        <img src="{{ $category->imageUrl() }}" alt="">
+                                    @else
+                                        <div class="lumoryx-category-media-empty px-4 text-center text-sm text-slate-500">
+                                            <span>Sin imagen asignada</span>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div>
+                                    <label class="lumoryx-label" for="category_image">Imagen de la categoria</label>
+                                    <input class="lumoryx-input mt-2" id="category_image" name="category_image" type="file" accept="image/png,image/jpeg,image/webp">
+                                    <p class="mt-2 text-xs leading-5 text-slate-500">Sube una nueva imagen para reemplazar la actual. JPG, PNG o WEBP, maximo 4 MB.</p>
+                                    @if ($category->image_path)
+                                        <label class="mt-3 flex items-start gap-3 rounded-lg border border-rose-300/20 bg-rose-300/10 p-3 text-sm text-rose-100">
+                                            <input class="mt-1 rounded border-white/10 bg-graphite-950 text-rose-300 focus:ring-rose-300" type="checkbox" name="remove_image" value="1">
+                                            <span>Quitar imagen actual</span>
+                                        </label>
+                                    @endif
+                                    @error('category_image')<p class="mt-2 text-sm text-rose-200">{{ $message }}</p>@enderror
+                                </div>
+                            </div>
                         </div>
                     </div>
 

@@ -18,6 +18,7 @@ class ApplicationCategory extends Model
         'description',
         'icon',
         'accent_color',
+        'image_path',
         'minimum_age',
         'is_open',
         'closed_until',
@@ -50,5 +51,14 @@ class ApplicationCategory extends Model
     public function scopeOrdered(Builder $query): Builder
     {
         return $query->orderBy('sort_order')->orderBy('name');
+    }
+
+    public function imageUrl(): ?string
+    {
+        if (! $this->image_path) {
+            return null;
+        }
+
+        return asset('storage/'.$this->image_path);
     }
 }

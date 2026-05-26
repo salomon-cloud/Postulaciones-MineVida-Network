@@ -13,7 +13,9 @@
 
 <div {{ $attributes->merge(['class' => 'space-y-4']) }}>
     @forelse ($items as $item)
-        @php($classes = $toneClasses[$item['tone'] ?? 'slate'] ?? $toneClasses['slate'])
+        @php
+            $classes = $toneClasses[$item['tone'] ?? 'slate'] ?? $toneClasses['slate'];
+        @endphp
         <article class="relative pl-8">
             @unless ($loop->last)
                 <div class="absolute left-3 top-8 h-[calc(100%+1rem)] w-px bg-white/10"></div>

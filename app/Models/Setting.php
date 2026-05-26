@@ -15,10 +15,10 @@ class Setting extends Model
     public static function defaults(): array
     {
         return [
-            'applications_open' => '1',
-            'minimum_age' => '15',
-            'reapply_cooldown_days' => '14',
-            'require_discord_guild' => '0',
+            'applications_open' => config('community.application_defaults.applications_open', true) ? '1' : '0',
+            'minimum_age' => (string) config('community.application_defaults.minimum_age', 15),
+            'reapply_cooldown_days' => (string) config('community.application_defaults.reapply_cooldown_days', 14),
+            'require_discord_guild' => config('community.application_defaults.require_discord_guild', false) ? '1' : '0',
             'discord_announce_applications_window' => '0',
             'discord_announcement_channel_id' => '',
             'discord_announcement_role_id' => '',

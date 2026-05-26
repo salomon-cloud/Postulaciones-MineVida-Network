@@ -10,8 +10,17 @@
 
     <section class="mt-8 grid gap-5 lg:grid-cols-[.36fr_.64fr]">
         <x-lumoryx.card class="p-6">
+            @if ($category->imageUrl())
+                <div class="lumoryx-category-media mb-5 rounded-lg border border-white/10">
+                    <img src="{{ $category->imageUrl() }}" alt="">
+                </div>
+            @endif
             <div class="flex items-start gap-4">
-                <span class="lumoryx-icon-tile h-14 w-14 text-sm font-black text-amber-100">{{ $category->icon ?: str($category->name)->substr(0, 2)->upper() }}</span>
+                @if ($category->imageUrl())
+                    <span class="lumoryx-icon-tile h-14 w-14 text-sm font-black text-amber-100">{{ $category->icon ?: str($category->name)->substr(0, 2)->upper() }}</span>
+                @else
+                    <span class="lumoryx-icon-tile h-14 w-14 text-sm font-black text-amber-100">{{ $category->icon ?: str($category->name)->substr(0, 2)->upper() }}</span>
+                @endif
                 <div class="min-w-0">
                     <h2 class="text-2xl font-black text-white">{{ $category->name }}</h2>
                     <p class="mt-2 text-sm leading-6 text-slate-400">{{ $category->summary }}</p>

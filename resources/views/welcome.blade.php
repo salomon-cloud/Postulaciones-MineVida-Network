@@ -1,12 +1,13 @@
 @php
+    $brandName = config('app.name', 'MineVida Network');
     $serverIp = config('community.server_ip', 'play.minevida.net');
     $serverVersion = config('community.server_version', 'Java 1.20+');
-    $discordWidgetId = config('community.discord_widget_id', '1422483289767153686');
-    $discordWidgetUrl = 'https://discord.com/widget?id='.$discordWidgetId.'&theme=dark';
+    $discordWidgetId = config('community.discord_widget_id');
+    $discordWidgetUrl = filled($discordWidgetId) ? 'https://discord.com/widget?id='.$discordWidgetId.'&theme=dark' : null;
     $postulationsUrl = auth()->check() ? route('applications.create') : route('login.discord');
 @endphp
 
-<x-layouts.public title="{{ config('app.name', 'MineVida Network') }} | Postulaciones">
+<x-layouts.public title="{{ $brandName }} | Postulaciones">
     <section class="lumoryx-home-hero">
         <div class="lumoryx-page-frame">
             <div
@@ -21,7 +22,7 @@
 
                     <h1 class="mt-7 text-4xl font-black leading-tight text-white sm:text-5xl lg:text-6xl">
                         Postulaciones
-                        <span class="lumoryx-home-title-accent">MineVida Network</span>
+                        <span class="lumoryx-home-title-accent">{{ $brandName }}</span>
                     </h1>
 
                     <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-200">
@@ -50,7 +51,7 @@
                     <div class="flex items-center justify-between gap-4">
                         <div>
                             <p class="text-xs font-black uppercase text-amber-100">Servidor</p>
-                            <p class="mt-2 text-2xl font-black text-white">MineVida Network</p>
+                            <p class="mt-2 text-2xl font-black text-white">{{ $brandName }}</p>
                         </div>
                         <span class="lumoryx-footer-status {{ $applicationsOpen ? 'is-open' : 'is-closed' }}">
                             {{ $applicationsOpen ? 'Abiertas' : 'Cerradas' }}
@@ -109,16 +110,27 @@
                         <span class="lumoryx-footer-social-icon">DC</span>
                     </div>
 
-                    <iframe
-                        class="lumoryx-discord-widget"
-                        src="{{ $discordWidgetUrl }}"
-                        width="350"
-                        height="500"
-                        allowtransparency="true"
-                        frameborder="0"
-                        sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
-                        title="Widget de Discord de MineVida Network"
-                    ></iframe>
+                    @if ($discordWidgetUrl)
+                        <iframe
+                            class="lumoryx-discord-widget"
+                            src="{{ $discordWidgetUrl }}"
+                            width="350"
+                            height="500"
+                            allowtransparency="true"
+                            frameborder="0"
+                            sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+                            title="Widget de Discord de {{ $brandName }}"
+                        ></iframe>
+                    @else
+                        <div class="lumoryx-discord-widget lumoryx-discord-widget-empty">
+                            <span class="lumoryx-footer-social-icon">DC</span>
+                            <h3 class="mt-4 text-2xl font-black text-white">Discord pendiente</h3>
+                            <p class="mt-2 max-w-sm text-center text-sm leading-6 text-slate-400">
+                                Configura COMMUNITY_DISCORD_WIDGET_ID para mostrar el widget publico del servidor.
+                            </p>
+                            <a class="lumoryx-button-primary mt-5" href="{{ route('login.discord') }}">Iniciar sesion</a>
+                        </div>
+                    @endif
                 </section>
             </div>
         </div>
