@@ -21,7 +21,6 @@
         $discordLink = $socialLinks->first(fn ($link) => str($link['label'] ?? '')->lower()->contains('discord'));
         $discordUrl = $discordLink['url'] ?? '#discord';
         $postulationsUrl = auth()->check() ? route('applications.create') : route('login.discord');
-        $myApplicationsUrl = auth()->check() ? route('applications.index') : route('login.discord');
         $panelUrl = auth()->check() ? route('dashboard') : route('login.discord');
 
         $applicationsOpen = true;
@@ -46,20 +45,6 @@
             ['label' => 'Discord', 'href' => '#discord', 'icon' => 'DC'],
             ['label' => 'Panel', 'href' => $panelUrl, 'icon' => 'PA'],
         ];
-
-        $applicationLinks = [
-            ['label' => 'Realizar postulacion', 'href' => $postulationsUrl, 'icon' => 'RP'],
-            ['label' => 'Estado de mi postulacion', 'href' => $myApplicationsUrl, 'icon' => 'ES'],
-            ['label' => 'Categorias disponibles', 'href' => $postulationsUrl, 'icon' => 'CA'],
-            ['label' => 'Comunidad Discord', 'href' => '#discord', 'icon' => 'DC'],
-        ];
-
-        $processSteps = [
-            ['title' => 'Envia tu solicitud', 'text' => 'Completa el formulario con calma.', 'icon' => '1'],
-            ['title' => 'Revision del staff', 'text' => 'El equipo revisa tus respuestas.', 'icon' => '2'],
-            ['title' => 'Entrevista', 'text' => 'Te contactaremos si avanzas.', 'icon' => '3'],
-            ['title' => 'Resultado final', 'text' => 'Recibiras la decision del equipo.', 'icon' => '4'],
-        ];
     @endphp
     <div
         class="lumoryx-public-bg min-h-screen overflow-x-hidden"
@@ -71,6 +56,7 @@
                 <x-lumoryx.navbar>
                     <a class="lumoryx-public-nav-link lumoryx-public-nav-link-active" href="{{ route('home') }}">Inicio</a>
                     <a class="lumoryx-public-nav-link" href="{{ route('applications.create') }}">Postulaciones</a>
+                    <a class="lumoryx-public-nav-link" href="#reglas">Reglas</a>
                     <a class="lumoryx-public-nav-link" href="#discord">Discord</a>
                 </x-lumoryx.navbar>
                 @auth
@@ -95,7 +81,7 @@
                             Comunidad, postulaciones y soporte conectados en un solo lugar. Entra al servidor, revisa tu proceso y mantente cerca del equipo.
                         </p>
 
-                        <div class="mt-6 grid gap-3">
+                        <div class="mt-6 grid gap-3 sm:max-w-sm">
                             <div class="lumoryx-footer-action-card">
                                 <span class="lumoryx-footer-action-icon">IP</span>
                                 <div class="min-w-0">
@@ -105,22 +91,12 @@
                                 <button class="lumoryx-footer-copy" type="button" data-copy-text="{{ $serverIp }}">Copiar</button>
                             </div>
 
-                            <a class="lumoryx-footer-action-card" href="{{ $discordUrl }}" target="_blank" rel="noopener noreferrer">
-                                <span class="lumoryx-footer-action-icon">DC</span>
-                                <span class="min-w-0">
-                                    <span class="block text-sm font-black text-white">Discord oficial</span>
-                                    <span class="block truncate text-xs text-slate-400">Unete a nuestra comunidad</span>
+                            <div class="lumoryx-footer-status-line">
+                                <span class="lumoryx-footer-status {{ $applicationsOpen ? 'is-open' : 'is-closed' }}">
+                                    {{ $applicationsOpen ? 'Postulaciones abiertas' : 'Postulaciones cerradas' }}
                                 </span>
-                                <span class="lumoryx-footer-mini-button">Unirse</span>
-                            </a>
-                        </div>
-
-                        <div class="lumoryx-footer-social-row">
-                            @foreach ($socialLinks as $link)
-                                <a class="lumoryx-footer-social" href="{{ $link['url'] }}" target="_blank" rel="noopener noreferrer">
-                                    {{ $link['abbr'] }}
-                                </a>
-                            @endforeach
+                                <span class="lumoryx-footer-chip">{{ $serverVersion }}</span>
+                            </div>
                         </div>
                     </section>
 
@@ -136,17 +112,22 @@
                         </div>
                     </nav>
 
-                    <nav class="lumoryx-footer-column" aria-label="Accesos de postulaciones">
-                        <h2 class="lumoryx-footer-heading">Postulaciones</h2>
-                        <div class="lumoryx-footer-link-list">
-                            @foreach ($applicationLinks as $link)
-                                <a class="lumoryx-footer-list-link" href="{{ $link['href'] }}">
-                                    <span class="lumoryx-footer-list-icon">{{ $link['icon'] }}</span>
-                                    <span>{{ $link['label'] }}</span>
+                    <section class="lumoryx-footer-column" aria-label="Redes sociales y comunidad">
+                        <h2 class="lumoryx-footer-heading">Comunidad</h2>
+                        <div class="lumoryx-footer-social-list">
+                            @forelse ($socialLinks as $link)
+                                <a class="lumoryx-footer-social-link" href="{{ $link['url'] }}" target="_blank" rel="noopener noreferrer">
+                                    <span class="lumoryx-footer-social">{{ $link['abbr'] }}</span>
+                                    <span class="min-w-0">
+                                        <span class="block truncate text-sm font-black text-white">{{ $link['label'] }}</span>
+                                        <span class="block truncate text-xs text-slate-500">{{ $link['description'] }}</span>
+                                    </span>
                                 </a>
-                            @endforeach
+                            @empty
+                                <div class="lumoryx-footer-empty">Configura las redes sociales desde el archivo .env.</div>
+                            @endforelse
                         </div>
-                    </nav>
+                    </section>
 
                     <section class="lumoryx-footer-insights">
                         <div class="lumoryx-footer-panel lumoryx-footer-accepted-panel">
@@ -185,27 +166,12 @@
                     </section>
                 </div>
 
-                <section class="lumoryx-footer-process" aria-label="Proceso de postulacion">
-                    <h2 class="lumoryx-footer-heading">Proceso de postulacion</h2>
-                    <div class="lumoryx-footer-process-grid">
-                        @foreach ($processSteps as $step)
-                            <article class="lumoryx-footer-process-step">
-                                <span class="lumoryx-footer-process-icon">{{ $step['icon'] }}</span>
-                                <div>
-                                    <p class="font-black text-white">{{ $step['title'] }}</p>
-                                    <p class="mt-1 text-xs leading-5 text-slate-500">{{ $step['text'] }}</p>
-                                </div>
-                            </article>
-                        @endforeach
-                    </div>
-                </section>
-
                 <div class="lumoryx-footer-bottom">
                     <p>&copy; {{ date('Y') }} {{ config('app.name', 'MineVida Network') }}. Todos los derechos reservados.</p>
                     <div class="flex flex-wrap items-center gap-3 sm:justify-end">
-                        <span>{{ $serverVersion }}</span>
+                        <span>Sistema de postulaciones</span>
                         <span class="hidden h-1 w-1 rounded-full bg-slate-600 sm:block"></span>
-                        <span>{{ $applicationsOpen ? 'Postulaciones abiertas' : 'Postulaciones cerradas' }}</span>
+                        <span>Conectado con Discord</span>
                     </div>
                 </div>
             </div>

@@ -511,8 +511,8 @@
 
     .lumoryx-category-media {
         position: relative;
-        height: 8.75rem;
-        min-height: 8.75rem;
+        height: clamp(9rem, 16vw, 11.5rem);
+        min-height: 9rem;
         overflow: hidden;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         background:
@@ -524,9 +524,8 @@
         display: block;
         height: 100%;
         width: 100%;
-        object-fit: contain;
+        object-fit: cover;
         object-position: center;
-        padding: 0.75rem;
         transition: transform 300ms ease, filter 300ms ease;
     }
 
@@ -541,7 +540,7 @@
         position: absolute;
         inset: 0;
         background:
-            linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.5)),
+            linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.62)),
             radial-gradient(circle at 0% 0%, rgba(250, 204, 21, 0.12), transparent 34%);
         pointer-events: none;
     }
@@ -587,7 +586,7 @@
     }
 
     .lumoryx-admin-category-card .lumoryx-category-media {
-        height: 10rem;
+        height: clamp(10rem, 18vw, 13rem);
         min-height: 10rem;
     }
 
@@ -597,8 +596,8 @@
         }
 
         .lumoryx-category-media {
-            height: 8rem;
-            min-height: 8rem;
+            height: 9rem;
+            min-height: 9rem;
         }
 
         .lumoryx-admin-category-card {
@@ -713,9 +712,9 @@
         position: absolute;
         inset: 0;
         background:
-            radial-gradient(circle at 22% 24%, rgba(250, 204, 21, 0.12), transparent 28%),
-            radial-gradient(circle at 78% 34%, rgba(88, 101, 242, 0.14), transparent 30%),
-            linear-gradient(90deg, rgba(5, 5, 6, 0.18), rgba(5, 5, 6, 0.5));
+            radial-gradient(circle at 18% 20%, rgba(250, 204, 21, 0.15), transparent 28%),
+            radial-gradient(circle at 78% 30%, rgba(88, 101, 242, 0.16), transparent 30%),
+            linear-gradient(90deg, rgba(5, 5, 6, 0.12), rgba(5, 5, 6, 0.58));
         pointer-events: none;
     }
 
@@ -756,11 +755,26 @@
         backdrop-filter: blur(12px);
     }
 
+    a.lumoryx-home-secondary-action {
+        @apply no-underline;
+    }
+
+    .lumoryx-home-trust-row {
+        @apply mt-7 flex flex-wrap gap-2 text-xs font-black uppercase text-slate-300;
+    }
+
+    .lumoryx-home-trust-row span {
+        @apply rounded-full border border-white/10 px-3 py-2;
+        background: rgba(5, 5, 6, 0.32);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+    }
+
     .lumoryx-home-console {
         @apply relative min-w-0 rounded-lg border border-white/10 p-5 backdrop-blur-md sm:p-6;
         background:
-            linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02)),
-            radial-gradient(circle at 20% 0%, rgba(250, 204, 21, 0.1), transparent 32%);
+            linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.018)),
+            radial-gradient(circle at 20% 0%, rgba(250, 204, 21, 0.12), transparent 32%),
+            rgba(12, 12, 15, 0.44);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 24px 52px rgba(0, 0, 0, 0.24);
     }
 
@@ -771,6 +785,19 @@
 
     .lumoryx-home-console-row strong {
         @apply text-right font-black text-white;
+    }
+
+    .lumoryx-home-console-note {
+        @apply mt-4 flex gap-3 rounded-md border border-amber-200/15 px-4 py-3 text-sm leading-6 text-slate-300;
+        background:
+            linear-gradient(135deg, rgba(250, 204, 21, 0.08), transparent 54%),
+            rgba(5, 5, 6, 0.22);
+    }
+
+    .lumoryx-home-console-note span {
+        @apply grid h-7 w-7 shrink-0 place-items-center rounded-md text-xs font-black text-amber-100;
+        background: rgba(250, 204, 21, 0.08);
+        border: 1px solid rgba(250, 204, 21, 0.14);
     }
 
     .lumoryx-discord-widget-card {
@@ -798,6 +825,79 @@
 
     .lumoryx-home-section-kicker {
         @apply text-xs font-black uppercase text-amber-100;
+    }
+
+    .lumoryx-home-section-head {
+        @apply flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between;
+    }
+
+    .lumoryx-home-process-section {
+        @apply py-8 sm:py-10;
+        background:
+            linear-gradient(180deg, rgba(5, 5, 6, 0.5), rgba(5, 5, 6, 0.44)),
+            radial-gradient(circle at 70% 40%, rgba(250, 204, 21, 0.07), transparent 30%);
+    }
+
+    .lumoryx-home-process-panel {
+        @apply rounded-lg border border-white/10 p-5 backdrop-blur-md sm:p-6;
+        background:
+            linear-gradient(135deg, rgba(250, 204, 21, 0.055), transparent 42%),
+            linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.018)),
+            rgba(8, 8, 10, 0.42);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.055), 0 22px 48px rgba(0, 0, 0, 0.18);
+    }
+
+    .lumoryx-home-process-grid {
+        @apply mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4;
+    }
+
+    .lumoryx-home-process-card {
+        @apply flex min-w-0 gap-4 rounded-md border border-white/10 p-4 transition hover:border-amber-200/25 hover:bg-white/[.045];
+        background: rgba(255, 255, 255, 0.024);
+    }
+
+    .lumoryx-home-process-icon {
+        @apply grid h-11 w-11 shrink-0 place-items-center rounded-md text-xs font-black text-amber-100;
+        background: rgba(250, 204, 21, 0.075);
+        border: 1px solid rgba(250, 204, 21, 0.15);
+    }
+
+    .lumoryx-home-process-card h3 {
+        @apply text-base font-black text-white;
+    }
+
+    .lumoryx-home-process-card p {
+        @apply mt-2 text-sm leading-6 text-slate-400;
+    }
+
+    .lumoryx-home-rules-section {
+        @apply border-y border-white/10 py-10 backdrop-blur-md sm:py-12;
+        background:
+            linear-gradient(180deg, rgba(5, 5, 6, 0.52), rgba(5, 5, 6, 0.42)),
+            radial-gradient(circle at 20% 0%, rgba(250, 204, 21, 0.09), transparent 34%),
+            radial-gradient(circle at 90% 80%, rgba(86, 189, 22, 0.06), transparent 30%);
+    }
+
+    .lumoryx-home-rule-card {
+        @apply min-w-0 rounded-lg border border-white/10 p-5 transition hover:border-amber-200/25 hover:bg-white/[.05];
+        background:
+            linear-gradient(135deg, rgba(250, 204, 21, 0.055), transparent 54%),
+            rgba(8, 8, 10, 0.42);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.045), 0 18px 38px rgba(0, 0, 0, 0.18);
+    }
+
+    .lumoryx-home-rule-icon {
+        @apply grid h-11 w-11 place-items-center rounded-md text-xs font-black text-amber-100;
+        background: rgba(250, 204, 21, 0.08);
+        border: 1px solid rgba(250, 204, 21, 0.16);
+    }
+
+    .lumoryx-home-rule-card h3 {
+        @apply mt-4 text-lg font-black text-white;
+    }
+
+    .lumoryx-home-rule-card p {
+        @apply mt-2 text-sm leading-6 text-slate-400;
     }
 
     .lumoryx-home-requirement {
@@ -874,7 +974,7 @@
 
     @media (min-width: 1024px) {
         .lumoryx-footer-grid {
-            grid-template-columns: minmax(0, 1.1fr) minmax(10rem, 0.55fr) minmax(13rem, 0.7fr) minmax(0, 1.45fr);
+            grid-template-columns: minmax(0, 1.15fr) minmax(10rem, 0.55fr) minmax(13rem, 0.78fr) minmax(0, 1.25fr);
         }
     }
 
@@ -926,6 +1026,17 @@
     .lumoryx-footer-social {
         @apply grid h-9 w-9 place-items-center rounded-md border border-white/10 text-[11px] font-black text-amber-100 transition hover:border-amber-200/30 hover:bg-amber-200/10 hover:text-white;
         background: rgba(255, 255, 255, 0.025);
+    }
+
+    .lumoryx-footer-social-list {
+        @apply mt-4 grid gap-2;
+    }
+
+    .lumoryx-footer-social-link {
+        @apply flex min-w-0 items-center gap-3 rounded-lg border border-white/10 px-3 py-3 transition hover:border-amber-200/25 hover:bg-white/[.045];
+        background:
+            linear-gradient(135deg, rgba(250, 204, 21, 0.045), transparent 55%),
+            rgba(255, 255, 255, 0.018);
     }
 
     .lumoryx-footer-link-list {
@@ -1036,6 +1147,10 @@
         background: rgba(255, 255, 255, 0.035);
     }
 
+    .lumoryx-footer-status-line {
+        @apply flex flex-wrap items-center gap-2;
+    }
+
     .lumoryx-footer-status {
         @apply inline-flex items-center gap-2 rounded-full border px-3 py-2 text-xs font-black;
         background: rgba(255, 255, 255, 0.035);
@@ -1065,28 +1180,6 @@
     .lumoryx-footer-social-icon {
         @apply grid h-7 w-7 shrink-0 place-items-center rounded-full text-[10px] font-black text-amber-100;
         background: rgba(250, 204, 21, 0.09);
-        border: 1px solid rgba(250, 204, 21, 0.16);
-    }
-
-    .lumoryx-footer-process {
-        @apply mt-8 rounded-lg border border-white/10 p-4;
-        background:
-            linear-gradient(90deg, rgba(250, 204, 21, 0.06), rgba(255, 255, 255, 0.02), rgba(86, 189, 22, 0.04)),
-            rgba(10, 10, 12, 0.42);
-    }
-
-    .lumoryx-footer-process-grid {
-        @apply mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4;
-    }
-
-    .lumoryx-footer-process-step {
-        @apply flex min-w-0 gap-3 rounded-md border border-white/10 p-3;
-        background: rgba(255, 255, 255, 0.02);
-    }
-
-    .lumoryx-footer-process-icon {
-        @apply grid h-9 w-9 shrink-0 place-items-center rounded-md text-xs font-black text-amber-100;
-        background: rgba(250, 204, 21, 0.08);
         border: 1px solid rgba(250, 204, 21, 0.16);
     }
 

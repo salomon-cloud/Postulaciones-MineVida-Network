@@ -9,7 +9,24 @@
             <h1 class="lumoryx-title truncate">{{ $application->minecraft_nick }}</h1>
             <p class="mt-2 truncate text-sm text-slate-400">{{ $application->user->discord_username }} - {{ $application->created_at->format('Y-m-d H:i') }}</p>
         </div>
-        <x-status-badge :status="$application->status" />
+        <div class="flex shrink-0 flex-wrap items-center gap-2">
+            <x-status-badge :status="$application->status" />
+            @can('delete', $application)
+                <form
+                    method="POST"
+                    action="{{ route('admin.applications.destroy', $application) }}"
+                    data-confirm
+                    data-confirm-title="Eliminar postulacion"
+                    data-confirm-message="La postulacion de {{ $application->minecraft_nick }} se ocultara del panel y del usuario. Esta accion conserva el registro interno."
+                    data-confirm-confirm-text="Eliminar"
+                    data-confirm-tone="danger"
+                >
+                    @csrf
+                    @method('DELETE')
+                    <button class="lumoryx-button-danger px-3 py-2" type="submit">Eliminar</button>
+                </form>
+            @endcan
+        </div>
     </div>
 
     <div class="mt-6">

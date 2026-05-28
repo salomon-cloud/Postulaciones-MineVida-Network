@@ -305,6 +305,49 @@ class AdminApplicationController extends Controller
         return back()->with('success', 'Nota interna guardada.');
     }
 
+    public function destroy(
+        Request $request,
+        Application $application,
+        DiscordSystemLogService $systemLogs,
+    ): RedirectResponse {
+        $this->authorize('delete', $application);
+
+        $application->load('user');
+
+        DB::transaction(function () use ($request, $application) {
+            $application->logs()->create([
+                'admin_id' => $request->user()->id,
+                'action' => 'application_deleted',
+                'old_status' => $application->status->value,
+                'new_status' => $application->status->value,
+                'description' => 'Postulacion eliminada del panel administrativo.',
+                'ip_address' => $request->ip(),
+                'user_agent' => str((string) $request->userAgent())->limit(512)->toString(),
+            ]);
+
+            $application->delete();
+        });
+
+        $systemLogs->queue(
+            'applications',
+            'Postulacion eliminada',
+            'Un administrador elimino una postulacion del panel.',
+            [
+                'Usuario' => ($application->user?->discord_username ?? 'Sin usuario').' ('.$application->user?->discord_id.')',
+                'Minecraft' => $application->minecraft_nick,
+                'Categoria' => $application->typeLabel(),
+                'Estado anterior' => $application->status->label(),
+            ],
+            'danger',
+            $request->user(),
+            $request,
+        );
+
+        return redirect()
+            ->route('admin.applications.index')
+            ->with('success', 'Postulacion eliminada correctamente.');
+    }
+
     private function validDateFilter(Request $request, string $key): bool
     {
         return $request->filled($key) && preg_match('/^\d{4}-\d{2}-\d{2}$/', (string) $request->input($key));

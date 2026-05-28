@@ -124,6 +124,19 @@
                                             <input type="hidden" name="confirmed" value="1">
                                             <button class="lumoryx-button-danger px-3 py-1.5" type="submit">Rechazar</button>
                                         </form>
+                                        <form
+                                            method="POST"
+                                            action="{{ route('admin.applications.destroy', $application) }}"
+                                            data-confirm
+                                            data-confirm-title="Eliminar postulacion"
+                                            data-confirm-message="La postulacion de {{ $application->minecraft_nick }} se ocultara del panel y del usuario. Esta accion conserva el registro interno."
+                                            data-confirm-confirm-text="Eliminar"
+                                            data-confirm-tone="danger"
+                                        >
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="lumoryx-button-danger px-3 py-1.5" type="submit">Eliminar</button>
+                                        </form>
                                     @endcan
                                 </div>
                             </td>

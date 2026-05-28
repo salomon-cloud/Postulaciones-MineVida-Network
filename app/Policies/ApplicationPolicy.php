@@ -40,6 +40,11 @@ class ApplicationPolicy
         return $user->isAtLeast(UserRole::Admin);
     }
 
+    public function delete(User $user, Application $application): bool
+    {
+        return $user->isAtLeast(UserRole::Admin);
+    }
+
     public function manageSettings(User $user): bool
     {
         return $user->isAtLeast(UserRole::Owner);

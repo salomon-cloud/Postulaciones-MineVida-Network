@@ -149,6 +149,15 @@
                             </div>
 
                             <div class="flex flex-col gap-2 sm:flex-row">
+                                @if ($category->applications_count)
+                                    <a
+                                        class="lumoryx-button-secondary w-full px-3 py-2"
+                                        href="{{ route('admin.applications.index', ['type' => $category->slug]) }}"
+                                    >
+                                        Ver postulaciones
+                                    </a>
+                                @endif
+
                                 @if ($isArchived)
                                     <form method="POST" action="{{ route('admin.categories.restore', $category->id) }}">
                                         @csrf

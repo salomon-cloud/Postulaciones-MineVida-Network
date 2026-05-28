@@ -27,7 +27,7 @@
         <div class="lg:col-span-2 rounded-lg border border-white/10 bg-white/[.025] p-4">
             <label class="lumoryx-label" for="category_image">Imagen de la categoria</label>
             <input class="lumoryx-input mt-2" id="category_image" name="category_image" type="file" accept="image/png,image/jpeg,image/webp">
-            <p class="mt-2 text-xs leading-5 text-slate-500">Opcional. Se recomienda una imagen horizontal tipo banner. Formatos: JPG, PNG o WEBP, maximo 4 MB.</p>
+            <p class="mt-2 text-xs leading-5 text-slate-500">Opcional. Se recomienda una imagen horizontal 1200x520 o similar; el sistema la recorta como portada para que todas las tarjetas mantengan el mismo tamano. Formatos: JPG, PNG o WEBP, maximo 4 MB.</p>
             @error('category_image')<p class="mt-2 text-sm text-rose-200">{{ $message }}</p>@enderror
         </div>
         <x-lumoryx.input name="minimum_age" label="Edad minima propia" type="number" min="10" max="80" value="{{ old('minimum_age') }}" placeholder="Opcional" />

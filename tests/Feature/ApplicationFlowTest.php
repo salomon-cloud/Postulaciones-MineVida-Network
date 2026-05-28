@@ -247,6 +247,23 @@ class ApplicationFlowTest extends TestCase
         ]);
     }
 
+    public function test_admin_can_delete_application(): void
+    {
+        $admin = User::factory()->admin()->create();
+        $application = $this->applicationFor(User::factory()->create());
+
+        $this->actingAs($admin)
+            ->delete(route('admin.applications.destroy', $application))
+            ->assertRedirect(route('admin.applications.index'));
+
+        $this->assertSoftDeleted('applications', ['id' => $application->id]);
+        $this->assertDatabaseHas('application_logs', [
+            'application_id' => $application->id,
+            'admin_id' => $admin->id,
+            'action' => 'application_deleted',
+        ]);
+    }
+
     public function test_user_cannot_create_duplicate_active_application_of_same_type(): void
     {
         Queue::fake();

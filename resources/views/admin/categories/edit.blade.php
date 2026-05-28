@@ -108,7 +108,7 @@
                                 <div>
                                     <label class="lumoryx-label" for="category_image">Imagen de la categoria</label>
                                     <input class="lumoryx-input mt-2" id="category_image" name="category_image" type="file" accept="image/png,image/jpeg,image/webp">
-                                    <p class="mt-2 text-xs leading-5 text-slate-500">Sube una nueva imagen para reemplazar la actual. JPG, PNG o WEBP, maximo 4 MB.</p>
+                                    <p class="mt-2 text-xs leading-5 text-slate-500">Sube una nueva imagen para reemplazar la actual. Recomendado 1200x520 o similar; se recorta como portada para mantener todas las tarjetas parejas. JPG, PNG o WEBP, maximo 4 MB.</p>
                                     @if ($category->image_path)
                                         <label class="mt-3 flex items-start gap-3 rounded-lg border border-rose-300/20 bg-rose-300/10 p-3 text-sm text-rose-100">
                                             <input class="mt-1 rounded border-white/10 bg-graphite-950 text-rose-300 focus:ring-rose-300" type="checkbox" name="remove_image" value="1">

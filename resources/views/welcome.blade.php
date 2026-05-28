@@ -5,13 +5,25 @@
     $discordWidgetId = config('community.discord_widget_id');
     $discordWidgetUrl = filled($discordWidgetId) ? 'https://discord.com/widget?id='.$discordWidgetId.'&theme=dark' : null;
     $postulationsUrl = auth()->check() ? route('applications.create') : route('login.discord');
+    $rules = [
+        ['icon' => '01', 'title' => 'Lee cada pregunta', 'body' => 'Responde con calma y evita enviar informacion incompleta.'],
+        ['icon' => '02', 'title' => 'Se honesto', 'body' => 'El equipo revisa experiencia, actitud y disponibilidad real.'],
+        ['icon' => '03', 'title' => 'No insistas por DM', 'body' => 'Cualquier avance llegara al panel y por notificacion de Discord.'],
+        ['icon' => '04', 'title' => 'Respeta el proceso', 'body' => 'Una mala conducta puede cancelar o pausar tu postulacion.'],
+    ];
+    $process = [
+        ['icon' => 'DS', 'title' => 'Acceso con Discord', 'body' => 'Tu identidad queda vinculada para recibir avisos y seguir el proceso.'],
+        ['icon' => 'FM', 'title' => 'Formulario por fases', 'body' => 'Completa datos, experiencia y preguntas sin sentirlo eterno.'],
+        ['icon' => 'RV', 'title' => 'Revision del equipo', 'body' => 'El staff revisa respuestas, historial y disponibilidad.'],
+        ['icon' => 'RS', 'title' => 'Resultado claro', 'body' => 'Veras el estado final en tu panel y por Discord cuando aplique.'],
+    ];
 @endphp
 
 <x-layouts.public title="{{ $brandName }} | Postulaciones">
     <section class="lumoryx-home-hero">
         <div class="lumoryx-page-frame">
             <div
-                class="lumoryx-home-hero-layout grid items-start gap-10 pt-7 pb-10 lg:grid-cols-[1.08fr_.92fr] lg:pt-9 lg:pb-14"
+                class="lumoryx-home-hero-layout grid items-start gap-10 pt-10 pb-12 lg:grid-cols-[1.05fr_.95fr] lg:pt-14 lg:pb-16"
                 style="min-height: 0 !important; align-items: flex-start !important;"
             >
                 <div class="max-w-3xl">
@@ -26,7 +38,7 @@
                     </h1>
 
                     <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-200">
-                        Forma parte del equipo que mantiene viva la comunidad. Elige el area correcta y envia tu solicitud con calma.
+                        Un portal ordenado para entrar al equipo de {{ $brandName }}. Revisa las reglas, elige el area correcta y envia tu solicitud con respuestas claras.
                     </p>
 
                     <div class="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -44,6 +56,16 @@
                             <span class="font-black text-white">{{ $serverIp }}</span>
                             <span class="text-amber-100">Copiar</span>
                         </button>
+                        <a class="lumoryx-home-secondary-action" href="#reglas">
+                            <span class="text-amber-100">Reglas</span>
+                            <span class="font-black text-white">Ver antes de postular</span>
+                        </a>
+                    </div>
+
+                    <div class="lumoryx-home-trust-row">
+                        <span>Revision por fases</span>
+                        <span>Panel de seguimiento</span>
+                        <span>Notificaciones Discord</span>
                     </div>
                 </div>
 
@@ -71,12 +93,71 @@
                             <span>Revision</span>
                             <strong>Por etapas</strong>
                         </div>
+                        <div class="lumoryx-home-console-row">
+                            <span>Reglas</span>
+                            <strong>Obligatorias</strong>
+                        </div>
                     </div>
 
                     <div class="mt-7 border-t border-white/10 pt-5">
-                        <p class="text-sm leading-6 text-slate-300">Tu solicitud queda registrada en el panel y el equipo puede actualizar el estado cuando avance el proceso.</p>
+                        <p class="text-sm leading-6 text-slate-300">Tu solicitud queda registrada en el panel. El equipo puede moverla a revision, entrevista o resultado final sin perder historial.</p>
+                    </div>
+
+                    <div class="lumoryx-home-console-note">
+                        <span>!</span>
+                        <p>Las postulaciones se revisan con calma. Envia una sola solicitud por area y espera actualizaciones oficiales.</p>
                     </div>
                 </aside>
+            </div>
+        </div>
+    </section>
+
+    <section class="lumoryx-home-process-section">
+        <div class="lumoryx-page-frame">
+            <div class="lumoryx-home-process-panel">
+                <div class="lumoryx-home-section-head">
+                    <div>
+                        <p class="lumoryx-home-section-kicker">Proceso guiado</p>
+                        <h2 class="mt-2 text-3xl font-black text-white sm:text-4xl">Todo queda ordenado desde el primer envio</h2>
+                    </div>
+                    <p class="max-w-xl text-sm leading-6 text-slate-400">
+                        El sistema evita formularios confusos y mantiene al usuario informado sin saturar al equipo.
+                    </p>
+                </div>
+
+                <div class="lumoryx-home-process-grid">
+                    @foreach ($process as $item)
+                        <article class="lumoryx-home-process-card">
+                            <span class="lumoryx-home-process-icon">{{ $item['icon'] }}</span>
+                            <div>
+                                <h3>{{ $item['title'] }}</h3>
+                                <p>{{ $item['body'] }}</p>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reglas" class="lumoryx-home-rules-section">
+        <div class="lumoryx-page-frame">
+            <div class="lumoryx-home-section-head">
+                <div>
+                    <p class="lumoryx-home-section-kicker">Reglas de postulacion</p>
+                    <h2 class="mt-2 text-3xl font-black text-white sm:text-4xl">Antes de enviar tu solicitud</h2>
+                </div>
+                <x-lumoryx.button href="{{ $postulationsUrl }}" variant="secondary">Ver postulaciones</x-lumoryx.button>
+            </div>
+
+            <div class="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                @foreach ($rules as $rule)
+                    <article class="lumoryx-home-rule-card">
+                        <span class="lumoryx-home-rule-icon">{{ $rule['icon'] }}</span>
+                        <h3>{{ $rule['title'] }}</h3>
+                        <p>{{ $rule['body'] }}</p>
+                    </article>
+                @endforeach
             </div>
         </div>
     </section>

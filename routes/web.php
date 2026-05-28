@@ -96,6 +96,9 @@ Route::prefix('admin')
         Route::post('/applications/{application}/notes', [AdminApplicationController::class, 'storeNote'])
             ->middleware('throttle:30,1')
             ->name('applications.notes');
+        Route::delete('/applications/{application}', [AdminApplicationController::class, 'destroy'])
+            ->middleware(['role:admin', 'throttle:20,1'])
+            ->name('applications.destroy');
         Route::get('/settings', [SettingsController::class, 'edit'])
             ->middleware('role:owner')
             ->name('settings.edit');
