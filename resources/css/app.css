@@ -511,8 +511,8 @@
 
     .lumoryx-category-media {
         position: relative;
-        height: clamp(9rem, 16vw, 11.5rem);
-        min-height: 9rem;
+        height: clamp(9.5rem, 16vw, 12rem);
+        min-height: 9.5rem;
         overflow: hidden;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         background:
@@ -524,8 +524,9 @@
         display: block;
         height: 100%;
         width: 100%;
-        object-fit: cover;
+        object-fit: contain;
         object-position: center;
+        padding: 0.65rem;
         transition: transform 300ms ease, filter 300ms ease;
     }
 
@@ -540,8 +541,8 @@
         position: absolute;
         inset: 0;
         background:
-            linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.62)),
-            radial-gradient(circle at 0% 0%, rgba(250, 204, 21, 0.12), transparent 34%);
+            linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.42)),
+            radial-gradient(circle at 0% 0%, rgba(250, 204, 21, 0.11), transparent 34%);
         pointer-events: none;
     }
 
@@ -586,7 +587,7 @@
     }
 
     .lumoryx-admin-category-card .lumoryx-category-media {
-        height: clamp(10rem, 18vw, 13rem);
+        height: clamp(10rem, 18vw, 13.5rem);
         min-height: 10rem;
     }
 
@@ -596,8 +597,8 @@
         }
 
         .lumoryx-category-media {
-            height: 9rem;
-            min-height: 9rem;
+            height: 9.5rem;
+            min-height: 9.5rem;
         }
 
         .lumoryx-admin-category-card {
