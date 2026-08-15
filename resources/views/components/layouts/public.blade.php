@@ -1,3 +1,5 @@
+@props(['compact' => false])
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -19,7 +21,7 @@
             ->filter(fn ($link) => filled($link['url'] ?? null))
             ->values();
         $discordLink = $socialLinks->first(fn ($link) => str($link['label'] ?? '')->lower()->contains('discord'));
-        $discordUrl = $discordLink['url'] ?? '#discord';
+        $discordUrl = $discordLink['url'] ?? route('home').'#discord';
         $postulationsUrl = auth()->check() ? route('applications.create') : route('login.discord');
         $panelUrl = auth()->check() ? route('dashboard') : route('login.discord');
 
@@ -28,13 +30,15 @@
 
         try {
             $applicationsOpen = \App\Models\Setting::bool('applications_open', true);
-            $acceptedApplications = \App\Models\Application::query()
-                ->with('user')
-                ->where('status', \App\Enums\ApplicationStatus::Accepted->value)
-                ->latest('reviewed_at')
-                ->latest('updated_at')
-                ->take(3)
-                ->get();
+            if (! $compact) {
+                $acceptedApplications = \App\Models\Application::query()
+                    ->with('user')
+                    ->where('status', \App\Enums\ApplicationStatus::Accepted->value)
+                    ->latest('reviewed_at')
+                    ->latest('updated_at')
+                    ->take(3)
+                    ->get();
+            }
         } catch (\Throwable $exception) {
             report($exception);
         }
@@ -55,14 +59,18 @@
                 <x-lumoryx.brand />
                 <x-lumoryx.navbar>
                     <a class="lumoryx-public-nav-link lumoryx-public-nav-link-active" href="{{ route('home') }}">Inicio</a>
-                    <a class="lumoryx-public-nav-link" href="{{ route('applications.create') }}">Postulaciones</a>
-                    <a class="lumoryx-public-nav-link" href="#reglas">Reglas</a>
-                    <a class="lumoryx-public-nav-link" href="#discord">Discord</a>
+                    <a class="lumoryx-public-nav-link" href="{{ $postulationsUrl }}">Postulaciones</a>
+                    <a class="lumoryx-public-nav-link" href="{{ route('home') }}#reglas">Reglas</a>
+                    <a class="lumoryx-public-nav-link" href="{{ $discordUrl }}">Discord</a>
+                    <a class="lumoryx-public-nav-link" href="{{ $panelUrl }}">Panel</a>
                 </x-lumoryx.navbar>
                 @auth
-                    <x-lumoryx.button class="hidden sm:inline-flex" href="{{ route('dashboard') }}" variant="secondary">Ir al panel</x-lumoryx.button>
+                    <x-lumoryx.button class="lumoryx-public-login-action hidden sm:inline-flex" href="{{ route('dashboard') }}">Ir al panel</x-lumoryx.button>
                 @else
-                    <x-lumoryx.button class="hidden sm:inline-flex" href="{{ route('login.discord') }}" variant="secondary">Iniciar sesion</x-lumoryx.button>
+                    <x-lumoryx.button class="lumoryx-public-login-action hidden sm:inline-flex" href="{{ route('login.discord') }}">
+                        <img class="h-4 w-4" src="{{ asset('images/discord-icon-svgrepo-com.svg') }}" alt="" aria-hidden="true">
+                        <span>Iniciar sesion</span>
+                    </x-lumoryx.button>
                 @endauth
             </div>
         </header>
@@ -72,6 +80,7 @@
             {{ $slot }}
         </main>
 
+        @unless ($compact)
         <footer id="soporte" class="lumoryx-public-footer">
             <div class="lumoryx-page-frame">
                 <div class="lumoryx-footer-grid">
@@ -176,6 +185,7 @@
                 </div>
             </div>
         </footer>
+        @endunless
         <x-lumoryx.confirm-dialog />
     </div>
 </body>

@@ -72,6 +72,10 @@
         border-color: rgba(250, 204, 21, 0.28);
     }
 
+    .lumoryx-public-login-action {
+        @apply min-h-11 gap-2.5 px-5 font-black;
+    }
+
     .lumoryx-public-main {
         padding-top: 5.45rem;
     }
@@ -701,6 +705,205 @@
 
     .lumoryx-public-requirement-title {
         @apply text-sm font-bold leading-5 text-white;
+    }
+
+    .lumoryx-landing {
+        @apply relative flex flex-col overflow-hidden;
+        min-height: calc(100svh - 5.45rem);
+        isolation: isolate;
+    }
+
+    .lumoryx-landing::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background:
+            linear-gradient(180deg, rgba(5, 5, 8, 0.16) 0%, rgba(5, 5, 8, 0.08) 42%, rgba(5, 5, 8, 0.74) 100%),
+            radial-gradient(circle at 50% 28%, rgba(27, 16, 75, 0.18), transparent 38%);
+        pointer-events: none;
+    }
+
+    .lumoryx-landing-body {
+        @apply relative flex flex-1 items-center justify-center py-10 sm:py-12;
+    }
+
+    .lumoryx-landing-content {
+        @apply mx-auto w-full max-w-5xl text-center;
+    }
+
+    .lumoryx-landing-eyebrow {
+        @apply mx-auto inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-[11px] font-black uppercase tracking-[0.12em] text-amber-100 backdrop-blur-md;
+        border-color: rgba(250, 204, 21, 0.28);
+        background: rgba(10, 10, 13, 0.62);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 12px 28px rgba(0, 0, 0, 0.25);
+    }
+
+    .lumoryx-landing-eyebrow svg {
+        @apply h-3.5 w-3.5 fill-current;
+    }
+
+    .lumoryx-landing-title {
+        @apply mt-5 uppercase leading-tight;
+        text-shadow: 0 3px 0 rgba(0, 0, 0, 0.42), 0 16px 30px rgba(0, 0, 0, 0.38);
+    }
+
+    .lumoryx-landing-title span,
+    .lumoryx-landing-title strong {
+        @apply block font-black;
+    }
+
+    .lumoryx-landing-title span {
+        font-size: clamp(2.4rem, 4vw, 3.75rem);
+        color: #fff;
+        letter-spacing: -0.025em;
+    }
+
+    .lumoryx-landing-title strong {
+        @apply mt-2;
+        font-size: clamp(2.25rem, 4.2vw, 3.6rem);
+        letter-spacing: -0.025em;
+        background: linear-gradient(180deg, #fffdf2 0%, #fff1b8 42%, #f8cf55 68%, #e5ac22 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 3px 0 rgba(105, 67, 5, 0.5)) drop-shadow(0 12px 22px rgba(0, 0, 0, 0.34));
+    }
+
+    .lumoryx-landing-lead {
+        @apply mx-auto mt-5 max-w-2xl text-base font-semibold leading-7 text-slate-200 sm:text-lg;
+        text-shadow: 0 3px 14px rgba(0, 0, 0, 0.9);
+    }
+
+    .lumoryx-landing-actions {
+        @apply mx-auto mt-7 flex max-w-2xl flex-col justify-center gap-3 sm:flex-row;
+    }
+
+    .lumoryx-landing-button {
+        @apply inline-flex min-h-14 min-w-0 items-center justify-center gap-3 rounded-lg border px-6 text-sm font-black transition focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2 focus:ring-offset-graphite-950 sm:min-w-[13.5rem];
+    }
+
+    .lumoryx-landing-button svg,
+    .lumoryx-landing-button img {
+        @apply h-6 w-6 shrink-0;
+    }
+
+    .lumoryx-landing-button svg {
+        fill: none;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 1.9;
+    }
+
+    .lumoryx-landing-button-primary {
+        @apply border-amber-100/50 text-graphite-950;
+        background: linear-gradient(180deg, #ffe784 0%, #facc15 52%, #e6ad08 100%);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.48), 0 13px 30px rgba(250, 204, 21, 0.18), 0 12px 25px rgba(0, 0, 0, 0.26);
+    }
+
+    .lumoryx-landing-button-primary:hover {
+        background: linear-gradient(180deg, #fff0a8 0%, #fdd52b 52%, #ebb50b 100%);
+        transform: translateY(-1px);
+    }
+
+    .lumoryx-landing-button-secondary {
+        @apply border-white/20 text-white backdrop-blur-md hover:border-white/35 hover:bg-white/[.09];
+        background: linear-gradient(180deg, rgba(24, 24, 33, 0.82), rgba(10, 10, 16, 0.82));
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 12px 28px rgba(0, 0, 0, 0.28);
+    }
+
+    .lumoryx-landing-button-secondary img {
+        filter: brightness(0) invert(1);
+    }
+
+    .lumoryx-landing-panel-icon {
+        @apply grid h-6 w-6 shrink-0 place-items-center rounded-md bg-white/10 text-xs font-black;
+    }
+
+    .lumoryx-landing-features {
+        @apply mx-auto mt-9 grid max-w-5xl gap-3 text-left md:grid-cols-3;
+    }
+
+    .lumoryx-landing-feature {
+        @apply flex min-w-0 items-center gap-4 rounded-xl border border-white/10 p-5 backdrop-blur-md transition hover:border-amber-200/25 hover:bg-white/[.065];
+        background: linear-gradient(180deg, rgba(13, 13, 18, 0.74), rgba(6, 6, 9, 0.72));
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.055), 0 18px 38px rgba(0, 0, 0, 0.3);
+    }
+
+    .lumoryx-landing-feature-icon {
+        @apply h-12 w-12 shrink-0 text-amber-300;
+        fill: none;
+        stroke: currentColor;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 2.2;
+        filter: drop-shadow(0 8px 16px rgba(250, 204, 21, 0.16));
+    }
+
+    .lumoryx-landing-feature h2 {
+        @apply text-base font-black text-white;
+    }
+
+    .lumoryx-landing-feature p {
+        @apply mt-1.5 text-xs leading-5 text-slate-400 sm:text-sm;
+    }
+
+    .lumoryx-landing-strip {
+        @apply relative border-t border-white/10 py-5 backdrop-blur-xl;
+        background: rgba(5, 5, 8, 0.82);
+        box-shadow: 0 -16px 36px rgba(0, 0, 0, 0.18);
+    }
+
+    .lumoryx-landing-strip-inner {
+        @apply grid gap-4 text-sm font-semibold text-slate-300 sm:grid-cols-2 lg:grid-cols-4 lg:items-center;
+    }
+
+    .lumoryx-landing-strip span,
+    .lumoryx-landing-strip button {
+        @apply flex min-w-0 items-center justify-center gap-3;
+    }
+
+    .lumoryx-landing-strip button {
+        @apply cursor-pointer transition hover:text-amber-100;
+    }
+
+    .lumoryx-landing-strip strong {
+        @apply truncate text-white;
+    }
+
+    .lumoryx-landing-strip i,
+    .lumoryx-landing-strip-icon {
+        @apply text-xl font-normal not-italic text-amber-300;
+    }
+
+    @media (max-width: 767px) {
+        .lumoryx-landing-body {
+            @apply items-start py-8;
+        }
+
+        .lumoryx-landing-title {
+            @apply mt-4;
+        }
+
+        .lumoryx-landing-features {
+            @apply mt-7;
+        }
+    }
+
+    @media (max-width: 639px) {
+        .lumoryx-landing-eyebrow {
+            @apply px-3 py-1.5 text-[10px];
+        }
+
+        .lumoryx-landing-feature {
+            @apply p-4;
+        }
+
+        .lumoryx-landing-strip-inner {
+            @apply grid-cols-1;
+        }
     }
 
     .lumoryx-home-hero {
