@@ -73,7 +73,7 @@
                     <p class="mt-1 text-sm text-slate-400">Revisa las normas y requisitos generales para evitar rechazos innecesarios.</p>
                 </div>
             </div>
-            <x-lumoryx.button class="shrink-0" variant="secondary" href="{{ route('home') }}#requisitos">Ver informacion</x-lumoryx.button>
+            <x-lumoryx.button class="shrink-0" variant="secondary" href="{{ route('rules') }}">Ver informacion</x-lumoryx.button>
         </div>
     </section>
 </x-layouts.user>

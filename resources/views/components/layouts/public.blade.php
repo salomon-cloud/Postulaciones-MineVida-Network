@@ -1,4 +1,10 @@
-@props(['compact' => false])
+@props(['compact' => false, 'description' => null, 'ogImage' => null])
+
+@php
+    $metaTitle = $title ?? config('app.name', 'MineVida Network');
+    $metaDescription = $description ?: 'Sistema de postulaciones de '.config('app.name', 'MineVida Network').'. Revisa las areas disponibles, el proceso de seleccion y postulate para unirte al equipo.';
+    $metaImage = $ogImage ?: asset(config('community.public_background_path', 'images/lumo_fondo.png'));
+@endphp
 
 <!DOCTYPE html>
 <html lang="es">
@@ -6,7 +12,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $title ?? config('app.name', 'MineVida Network') }}</title>
+    <meta name="theme-color" content="#050506">
+    <meta name="description" content="{{ $metaDescription }}">
+    <link rel="icon" type="image/png" href="{{ asset(config('community.logo_path', 'images/MineVidaLogo.png')) }}">
+    <title>{{ $metaTitle }}</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ config('app.name', 'MineVida Network') }}">
+    <meta property="og:title" content="{{ $metaTitle }}">
+    <meta property="og:description" content="{{ $metaDescription }}">
+    <meta property="og:image" content="{{ $metaImage }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:locale" content="es_MX">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $metaTitle }}">
+    <meta name="twitter:description" content="{{ $metaDescription }}">
+    <meta name="twitter:image" content="{{ $metaImage }}">
+
     <script>
         window.lumoryxConfig = @json(['appName' => config('app.name', 'MineVida Network')]);
     </script>
@@ -46,6 +68,7 @@
         $navigationLinks = [
             ['label' => 'Inicio', 'href' => route('home'), 'icon' => 'IN'],
             ['label' => 'Postulaciones', 'href' => $postulationsUrl, 'icon' => 'PO'],
+            ['label' => 'Reglas', 'href' => route('rules'), 'icon' => 'RG'],
             ['label' => 'Discord', 'href' => '#discord', 'icon' => 'DC'],
             ['label' => 'Panel', 'href' => $panelUrl, 'icon' => 'PA'],
         ];
@@ -54,24 +77,79 @@
         class="lumoryx-public-bg min-h-screen overflow-x-hidden"
         style="--lumoryx-public-bg-image: url('{{ asset($publicBackground) }}');"
     >
-        <header class="lumoryx-public-header">
-            <div class="lumoryx-page-frame flex items-center justify-between py-4">
+        <header
+            class="lumoryx-public-header"
+            x-data="{ mobileNavOpen: false, scrolled: false }"
+            x-init="scrolled = window.scrollY > 12"
+            @scroll.window="scrolled = window.scrollY > 12"
+            @keydown.escape.window="mobileNavOpen = false"
+            @close-mobile-nav.window="mobileNavOpen = false"
+            :class="{ 'is-scrolled': scrolled }"
+        >
+            <div class="lumoryx-page-frame flex items-center justify-between py-4 transition-[padding]" :class="scrolled ? 'lg:py-2.5' : 'lg:py-4'">
                 <x-lumoryx.brand />
                 <x-lumoryx.navbar>
-                    <a class="lumoryx-public-nav-link lumoryx-public-nav-link-active" href="{{ route('home') }}">Inicio</a>
+                    <a class="lumoryx-public-nav-link {{ request()->routeIs('home') ? 'lumoryx-public-nav-link-active' : '' }}" href="{{ route('home') }}#inicio">Inicio</a>
+                    <a class="lumoryx-public-nav-link" href="{{ route('home') }}#categorias">Categorias</a>
                     <a class="lumoryx-public-nav-link" href="{{ $postulationsUrl }}">Postulaciones</a>
-                    <a class="lumoryx-public-nav-link" href="{{ route('home') }}#reglas">Reglas</a>
+                    <a class="lumoryx-public-nav-link {{ request()->routeIs('rules') ? 'lumoryx-public-nav-link-active' : '' }}" href="{{ route('rules') }}">Reglas</a>
                     <a class="lumoryx-public-nav-link" href="{{ $discordUrl }}">Discord</a>
                     <a class="lumoryx-public-nav-link" href="{{ $panelUrl }}">Panel</a>
                 </x-lumoryx.navbar>
-                @auth
-                    <x-lumoryx.button class="lumoryx-public-login-action hidden sm:inline-flex" href="{{ route('dashboard') }}">Ir al panel</x-lumoryx.button>
-                @else
-                    <x-lumoryx.button class="lumoryx-public-login-action hidden sm:inline-flex" href="{{ route('login.discord') }}">
-                        <img class="h-4 w-4" src="{{ asset('images/discord-icon-svgrepo-com.svg') }}" alt="" aria-hidden="true">
-                        <span>Iniciar sesion</span>
-                    </x-lumoryx.button>
-                @endauth
+                <div class="flex items-center gap-2">
+                    @auth
+                        <x-lumoryx.button class="lumoryx-public-login-action hidden sm:inline-flex" href="{{ route('dashboard') }}">Ir al panel</x-lumoryx.button>
+                    @else
+                        <x-lumoryx.button variant="discord" class="lumoryx-public-login-action hidden sm:inline-flex" href="{{ route('login.discord') }}">
+                            <img class="h-4 w-4" src="{{ asset('images/discord-icon-svgrepo-com.svg') }}" alt="" aria-hidden="true">
+                            <span>Iniciar sesion</span>
+                        </x-lumoryx.button>
+                    @endauth
+
+                    <button
+                        type="button"
+                        class="lumoryx-public-menu-toggle lg:hidden"
+                        @click="mobileNavOpen = !mobileNavOpen"
+                        :aria-expanded="mobileNavOpen ? 'true' : 'false'"
+                        aria-controls="lumoryx-mobile-nav"
+                        aria-label="Abrir menu de navegacion"
+                    >
+                        <svg x-show="!mobileNavOpen" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+                        <svg x-show="mobileNavOpen" x-cloak viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div
+                id="lumoryx-mobile-nav"
+                class="lumoryx-public-mobile-nav lg:hidden"
+                x-show="mobileNavOpen"
+                x-cloak
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 -translate-y-2"
+                x-transition:enter-end="opacity-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 translate-y-0"
+                x-transition:leave-end="opacity-0 -translate-y-2"
+                @click.outside="mobileNavOpen = false"
+            >
+                <div class="lumoryx-page-frame lumoryx-public-mobile-nav-inner">
+                    <a class="lumoryx-public-mobile-link" href="{{ route('home') }}#inicio" @click="mobileNavOpen = false">Inicio</a>
+                    <a class="lumoryx-public-mobile-link" href="{{ route('home') }}#categorias" @click="mobileNavOpen = false">Categorias</a>
+                    <a class="lumoryx-public-mobile-link" href="{{ $postulationsUrl }}" @click="mobileNavOpen = false">Postulaciones</a>
+                    <a class="lumoryx-public-mobile-link" href="{{ route('rules') }}" @click="mobileNavOpen = false">Reglas</a>
+                    <a class="lumoryx-public-mobile-link" href="{{ $discordUrl }}" @click="mobileNavOpen = false">Discord</a>
+                    <a class="lumoryx-public-mobile-link" href="{{ $panelUrl }}" @click="mobileNavOpen = false">Panel</a>
+
+                    @auth
+                        <x-lumoryx.button class="lumoryx-public-mobile-cta" href="{{ route('dashboard') }}">Ir al panel</x-lumoryx.button>
+                    @else
+                        <x-lumoryx.button variant="discord" class="lumoryx-public-mobile-cta" href="{{ route('login.discord') }}">
+                            <img class="h-4 w-4" src="{{ asset('images/discord-icon-svgrepo-com.svg') }}" alt="" aria-hidden="true">
+                            <span>Iniciar sesion con Discord</span>
+                        </x-lumoryx.button>
+                    @endauth
+                </div>
             </div>
         </header>
 

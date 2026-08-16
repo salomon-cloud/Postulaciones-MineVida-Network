@@ -123,8 +123,16 @@
                             ->filter(fn ($interview) => $interview->scheduled_at && $interview->scheduled_at->isFuture())
                             ->sortBy('scheduled_at')
                             ->first();
+                        $statusAccent = match ($application->status) {
+                            \App\Enums\ApplicationStatus::Pending => 'border-l-slate-400',
+                            \App\Enums\ApplicationStatus::InReview => 'border-l-amber-400',
+                            \App\Enums\ApplicationStatus::Interview => 'border-l-sky-400',
+                            \App\Enums\ApplicationStatus::Accepted => 'border-l-emerald-400',
+                            \App\Enums\ApplicationStatus::Rejected => 'border-l-rose-400',
+                            \App\Enums\ApplicationStatus::Cancelled => 'border-l-zinc-500',
+                        };
                     @endphp
-                    <a href="{{ route('applications.show', $application) }}" class="block p-5 transition hover:bg-white/[.04]">
+                    <a href="{{ route('applications.show', $application) }}" class="block border-l-4 {{ $statusAccent }} p-5 transition hover:bg-white/[.04]">
                         <div class="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                             <div class="min-w-0">
                                 <p class="truncate font-semibold text-white">{{ $application->typeLabel() }} - {{ $application->minecraft_nick }}</p>

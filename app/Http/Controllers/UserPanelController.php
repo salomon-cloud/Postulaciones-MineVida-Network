@@ -12,9 +12,15 @@ class UserPanelController extends Controller
 {
     public function notifications(Request $request): View
     {
+        ApplicationLog::query()
+            ->visibleToUser()
+            ->unread()
+            ->whereHas('application', fn ($query) => $query->where('user_id', $request->user()->id))
+            ->update(['read_at' => now()]);
+
         $logs = ApplicationLog::query()
             ->with('application')
-            ->where('action', '!=', 'internal_note_added')
+            ->visibleToUser()
             ->whereHas('application', fn ($query) => $query->where('user_id', $request->user()->id))
             ->latest()
             ->paginate(12);

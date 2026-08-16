@@ -45,20 +45,51 @@
         background-attachment: fixed, fixed, fixed, fixed;
     }
 
+    @media (max-width: 767px) {
+        .lumoryx-public-bg {
+            background-attachment: scroll, scroll, scroll, scroll;
+        }
+    }
+
     .lumoryx-public-header {
-        @apply fixed inset-x-0 top-0 z-50 border-b border-white/10 backdrop-blur-xl;
+        @apply fixed inset-x-0 top-0 z-50 border-b border-white/10 backdrop-blur-xl transition-shadow;
         background:
             linear-gradient(180deg, rgba(5, 5, 6, 0.86), rgba(5, 5, 6, 0.68)),
             radial-gradient(circle at 50% 0%, rgba(250, 204, 21, 0.08), transparent 34%);
         box-shadow: 0 12px 34px rgba(0, 0, 0, 0.28);
     }
 
+    .lumoryx-public-header.is-scrolled {
+        background:
+            linear-gradient(180deg, rgba(5, 5, 6, 0.96), rgba(5, 5, 6, 0.9)),
+            radial-gradient(circle at 50% 0%, rgba(250, 204, 21, 0.06), transparent 34%);
+        box-shadow: 0 16px 38px rgba(0, 0, 0, 0.4);
+    }
+
+    .lumoryx-public-navbar {
+        @apply gap-1 rounded-full border border-white/10 p-1.5;
+        background: rgba(10, 10, 13, 0.5);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
     .lumoryx-public-nav-link {
-        @apply rounded-full px-4 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/[.06] hover:text-white;
+        @apply rounded-full px-3.5 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/[.06] hover:text-white lg:px-4;
     }
 
     .lumoryx-public-nav-link-active {
         @apply bg-amber-300/10 text-white ring-1 ring-amber-300/35;
+    }
+
+    .lumoryx-public-nav-link:focus-visible,
+    .lumoryx-public-mobile-link:focus-visible,
+    .lumoryx-public-menu-toggle:focus-visible,
+    .lumoryx-landing-category-link:focus-visible,
+    .lumoryx-landing-category-card:focus-within,
+    .lumoryx-landing-strip button:focus-visible,
+    .lumoryx-footer-copy:focus-visible,
+    .lumoryx-footer-social-link:focus-visible,
+    .lumoryx-footer-list-link:focus-visible {
+        @apply outline-none ring-2 ring-amber-300 ring-offset-2 ring-offset-graphite-950;
     }
 
     .lumoryx-public-header .lumoryx-button-secondary {
@@ -74,6 +105,39 @@
 
     .lumoryx-public-login-action {
         @apply min-h-11 gap-2.5 px-5 font-black;
+    }
+
+    .lumoryx-public-menu-toggle {
+        @apply inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/15 text-slate-200 transition hover:border-amber-300/30 hover:text-white active:scale-95;
+        background: rgba(255, 255, 255, 0.045);
+    }
+
+    .lumoryx-public-menu-toggle svg {
+        @apply h-5 w-5;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+    }
+
+    .lumoryx-public-mobile-nav {
+        @apply absolute inset-x-0 top-full border-t border-white/10 backdrop-blur-xl;
+        background: linear-gradient(180deg, rgba(6, 6, 8, 0.98), rgba(5, 5, 6, 0.99));
+        box-shadow: 0 24px 40px rgba(0, 0, 0, 0.4);
+        max-height: calc(100dvh - 5.45rem);
+        overflow-y: auto;
+    }
+
+    .lumoryx-public-mobile-nav-inner {
+        @apply flex flex-col gap-1.5 py-4;
+    }
+
+    .lumoryx-public-mobile-link {
+        @apply rounded-lg px-4 py-3 text-sm font-semibold text-slate-300 transition hover:bg-white/[.06] hover:text-white active:bg-white/[.09];
+    }
+
+    .lumoryx-public-mobile-cta {
+        @apply mt-2 justify-center;
     }
 
     .lumoryx-public-main {
@@ -218,6 +282,11 @@
         border-color: rgba(250, 204, 21, 0.16);
     }
 
+    .lumoryx-nav-badge-alert {
+        @apply rounded-full border-rose-300/30 bg-rose-400/20 text-rose-100;
+        box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.08);
+    }
+
     .lumoryx-panel {
         @apply min-w-0 rounded-lg border border-white/10 shadow-panel backdrop-blur;
         background:
@@ -258,14 +327,25 @@
         transform: translateY(-1px);
     }
 
+    .lumoryx-panel a:focus-visible,
+    .lumoryx-card:focus-visible,
+    .lumoryx-nav-link:focus-visible {
+        @apply outline-none ring-2 ring-inset ring-amber-300;
+    }
+
     .lumoryx-stat-card {
-        @apply relative min-w-0 overflow-hidden rounded-lg border p-5;
+        @apply relative min-w-0 overflow-hidden rounded-lg border p-5 transition;
         background:
             linear-gradient(180deg, rgba(255, 255, 255, 0.042), rgba(255, 255, 255, 0.016)),
             rgba(255, 255, 255, 0.014);
         border-color: rgba(255, 255, 255, 0.105);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.042), 0 12px 30px rgba(0, 0, 0, 0.17);
         overflow-wrap: anywhere;
+    }
+
+    .lumoryx-stat-card:hover {
+        border-color: rgba(250, 204, 21, 0.16);
+        transform: translateY(-1px);
     }
 
     .lumoryx-stat-card::before {
@@ -286,6 +366,16 @@
     .lumoryx-kicker {
         @apply text-xs font-black uppercase tracking-wider text-amber-200;
         text-shadow: 0 8px 18px rgba(250, 204, 21, 0.1);
+    }
+
+    .lumoryx-progress-track {
+        @apply h-2 w-full overflow-hidden rounded-full border border-white/10 bg-white/5;
+    }
+
+    .lumoryx-progress-fill {
+        @apply h-full rounded-full transition-[width] duration-500 ease-out;
+        background: linear-gradient(90deg, #fde68a, #facc15 60%, #e0aa10);
+        box-shadow: 0 0 12px rgba(250, 204, 21, 0.35);
     }
 
     .lumoryx-title {
@@ -338,6 +428,10 @@
 
     .lumoryx-button-discord {
         @apply lumoryx-button bg-[#5865F2] text-white shadow-panel hover:bg-[#4752C4] focus:ring-[#5865F2];
+    }
+
+    .lumoryx-button-discord img {
+        filter: brightness(0) invert(1);
     }
 
     .lumoryx-button-danger {
@@ -743,9 +837,61 @@
         @apply h-3.5 w-3.5 fill-current;
     }
 
+    .lumoryx-landing-status-dot {
+        @apply relative inline-flex h-2 w-2 shrink-0 rounded-full;
+    }
+
+    .lumoryx-landing-status-dot::after {
+        content: "";
+        position: absolute;
+        inset: -4px;
+        border-radius: 9999px;
+        animation: lumoryx-status-pulse 2.2s ease-out infinite;
+    }
+
+    .lumoryx-landing-status-dot.is-open {
+        @apply bg-lime-400;
+    }
+
+    .lumoryx-landing-status-dot.is-open::after {
+        background: rgba(163, 230, 53, 0.45);
+    }
+
+    .lumoryx-landing-status-dot.is-closed {
+        @apply bg-amber-400;
+    }
+
+    .lumoryx-landing-status-dot.is-closed::after {
+        background: rgba(251, 191, 36, 0.4);
+        animation-duration: 2.6s;
+    }
+
+    @keyframes lumoryx-status-pulse {
+        0% {
+            transform: scale(0.4);
+            opacity: 0.7;
+        }
+
+        70%,
+        100% {
+            transform: scale(1.7);
+            opacity: 0;
+        }
+    }
+
     .lumoryx-landing-title {
-        @apply mt-5 uppercase leading-tight;
+        @apply relative mt-5 uppercase leading-tight;
         text-shadow: 0 3px 0 rgba(0, 0, 0, 0.42), 0 16px 30px rgba(0, 0, 0, 0.38);
+    }
+
+    .lumoryx-landing-title::after {
+        content: "";
+        position: absolute;
+        inset: -12% -25%;
+        z-index: -1;
+        background: radial-gradient(ellipse at 50% 62%, rgba(163, 230, 53, 0.16), transparent 62%);
+        filter: blur(22px);
+        pointer-events: none;
     }
 
     .lumoryx-landing-title span,
@@ -763,12 +909,25 @@
         @apply mt-2;
         font-size: clamp(2.25rem, 4.2vw, 3.6rem);
         letter-spacing: -0.025em;
-        background: linear-gradient(180deg, #fffdf2 0%, #fff1b8 42%, #f8cf55 68%, #e5ac22 100%);
+        background: linear-gradient(100deg, #d9ffb0 0%, #8be23f 16%, #35c95f 32%, #1a9e52 46%, #fff3b0 50%, #1a9e52 54%, #35c95f 68%, #8be23f 84%, #d9ffb0 100%);
+        background-size: 280% 100%;
+        background-position: 0% 50%;
         background-clip: text;
         -webkit-background-clip: text;
         color: transparent;
         -webkit-text-fill-color: transparent;
-        filter: drop-shadow(0 3px 0 rgba(105, 67, 5, 0.5)) drop-shadow(0 12px 22px rgba(0, 0, 0, 0.34));
+        filter: drop-shadow(0 3px 0 rgba(20, 60, 45, 0.5)) drop-shadow(0 14px 26px rgba(46, 212, 143, 0.26));
+        animation: lumoryx-title-shimmer 6.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes lumoryx-title-shimmer {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        100% {
+            background-position: 100% 50%;
+        }
     }
 
     .lumoryx-landing-lead {
@@ -818,8 +977,40 @@
         filter: brightness(0) invert(1);
     }
 
+    .lumoryx-landing-button-discord {
+        @apply border-[#5865F2]/40 text-white backdrop-blur-md;
+        background: linear-gradient(180deg, #7982f5 0%, #5865f2 55%, #4752c4 100%);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 13px 30px rgba(88, 101, 242, 0.28), 0 12px 25px rgba(0, 0, 0, 0.26);
+    }
+
+    .lumoryx-landing-button-discord:hover {
+        background: linear-gradient(180deg, #8991f7 0%, #6672f4 55%, #4f5bd6 100%);
+        transform: translateY(-1px);
+    }
+
+    .lumoryx-landing-button-discord img {
+        filter: brightness(0) invert(1);
+    }
+
     .lumoryx-landing-panel-icon {
         @apply grid h-6 w-6 shrink-0 place-items-center rounded-md bg-white/10 text-xs font-black;
+    }
+
+    .lumoryx-landing-social-proof {
+        @apply mx-auto mt-6 flex max-w-2xl flex-col items-center justify-center gap-2.5 text-xs font-semibold text-slate-300 sm:flex-row sm:text-sm;
+    }
+
+    .lumoryx-landing-social-avatars {
+        @apply flex items-center -space-x-3;
+    }
+
+    .lumoryx-landing-social-avatar {
+        @apply grid h-9 w-9 shrink-0 place-items-center rounded-full border-2 border-graphite-950 bg-graphite-900 object-cover text-[11px] font-black text-amber-100 ring-1 ring-white/10;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+    }
+
+    .lumoryx-landing-social-text {
+        @apply text-slate-300;
     }
 
     .lumoryx-landing-features {
@@ -827,19 +1018,78 @@
     }
 
     .lumoryx-landing-feature {
-        @apply flex min-w-0 items-center gap-4 rounded-xl border border-white/10 p-5 backdrop-blur-md transition hover:border-amber-200/25 hover:bg-white/[.065];
+        @apply relative flex min-w-0 items-center gap-4 overflow-hidden rounded-xl border border-white/10 p-5 backdrop-blur-md transition hover:-translate-y-0.5 hover:bg-white/[.065];
         background: linear-gradient(180deg, rgba(13, 13, 18, 0.74), rgba(6, 6, 9, 0.72));
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.055), 0 18px 38px rgba(0, 0, 0, 0.3);
     }
 
+    .lumoryx-landing-feature-icon-wrap {
+        @apply grid h-14 w-14 shrink-0 place-items-center rounded-2xl border transition;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+
     .lumoryx-landing-feature-icon {
-        @apply h-12 w-12 shrink-0 text-amber-300;
+        @apply h-7 w-7;
         fill: none;
         stroke: currentColor;
         stroke-linecap: round;
         stroke-linejoin: round;
-        stroke-width: 2.2;
-        filter: drop-shadow(0 8px 16px rgba(250, 204, 21, 0.16));
+        stroke-width: 2.4;
+    }
+
+    .lumoryx-landing-feature-gold {
+        border-color: rgba(250, 204, 21, 0.14);
+    }
+
+    .lumoryx-landing-feature-green {
+        border-color: rgba(132, 204, 22, 0.14);
+    }
+
+    .lumoryx-landing-feature-discord {
+        border-color: rgba(88, 101, 242, 0.18);
+    }
+
+    .lumoryx-landing-feature-gold .lumoryx-landing-feature-icon-wrap {
+        @apply border-amber-300/35 text-amber-200;
+        background: linear-gradient(155deg, rgba(250, 204, 21, 0.32), rgba(250, 204, 21, 0.05));
+        filter: drop-shadow(0 6px 14px rgba(250, 204, 21, 0.22));
+    }
+
+    .lumoryx-landing-feature-gold:hover {
+        @apply border-amber-200/40;
+    }
+
+    .lumoryx-landing-feature-gold:hover .lumoryx-landing-feature-icon-wrap {
+        background: linear-gradient(155deg, rgba(250, 204, 21, 0.42), rgba(250, 204, 21, 0.08));
+    }
+
+    .lumoryx-landing-feature-green .lumoryx-landing-feature-icon-wrap {
+        @apply border-lime-300/35 text-lime-300;
+        background: linear-gradient(155deg, rgba(132, 204, 22, 0.36), rgba(132, 204, 22, 0.06));
+        filter: drop-shadow(0 6px 14px rgba(132, 204, 22, 0.24));
+    }
+
+    .lumoryx-landing-feature-green:hover {
+        @apply border-lime-300/45;
+    }
+
+    .lumoryx-landing-feature-green:hover .lumoryx-landing-feature-icon-wrap {
+        background: linear-gradient(155deg, rgba(132, 204, 22, 0.46), rgba(132, 204, 22, 0.1));
+    }
+
+    .lumoryx-landing-feature-discord .lumoryx-landing-feature-icon-wrap {
+        border-color: rgba(88, 101, 242, 0.45);
+        color: #b0b8ff;
+        background: linear-gradient(155deg, rgba(88, 101, 242, 0.42), rgba(88, 101, 242, 0.08));
+        filter: drop-shadow(0 6px 14px rgba(88, 101, 242, 0.3));
+    }
+
+    .lumoryx-landing-feature-discord:hover {
+        border-color: rgba(88, 101, 242, 0.55);
+    }
+
+    .lumoryx-landing-feature-discord:hover .lumoryx-landing-feature-icon-wrap {
+        background: linear-gradient(155deg, rgba(88, 101, 242, 0.55), rgba(88, 101, 242, 0.12));
     }
 
     .lumoryx-landing-feature h2 {
@@ -890,6 +1140,10 @@
         .lumoryx-landing-features {
             @apply mt-7;
         }
+
+        .lumoryx-landing-actions {
+            @apply mt-6 gap-2.5;
+        }
     }
 
     @media (max-width: 639px) {
@@ -903,6 +1157,266 @@
 
         .lumoryx-landing-strip-inner {
             @apply grid-cols-1;
+        }
+
+        .lumoryx-landing-button {
+            @apply min-h-12 px-5;
+        }
+
+        .lumoryx-landing-social-text {
+            @apply px-4 text-center;
+        }
+    }
+
+    .lumoryx-landing-eyebrow,
+    .lumoryx-landing-title,
+    .lumoryx-landing-lead,
+    .lumoryx-landing-actions,
+    .lumoryx-landing-social-proof {
+        animation: lumoryx-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .lumoryx-landing-eyebrow {
+        animation-delay: 0.02s;
+    }
+
+    .lumoryx-landing-title {
+        animation-delay: 0.08s;
+    }
+
+    .lumoryx-landing-lead {
+        animation-delay: 0.16s;
+    }
+
+    .lumoryx-landing-actions {
+        animation-delay: 0.24s;
+    }
+
+    .lumoryx-landing-social-proof {
+        animation-delay: 0.3s;
+    }
+
+    .lumoryx-landing-feature {
+        animation: lumoryx-fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .lumoryx-landing-feature:nth-child(1) {
+        animation-delay: 0.38s;
+    }
+
+    .lumoryx-landing-feature:nth-child(2) {
+        animation-delay: 0.46s;
+    }
+
+    .lumoryx-landing-feature:nth-child(3) {
+        animation-delay: 0.54s;
+    }
+
+    @keyframes lumoryx-fade-up {
+        from {
+            opacity: 0;
+            transform: translateY(14px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .lumoryx-landing-eyebrow,
+        .lumoryx-landing-title,
+        .lumoryx-landing-lead,
+        .lumoryx-landing-actions,
+        .lumoryx-landing-social-proof,
+        .lumoryx-landing-feature,
+        .lumoryx-landing-status-dot::after,
+        .lumoryx-landing-title strong {
+            animation: none;
+        }
+    }
+
+    .lumoryx-landing-section {
+        @apply relative border-t border-white/10 py-14 sm:py-16;
+        background: rgba(5, 5, 6, 0.74);
+        backdrop-filter: blur(6px);
+    }
+
+    .lumoryx-landing-section-alt {
+        background: rgba(8, 8, 11, 0.84);
+    }
+
+    .lumoryx-landing-section-inner {
+        @apply lumoryx-page-frame relative;
+    }
+
+    .lumoryx-landing-section-head {
+        @apply mx-auto max-w-2xl text-center;
+    }
+
+    .lumoryx-landing-kicker {
+        @apply inline-flex items-center gap-2 rounded-full border border-amber-300/25 bg-amber-300/10 px-3 py-1 text-[11px] font-black uppercase tracking-[0.14em] text-amber-200;
+    }
+
+    .lumoryx-landing-section-title {
+        @apply mt-4 text-2xl font-black text-white sm:text-3xl;
+        text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .lumoryx-landing-section-lead {
+        @apply mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-300 sm:text-base;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+    }
+
+    .lumoryx-landing-section-footnote {
+        @apply mx-auto mt-8 max-w-2xl text-center text-xs text-slate-500 sm:text-sm;
+    }
+
+    .lumoryx-landing-section-footnote a {
+        @apply font-bold text-amber-200 transition hover:text-amber-100;
+    }
+
+    /* Categorias */
+    .lumoryx-landing-category-grid {
+        @apply mx-auto mt-10 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-3;
+    }
+
+    .lumoryx-landing-category-card {
+        @apply flex flex-col rounded-xl border border-white/10 p-5 backdrop-blur-md transition hover:-translate-y-0.5;
+        background: linear-gradient(180deg, rgba(13, 13, 18, 0.74), rgba(6, 6, 9, 0.72));
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 16px 34px rgba(0, 0, 0, 0.28);
+    }
+
+    .lumoryx-landing-category-card:hover {
+        border-color: color-mix(in srgb, var(--lumoryx-cat-color, #facc15) 45%, transparent);
+    }
+
+    .lumoryx-landing-category-card.is-closed {
+        @apply opacity-70;
+    }
+
+    .lumoryx-landing-category-top {
+        @apply flex items-center justify-between gap-3;
+    }
+
+    .lumoryx-landing-category-icon {
+        @apply grid h-11 w-11 shrink-0 place-items-center rounded-xl text-xs font-black;
+        color: var(--lumoryx-cat-color, #facc15);
+        border: 1px solid color-mix(in srgb, var(--lumoryx-cat-color, #facc15) 40%, transparent);
+        background: color-mix(in srgb, var(--lumoryx-cat-color, #facc15) 16%, transparent);
+    }
+
+    .lumoryx-landing-category-badge {
+        @apply shrink-0 rounded-full border border-white/15 bg-white/5 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-300;
+    }
+
+    .lumoryx-landing-category-card h3 {
+        @apply mt-4 text-lg font-black text-white;
+    }
+
+    .lumoryx-landing-category-card p {
+        @apply mt-2 flex-1 text-sm leading-6 text-slate-400;
+    }
+
+    .lumoryx-landing-category-link {
+        @apply mt-5 inline-flex items-center gap-1.5 text-sm font-bold transition;
+        color: var(--lumoryx-cat-color, #facc15);
+    }
+
+    .lumoryx-landing-category-link svg {
+        @apply h-4 w-4 transition-transform;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .lumoryx-landing-category-link:hover svg {
+        transform: translateX(3px);
+    }
+
+    /* Proceso */
+    .lumoryx-landing-process {
+        @apply mx-auto mt-10 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4;
+    }
+
+    .lumoryx-landing-process-step {
+        @apply flex flex-col items-start gap-3 rounded-xl border border-white/10 p-5;
+        background: linear-gradient(180deg, rgba(13, 13, 18, 0.6), rgba(6, 6, 9, 0.5));
+    }
+
+    .lumoryx-landing-process-number {
+        @apply grid h-9 w-9 shrink-0 place-items-center rounded-full border border-amber-300/30 bg-amber-300/10 text-sm font-black text-amber-200;
+    }
+
+    .lumoryx-landing-process-step h3 {
+        @apply text-sm font-black text-white;
+    }
+
+    .lumoryx-landing-process-step p {
+        @apply mt-1 text-xs leading-5 text-slate-400;
+    }
+
+    /* Requisitos */
+    .lumoryx-landing-requirements {
+        @apply mx-auto mt-10 grid max-w-4xl gap-4 sm:grid-cols-2;
+    }
+
+    .lumoryx-landing-requirement {
+        @apply flex min-w-0 items-start gap-4 rounded-xl border border-white/10 p-5;
+        background: linear-gradient(180deg, rgba(13, 13, 18, 0.6), rgba(6, 6, 9, 0.5));
+    }
+
+    .lumoryx-landing-requirement-icon {
+        @apply grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-lime-300/25 text-lime-300;
+        background: linear-gradient(160deg, rgba(163, 230, 53, 0.18), rgba(163, 230, 53, 0.03));
+    }
+
+    .lumoryx-landing-requirement-icon svg {
+        @apply h-5 w-5;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2.2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .lumoryx-landing-requirement h3 {
+        @apply text-sm font-black text-white;
+    }
+
+    .lumoryx-landing-requirement p {
+        @apply mt-1.5 text-xs leading-5 text-slate-400 sm:text-sm;
+    }
+
+    /* Discord CTA band */
+    .lumoryx-landing-discord-band {
+        @apply mx-auto flex max-w-5xl flex-col items-center gap-6 rounded-2xl border p-6 text-center sm:flex-row sm:p-8 sm:text-left;
+        border-color: rgba(88, 101, 242, 0.28);
+        background: linear-gradient(135deg, rgba(88, 101, 242, 0.14), rgba(88, 101, 242, 0.02));
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 20px 44px rgba(24, 28, 92, 0.22);
+    }
+
+    .lumoryx-landing-discord-icon {
+        @apply grid h-16 w-16 shrink-0 place-items-center rounded-2xl border;
+        border-color: rgba(88, 101, 242, 0.35);
+        background: linear-gradient(160deg, rgba(88, 101, 242, 0.3), rgba(88, 101, 242, 0.06));
+    }
+
+    .lumoryx-landing-discord-icon img {
+        @apply h-8 w-8;
+        filter: brightness(0) invert(1);
+    }
+
+    @media (max-width: 639px) {
+        .lumoryx-landing-section {
+            @apply py-10;
+        }
+
+        .lumoryx-landing-discord-band {
+            @apply p-5;
         }
     }
 

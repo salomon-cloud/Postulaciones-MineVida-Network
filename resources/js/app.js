@@ -10,6 +10,9 @@ function initApplicationWizard(form) {
     const buttons = Array.from(form.querySelectorAll('[data-step-button]'));
     const numbers = Array.from(form.querySelectorAll('[data-step-number]'));
     const titles = Array.from(form.querySelectorAll('[data-step-title]'));
+    const progressFill = form.querySelector('[data-progress-fill]');
+    const progressLabel = form.querySelector('[data-progress-label]');
+    const progressPercent = form.querySelector('[data-progress-percent]');
     let currentStep = Number(form.dataset.initialStep || 0);
     let maxUnlockedStep = currentStep;
 
@@ -57,6 +60,20 @@ function initApplicationWizard(form) {
             title.classList.toggle('text-white', step <= currentStep);
             title.classList.toggle('text-slate-400', step > currentStep);
         });
+
+        const percent = sections.length > 1 ? Math.round((currentStep / (sections.length - 1)) * 100) : 100;
+
+        if (progressFill) {
+            progressFill.style.width = `${percent}%`;
+        }
+
+        if (progressLabel) {
+            progressLabel.textContent = `Paso ${currentStep + 1} de ${sections.length}`;
+        }
+
+        if (progressPercent) {
+            progressPercent.textContent = `${percent}%`;
+        }
     };
 
     const currentSection = () => sections.find((section) => parseStep(section, 'stepSection') === currentStep);
@@ -291,3 +308,49 @@ function initOfflineExperience() {
 }
 
 initOfflineExperience();
+
+function initScrollspy() {
+    const links = Array.from(document.querySelectorAll('.lumoryx-public-nav-link[href*="#"]'));
+
+    if (!links.length || !('IntersectionObserver' in window)) {
+        return;
+    }
+
+    const sectionLinks = new Map();
+
+    links.forEach((link) => {
+        const hash = link.getAttribute('href').split('#')[1];
+        const section = hash ? document.getElementById(hash) : null;
+
+        if (section) {
+            sectionLinks.set(section, link);
+        }
+    });
+
+    if (!sectionLinks.size) {
+        return;
+    }
+
+    const setActive = (activeLink) => {
+        links.forEach((link) => {
+            link.classList.toggle('lumoryx-public-nav-link-active', link === activeLink);
+        });
+    };
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            const visible = entries
+                .filter((entry) => entry.isIntersecting)
+                .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+            if (visible) {
+                setActive(sectionLinks.get(visible.target));
+            }
+        },
+        { rootMargin: '-40% 0px -50% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] },
+    );
+
+    sectionLinks.forEach((link, section) => observer.observe(section));
+}
+
+initScrollspy();

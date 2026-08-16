@@ -32,6 +32,19 @@
         @csrf
         <input type="hidden" name="type" value="{{ $type }}">
 
+        @php
+            $progressPercent = count($steps) > 1 ? round(($initialStep / (count($steps) - 1)) * 100) : 100;
+        @endphp
+        <div class="mb-5">
+            <div class="mb-2 flex items-center justify-between text-xs font-semibold text-slate-400">
+                <span data-progress-label>Paso {{ $initialStep + 1 }} de {{ count($steps) }}</span>
+                <span data-progress-percent>{{ $progressPercent }}%</span>
+            </div>
+            <div class="lumoryx-progress-track">
+                <div class="lumoryx-progress-fill" data-progress-fill style="width: {{ $progressPercent }}%"></div>
+            </div>
+        </div>
+
         <div class="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
             @foreach ($steps as $index => $stepData)
                 @php
@@ -141,7 +154,7 @@
                                                     <input class="mt-1 rounded border-white/10 bg-graphite-950 text-amber-300 focus:ring-amber-300" type="checkbox" name="{{ $key }}" value="1" @checked(old($key)) @required($required)>
                                                     <span class="lumoryx-break">{{ $field['label'] }}</span>
                                                 </span>
-                                                <a class="shrink-0 font-semibold text-amber-200 hover:text-white" href="{{ route('home') }}#requisitos">Ver reglas</a>
+                                                <a class="shrink-0 font-semibold text-amber-200 hover:text-white" href="{{ route('rules') }}" target="_blank" rel="noopener noreferrer">Ver reglas</a>
                                             </label>
                                             @error($key)<p class="mt-2 text-sm text-rose-200">{{ $message }}</p>@enderror
                                         @elseif (in_array($fieldType, ['textarea', 'textarea_urls'], true))

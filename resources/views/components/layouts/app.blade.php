@@ -23,7 +23,7 @@
         @guest
             <header class="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
                 <x-lumoryx.brand />
-                <a class="lumoryx-button-secondary" href="{{ route('login.discord') }}">Discord</a>
+                <a class="lumoryx-button-discord" href="{{ route('login.discord') }}">Iniciar sesion con Discord</a>
             </header>
         @endguest
 

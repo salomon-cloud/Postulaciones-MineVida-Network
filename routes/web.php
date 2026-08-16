@@ -11,10 +11,13 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Auth\DiscordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\RulesController;
 use App\Http\Controllers\UserPanelController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', LandingController::class)->name('home');
+
+Route::get('/reglas', RulesController::class)->name('rules');
 
 Route::view('/offline', 'offline')->name('offline');
 

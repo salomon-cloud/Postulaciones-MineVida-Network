@@ -13,6 +13,13 @@
 <body>
     @php
         $applicationCount = auth()->check() ? auth()->user()->applications()->count() : 0;
+        $unreadNotifications = auth()->check()
+            ? \App\Models\ApplicationLog::query()
+                ->visibleToUser()
+                ->unread()
+                ->whereHas('application', fn ($query) => $query->where('user_id', auth()->id()))
+                ->count()
+            : 0;
         $sidebarBackground = config('community.sidebar_background_path', 'images/slidebar.png');
     @endphp
 
@@ -32,7 +39,7 @@
                     <x-lumoryx.sidebar-link icon="IN" :href="route('dashboard')" :active="request()->routeIs('dashboard')">Inicio</x-lumoryx.sidebar-link>
                     <x-lumoryx.sidebar-link icon="MP" :href="route('applications.index')" :active="request()->routeIs('applications.index', 'applications.show')" :badge="$applicationCount ?: null">Mis postulaciones</x-lumoryx.sidebar-link>
                     <x-lumoryx.sidebar-link icon="PO" :href="route('applications.create')" :active="request()->routeIs('applications.create', 'applications.create.type')">Postulaciones</x-lumoryx.sidebar-link>
-                    <x-lumoryx.sidebar-link icon="NO" :href="route('user.notifications')" :active="request()->routeIs('user.notifications')">Notificaciones</x-lumoryx.sidebar-link>
+                    <x-lumoryx.sidebar-link icon="NO" :href="route('user.notifications')" :active="request()->routeIs('user.notifications')" :badge="$unreadNotifications ?: null" badge-alert>Notificaciones</x-lumoryx.sidebar-link>
                     <x-lumoryx.sidebar-link icon="PF" :href="route('user.profile')" :active="request()->routeIs('user.profile')">Perfil</x-lumoryx.sidebar-link>
                     <x-lumoryx.sidebar-link icon="AJ" :href="route('user.settings')" :active="request()->routeIs('user.settings')">Ajustes</x-lumoryx.sidebar-link>
                 </nav>

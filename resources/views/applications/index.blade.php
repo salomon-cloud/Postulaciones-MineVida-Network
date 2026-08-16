@@ -64,6 +64,37 @@
         @endif
     </section>
 
+    @if ($applications->count() > 1)
+        <section class="mt-8">
+            <x-lumoryx.card class="overflow-hidden p-0">
+                <div class="border-b border-white/10 p-5">
+                    <h2 class="text-lg font-black text-white">Historial de postulaciones</h2>
+                </div>
+                <div class="divide-y divide-white/10">
+                    @foreach ($applications->skip(1) as $application)
+                        @php
+                            $statusAccent = match ($application->status) {
+                                \App\Enums\ApplicationStatus::Pending => 'border-l-slate-400',
+                                \App\Enums\ApplicationStatus::InReview => 'border-l-amber-400',
+                                \App\Enums\ApplicationStatus::Interview => 'border-l-sky-400',
+                                \App\Enums\ApplicationStatus::Accepted => 'border-l-emerald-400',
+                                \App\Enums\ApplicationStatus::Rejected => 'border-l-rose-400',
+                                \App\Enums\ApplicationStatus::Cancelled => 'border-l-zinc-500',
+                            };
+                        @endphp
+                        <a href="{{ route('applications.show', $application) }}" class="flex min-w-0 items-center justify-between gap-4 border-l-4 {{ $statusAccent }} p-5 transition hover:bg-white/[.04]">
+                            <div class="min-w-0">
+                                <p class="truncate font-semibold text-white">{{ $application->typeLabel() }} - {{ $application->minecraft_nick }}</p>
+                                <p class="text-sm text-slate-400">{{ $application->created_at->format('Y-m-d H:i') }}</p>
+                            </div>
+                            <x-status-badge :status="$application->status" />
+                        </a>
+                    @endforeach
+                </div>
+            </x-lumoryx.card>
+        </section>
+    @endif
+
     <section class="mt-8">
         <x-lumoryx.card class="overflow-hidden p-0">
             <div class="flex flex-col gap-4 border-b border-white/10 p-5 sm:flex-row sm:items-center sm:justify-between">

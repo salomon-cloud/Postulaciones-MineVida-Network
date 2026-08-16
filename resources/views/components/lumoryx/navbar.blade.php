@@ -1,3 +1,3 @@
-<nav {{ $attributes->merge(['class' => 'hidden items-center gap-10 text-sm font-semibold text-slate-300 md:flex']) }}>
+<nav {{ $attributes->merge(['class' => 'lumoryx-public-navbar hidden items-center text-sm font-semibold text-slate-300 lg:flex']) }}>
     {{ $slot }}
 </nav>

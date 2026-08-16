@@ -209,7 +209,17 @@
             </div>
             <div class="divide-y divide-white/10">
                 @forelse ($latest as $application)
-                    <a href="{{ route('admin.applications.show', $application) }}" class="flex min-w-0 flex-col gap-3 p-5 transition hover:bg-white/[.04] sm:flex-row sm:items-center sm:justify-between">
+                    @php
+                        $statusAccent = match ($application->status) {
+                            \App\Enums\ApplicationStatus::Pending => 'border-l-slate-400',
+                            \App\Enums\ApplicationStatus::InReview => 'border-l-amber-400',
+                            \App\Enums\ApplicationStatus::Interview => 'border-l-sky-400',
+                            \App\Enums\ApplicationStatus::Accepted => 'border-l-emerald-400',
+                            \App\Enums\ApplicationStatus::Rejected => 'border-l-rose-400',
+                            \App\Enums\ApplicationStatus::Cancelled => 'border-l-zinc-500',
+                        };
+                    @endphp
+                    <a href="{{ route('admin.applications.show', $application) }}" class="flex min-w-0 flex-col gap-3 border-l-4 {{ $statusAccent }} p-5 transition hover:bg-white/[.04] sm:flex-row sm:items-center sm:justify-between">
                         <div class="min-w-0">
                             <p class="truncate font-semibold text-white">{{ $application->typeLabel() }} - {{ $application->minecraft_nick }}</p>
                             <p class="truncate text-sm text-slate-400">{{ $application->user->discord_username }} - {{ $application->created_at->format('Y-m-d H:i') }}</p>
