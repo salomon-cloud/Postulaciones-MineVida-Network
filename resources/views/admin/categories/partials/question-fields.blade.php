@@ -54,12 +54,12 @@
             required
         />
 
-        <label class="flex h-full items-start gap-3 rounded-lg border border-white/10 bg-white/[.035] p-4 text-sm text-slate-300">
-            <input class="mt-1 rounded border-white/10 bg-graphite-950 text-amber-300 focus:ring-amber-300" type="checkbox" name="is_required" value="1" @checked($isRequired)>
+        <label class="flex h-full items-center justify-between gap-3 rounded-lg border border-white/10 bg-white/[.035] p-4 text-sm text-slate-300">
             <span>
                 <span class="block font-semibold text-white">Obligatoria</span>
                 <span class="mt-1 block text-slate-400">El usuario debe responderla.</span>
             </span>
+            <input class="lumoryx-toggle-checkbox shrink-0" type="checkbox" name="is_required" value="1" @checked($isRequired)>
         </label>
     </div>
 

@@ -1,4 +1,4 @@
-@props(['label', 'value', 'hint' => null, 'tone' => 'purple', 'icon' => null])
+@props(['label', 'value', 'hint' => null, 'tone' => 'purple', 'icon' => null, 'percent' => null])
 
 @php
     $tones = [
@@ -21,7 +21,10 @@
             @endif
         </div>
     </div>
-    <div class="mt-5 h-1.5 rounded-full bg-white/10">
-        <div class="h-full w-2/3 rounded-full {{ $tones['bar'] }}"></div>
-    </div>
+    @if (! is_null($percent))
+        <div class="mt-5 h-1.5 overflow-hidden rounded-full bg-white/10">
+            <div class="h-full rounded-full transition-[width] duration-500 {{ $tones['bar'] }}" style="width: {{ max(0, min(100, (float) $percent)) }}%"></div>
+        </div>
+        <p class="mt-1.5 text-right text-[11px] font-semibold text-slate-500">{{ round($percent) }}% del total</p>
+    @endif
 </div>

@@ -1,11 +1,15 @@
 <x-layouts.admin :title="'Postulaciones admin | '.config('app.name', 'MineVida Network')">
     <x-lumoryx.page-header kicker="Panel de administracion" title="Postulaciones" description="Revisa, filtra y gestiona las postulaciones enviadas al servidor." glow="amber" glow2="sky" />
 
+    @php
+        $statTotal = max($stats['total'], 1);
+    @endphp
+
     <section class="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <x-lumoryx.stat-card label="Pendientes" :value="$stats['pending']" hint="Esperando revision" tone="purple" icon="P" />
-        <x-lumoryx.stat-card label="Aceptadas" :value="$stats['accepted']" hint="Este mes" tone="green" icon="A" />
-        <x-lumoryx.stat-card label="Rechazadas" :value="$stats['rejected']" hint="Este mes" tone="red" icon="R" />
-        <x-lumoryx.stat-card label="Entrevistas" :value="$stats['interview']" hint="Programadas" tone="blue" icon="E" />
+        <x-lumoryx.stat-card label="Pendientes" :value="$stats['pending']" hint="Esperando revision" tone="purple" icon="P" :percent="$stats['pending'] / $statTotal * 100" />
+        <x-lumoryx.stat-card label="Aceptadas" :value="$stats['accepted']" hint="Historico total" tone="green" icon="A" :percent="$stats['accepted'] / $statTotal * 100" />
+        <x-lumoryx.stat-card label="Rechazadas" :value="$stats['rejected']" hint="Historico total" tone="red" icon="R" :percent="$stats['rejected'] / $statTotal * 100" />
+        <x-lumoryx.stat-card label="Entrevistas" :value="$stats['interview']" hint="Programadas" tone="blue" icon="E" :percent="$stats['interview'] / $statTotal * 100" />
     </section>
 
     <form class="lumoryx-panel mt-6 grid gap-4 p-5 md:grid-cols-6" method="GET" action="{{ route('admin.applications.index') }}">

@@ -32,6 +32,7 @@ class AdminApplicationController extends Controller
             'accepted' => Application::query()->where('status', ApplicationStatus::Accepted->value)->count(),
             'rejected' => Application::query()->where('status', ApplicationStatus::Rejected->value)->count(),
             'interview' => Application::query()->where('status', ApplicationStatus::Interview->value)->count(),
+            'total' => Application::query()->count(),
         ];
 
         $applications = Application::query()

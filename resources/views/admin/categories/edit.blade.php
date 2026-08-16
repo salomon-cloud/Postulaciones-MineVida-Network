@@ -31,21 +31,12 @@
 
 <x-layouts.admin :title="'Editar categoria | '.config('app.name', 'MineVida Network')">
     <div class="space-y-6">
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-            <div class="min-w-0">
-                <p class="lumoryx-kicker">Constructor de formulario</p>
-                <h1 class="lumoryx-title">{{ $category->name }}</h1>
-                <p class="mt-2 max-w-3xl text-slate-400">
-                    Configura esta postulacion por partes. Cada seccion guarda una sola cosa para que no se mezcle todo.
-                </p>
-            </div>
-            <div class="flex flex-col gap-2 sm:flex-row">
-                <x-lumoryx.button variant="secondary" href="{{ route('applications.create.type', $category->slug) }}">
-                    {{ $category->is_open ? 'Ver como usuario' : 'Ver aviso cerrado' }}
-                </x-lumoryx.button>
-                <x-lumoryx.button variant="secondary" href="{{ route('admin.categories.index') }}">Volver</x-lumoryx.button>
-            </div>
-        </div>
+        <x-lumoryx.page-header kicker="Constructor de formulario" :title="$category->name" description="Configura esta postulacion por partes. Cada seccion guarda una sola cosa para que no se mezcle todo." glow="amber" glow2="sky">
+            <x-lumoryx.button variant="secondary" href="{{ route('applications.create.type', $category->slug) }}">
+                {{ $category->is_open ? 'Ver como usuario' : 'Ver aviso cerrado' }}
+            </x-lumoryx.button>
+            <x-lumoryx.button variant="secondary" href="{{ route('admin.categories.index') }}">Volver</x-lumoryx.button>
+        </x-lumoryx.page-header>
 
         @error('question')
             <div class="rounded-lg border border-rose-300/20 bg-rose-950/40 p-4 text-sm text-rose-100">{{ $message }}</div>
@@ -72,7 +63,7 @@
 
         @if ($activeTab === 'info')
             <section class="grid gap-6 xl:grid-cols-[1fr_.34fr]">
-                <form class="lumoryx-panel p-5 sm:p-6" method="POST" action="{{ route('admin.categories.update', $category) }}">
+                <form class="lumoryx-panel p-5 sm:p-6" method="POST" action="{{ route('admin.categories.update', $category) }}" x-data="{ accentColor: '{{ old('accent_color', $category->accent_color ?: '#facc15') }}' }">
                     @csrf
                     @method('PATCH')
 
@@ -100,7 +91,13 @@
                         <summary class="cursor-pointer text-sm font-semibold text-white">Ajustes avanzados</summary>
                         <div class="mt-4 grid gap-4 sm:grid-cols-2">
                             <x-lumoryx.input name="slug" label="URL interna" value="{{ old('slug', $category->slug) }}" :disabled="$category->applications_count > 0" required />
-                            <x-lumoryx.input name="accent_color" label="Color" value="{{ old('accent_color', $category->accent_color) }}" placeholder="#facc15" />
+                            <div>
+                                <label class="lumoryx-label" for="accent_color">Color</label>
+                                <div class="mt-2 flex items-center gap-3">
+                                    <span class="h-11 w-11 shrink-0 rounded-md border border-white/15" :style="{ backgroundColor: accentColor }"></span>
+                                    <input id="accent_color" class="lumoryx-input" type="text" name="accent_color" x-model="accentColor" placeholder="#facc15">
+                                </div>
+                            </div>
                             <x-lumoryx.input name="minimum_age" label="Edad minima propia" type="number" min="10" max="80" value="{{ old('minimum_age', $category->minimum_age) }}" />
                             <x-lumoryx.input name="sort_order" label="Orden en listado" type="number" min="0" value="{{ old('sort_order', $category->sort_order) }}" required />
                             <div class="sm:col-span-2">

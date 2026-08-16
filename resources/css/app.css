@@ -270,6 +270,15 @@
         border-color: rgba(255, 255, 255, 0.1);
     }
 
+    .lumoryx-nav-icon svg {
+        @apply h-4 w-4;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
     .lumoryx-nav-link-active .lumoryx-nav-icon {
         @apply text-amber-100;
         background: rgba(250, 204, 21, 0.1);
@@ -376,6 +385,39 @@
         @apply h-full rounded-full transition-[width] duration-500 ease-out;
         background: linear-gradient(90deg, #fde68a, #facc15 60%, #e0aa10);
         box-shadow: 0 0 12px rgba(250, 204, 21, 0.35);
+    }
+
+    .lumoryx-toggle-checkbox {
+        -webkit-appearance: none;
+        appearance: none;
+        @apply relative h-6 w-11 shrink-0 cursor-pointer rounded-full border border-white/15 transition;
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .lumoryx-toggle-checkbox::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        height: 16px;
+        width: 16px;
+        border-radius: 9999px;
+        background: rgb(203, 213, 225);
+        transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .lumoryx-toggle-checkbox:checked {
+        @apply border-amber-300/40;
+        background: rgba(250, 204, 21, 0.7);
+    }
+
+    .lumoryx-toggle-checkbox:checked::after {
+        transform: translateX(20px);
+        background: #050506;
+    }
+
+    .lumoryx-toggle-checkbox:focus-visible {
+        @apply outline-none ring-2 ring-amber-300 ring-offset-2 ring-offset-graphite-950;
     }
 
     .lumoryx-app-progress {

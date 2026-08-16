@@ -56,9 +56,8 @@
                             <span class="mt-1 block text-sm leading-6 text-slate-400">Cuando cambies este estado, el sistema puede publicar un aviso en Discord si los anuncios estan activos.</span>
                         </span>
                         <span class="flex shrink-0 items-center gap-3 rounded-full border border-white/10 bg-black/30 px-4 py-2 text-sm font-black text-white">
-                            <span class="h-2.5 w-2.5 rounded-full {{ old('applications_open', $settings['applications_open']) ? 'bg-emerald-300' : 'bg-rose-300' }}"></span>
                             {{ old('applications_open', $settings['applications_open']) ? 'Activas' : 'Pausadas' }}
-                            <input class="ml-2 rounded border-white/10 bg-graphite-950 text-amber-300 focus:ring-amber-300" type="checkbox" name="applications_open" value="1" @checked(old('applications_open', $settings['applications_open']))>
+                            <input class="lumoryx-toggle-checkbox" type="checkbox" name="applications_open" value="1" @checked(old('applications_open', $settings['applications_open']))>
                         </span>
                     </label>
 
@@ -96,7 +95,7 @@
                         <span class="block font-bold text-white">Verificar pertenencia al servidor</span>
                         <span class="mt-1 block text-sm leading-6 text-slate-400">Requiere scopes de Discord y el ID del servidor configurado en el entorno.</span>
                     </span>
-                    <input class="rounded border-white/10 bg-graphite-950 text-amber-300 focus:ring-amber-300" type="checkbox" name="require_discord_guild" value="1" @checked(old('require_discord_guild', $settings['require_discord_guild']))>
+                    <input class="lumoryx-toggle-checkbox" type="checkbox" name="require_discord_guild" value="1" @checked(old('require_discord_guild', $settings['require_discord_guild']))>
                 </label>
 
                 <div class="mt-5 rounded-lg border border-amber-300/20 bg-amber-300/10 p-4 text-sm leading-6 text-amber-50">
@@ -118,7 +117,7 @@
                                 <span class="block font-bold text-white">Activar auditoria</span>
                                 <span class="mt-1 block text-xs leading-5 text-slate-500">Si lo apagas, no se enviaran logs a Discord.</span>
                             </span>
-                            <input class="rounded border-white/10 bg-graphite-950 text-amber-300 focus:ring-amber-300" type="checkbox" name="discord_system_logs_enabled" value="1" @checked(old('discord_system_logs_enabled', $settings['discord_system_logs_enabled']))>
+                            <input class="lumoryx-toggle-checkbox" type="checkbox" name="discord_system_logs_enabled" value="1" @checked(old('discord_system_logs_enabled', $settings['discord_system_logs_enabled']))>
                         </label>
                     </div>
 
@@ -162,7 +161,7 @@
                     </div>
                     <label class="flex shrink-0 items-center gap-3 rounded-full border border-white/10 bg-white/[.035] px-4 py-2 text-sm font-black text-white">
                         Activar
-                        <input class="rounded border-white/10 bg-graphite-950 text-amber-300 focus:ring-amber-300" type="checkbox" name="discord_announce_applications_window" value="1" @checked(old('discord_announce_applications_window', $settings['discord_announce_applications_window']))>
+                        <input class="lumoryx-toggle-checkbox" type="checkbox" name="discord_announce_applications_window" value="1" @checked(old('discord_announce_applications_window', $settings['discord_announce_applications_window']))>
                     </label>
                 </div>
 

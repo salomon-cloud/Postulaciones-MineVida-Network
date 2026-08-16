@@ -36,12 +36,12 @@
                 </div>
 
                 <nav class="mt-8 flex-1 space-y-2 overflow-y-auto pr-1">
-                    <x-lumoryx.sidebar-link icon="IN" :href="route('dashboard')" :active="request()->routeIs('dashboard')">Inicio</x-lumoryx.sidebar-link>
-                    <x-lumoryx.sidebar-link icon="MP" :href="route('applications.index')" :active="request()->routeIs('applications.index', 'applications.show')" :badge="$applicationCount ?: null">Mis postulaciones</x-lumoryx.sidebar-link>
-                    <x-lumoryx.sidebar-link icon="PO" :href="route('applications.create')" :active="request()->routeIs('applications.create', 'applications.create.type')">Postulaciones</x-lumoryx.sidebar-link>
-                    <x-lumoryx.sidebar-link icon="NO" :href="route('user.notifications')" :active="request()->routeIs('user.notifications')" :badge="$unreadNotifications ?: null" badge-alert>Notificaciones</x-lumoryx.sidebar-link>
-                    <x-lumoryx.sidebar-link icon="PF" :href="route('user.profile')" :active="request()->routeIs('user.profile')">Perfil</x-lumoryx.sidebar-link>
-                    <x-lumoryx.sidebar-link icon="AJ" :href="route('user.settings')" :active="request()->routeIs('user.settings')">Ajustes</x-lumoryx.sidebar-link>
+                    <x-lumoryx.sidebar-link icon="<svg viewBox='0 0 24 24'><path d='M3 11l9-8 9 8M5 10v10h14V10'/></svg>" :href="route('dashboard')" :active="request()->routeIs('dashboard')">Inicio</x-lumoryx.sidebar-link>
+                    <x-lumoryx.sidebar-link icon="<svg viewBox='0 0 24 24'><path d='M7 3h7l4 4v14H7V3Z'/><path d='M14 3v5h5M10 12h5M10 16h5'/></svg>" :href="route('applications.index')" :active="request()->routeIs('applications.index', 'applications.show')" :badge="$applicationCount ?: null">Mis postulaciones</x-lumoryx.sidebar-link>
+                    <x-lumoryx.sidebar-link icon="<svg viewBox='0 0 24 24'><path d='M12 5v14M5 12h14'/></svg>" :href="route('applications.create')" :active="request()->routeIs('applications.create', 'applications.create.type')">Postulaciones</x-lumoryx.sidebar-link>
+                    <x-lumoryx.sidebar-link icon="<svg viewBox='0 0 24 24'><path d='M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9'/><path d='M13.7 21a2 2 0 0 1-3.4 0'/></svg>" :href="route('user.notifications')" :active="request()->routeIs('user.notifications')" :badge="$unreadNotifications ?: null" badge-alert>Notificaciones</x-lumoryx.sidebar-link>
+                    <x-lumoryx.sidebar-link icon="<svg viewBox='0 0 24 24'><circle cx='12' cy='8' r='4'/><path d='M4 21v-1a8 8 0 0 1 16 0v1'/></svg>" :href="route('user.profile')" :active="request()->routeIs('user.profile')">Perfil</x-lumoryx.sidebar-link>
+                    <x-lumoryx.sidebar-link icon="<svg viewBox='0 0 24 24'><circle cx='12' cy='12' r='3'/><path d='M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z'/></svg>" :href="route('user.settings')" :active="request()->routeIs('user.settings')">Ajustes</x-lumoryx.sidebar-link>
                 </nav>
 
                 <div class="shrink-0 space-y-4 pt-5">
