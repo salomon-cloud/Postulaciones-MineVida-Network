@@ -378,6 +378,110 @@
         box-shadow: 0 0 12px rgba(250, 204, 21, 0.35);
     }
 
+    .lumoryx-app-progress {
+        @apply grid grid-cols-4 gap-1;
+    }
+
+    .lumoryx-app-progress-step {
+        @apply flex flex-col items-center text-center;
+    }
+
+    .lumoryx-app-progress-track {
+        @apply relative flex h-9 w-full items-center justify-center;
+    }
+
+    .lumoryx-app-progress-track::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 50%;
+        top: 50%;
+        height: 2px;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.1);
+        transition: background 0.4s ease;
+    }
+
+    .lumoryx-app-progress-step:first-child .lumoryx-app-progress-track::before {
+        display: none;
+    }
+
+    .lumoryx-app-progress-track.is-filled::before {
+        background: var(--step-color, #fbbf24);
+        box-shadow: 0 0 8px color-mix(in srgb, var(--step-color, #fbbf24) 55%, transparent);
+    }
+
+    .lumoryx-app-progress-node {
+        @apply relative z-10 grid h-8 w-8 shrink-0 place-items-center rounded-full border text-xs font-black text-slate-500 transition;
+        background: rgba(255, 255, 255, 0.045);
+        border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    .lumoryx-app-progress-node.is-done {
+        border-color: var(--step-color, #fbbf24);
+        background: var(--step-color, #fbbf24);
+        color: #050506;
+        box-shadow: 0 4px 14px color-mix(in srgb, var(--step-color, #fbbf24) 45%, transparent);
+    }
+
+    .lumoryx-app-progress-node.is-current {
+        border-color: var(--step-color, #fbbf24);
+        color: var(--step-color, #fbbf24);
+        background: color-mix(in srgb, var(--step-color, #fbbf24) 14%, rgba(255, 255, 255, 0.04));
+        box-shadow: 0 0 0 4px color-mix(in srgb, var(--step-color, #fbbf24) 20%, transparent);
+    }
+
+    .lumoryx-app-progress-label {
+        @apply mt-2 truncate text-[10px] font-bold uppercase tracking-wide text-slate-500 transition sm:text-xs;
+    }
+
+    .lumoryx-app-progress-step.is-active .lumoryx-app-progress-label {
+        @apply text-slate-200;
+    }
+
+    .lumoryx-timeline-item {
+        animation: lumoryx-fade-up 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .lumoryx-action-menu-trigger {
+        @apply grid h-9 w-9 shrink-0 place-items-center rounded-md border border-white/10 text-slate-300 transition hover:border-amber-300/30 hover:bg-white/[.07] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300;
+        background: rgba(255, 255, 255, 0.03);
+    }
+
+    .lumoryx-action-menu-trigger svg {
+        @apply h-4 w-4;
+        fill: currentColor;
+    }
+
+    .lumoryx-action-menu {
+        @apply fixed z-[60] w-56 overflow-hidden rounded-lg border border-white/10 py-1.5;
+        background: linear-gradient(180deg, rgba(20, 20, 24, 0.98), rgba(10, 10, 12, 0.98));
+        backdrop-filter: blur(14px);
+        box-shadow: 0 20px 44px rgba(0, 0, 0, 0.45);
+    }
+
+    .lumoryx-action-menu-item {
+        @apply flex w-full items-center gap-2.5 border-0 bg-transparent px-3.5 py-2.5 text-left text-sm font-semibold text-slate-200 transition hover:bg-white/[.07] hover:text-white focus-visible:outline-none focus-visible:bg-white/[.08];
+    }
+
+    .lumoryx-action-menu-item.is-success {
+        @apply text-emerald-300 hover:text-emerald-200;
+    }
+
+    .lumoryx-action-menu-item.is-danger {
+        @apply text-rose-300 hover:text-rose-200;
+    }
+
+    .lumoryx-action-menu-divider {
+        @apply my-1.5 border-t border-white/10;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .lumoryx-timeline-item {
+            animation: none;
+        }
+    }
+
     .lumoryx-title {
         @apply text-3xl font-black tracking-normal text-white sm:text-4xl;
     }

@@ -1,10 +1,5 @@
 <x-layouts.admin :title="'Seleccionados | '.config('app.name', 'MineVida Network')">
-    <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-        <div class="min-w-0">
-            <p class="lumoryx-kicker">Anuncio publico</p>
-            <h1 class="lumoryx-title">Seleccionados</h1>
-            <p class="mt-2 max-w-3xl text-sm leading-6 text-slate-400">Publica en Discord las personas aceptadas que ya fueron seleccionadas para el equipo.</p>
-        </div>
+    <x-lumoryx.page-header kicker="Anuncio publico" title="Seleccionados" description="Publica en Discord las personas aceptadas que ya fueron seleccionadas para el equipo." glow="emerald" glow2="amber">
         <div class="lumoryx-panel px-4 py-3 text-sm">
             <p class="text-slate-400">{{ count($selectedChannels) === 1 ? 'Canal configurado' : 'Canales configurados' }}</p>
             <p class="mt-1 font-semibold text-white">{{ count($selectedChannels) ?: 'Sin' }} {{ count($selectedChannels) === 1 ? 'canal' : 'canales' }}</p>
@@ -12,7 +7,7 @@
                 <p class="lumoryx-break mt-2 max-w-xs text-xs text-slate-500">{{ implode(', ', $selectedChannels) }}</p>
             @endif
         </div>
-    </div>
+    </x-lumoryx.page-header>
 
     @error('applications')
         <div class="mt-5 rounded-lg border border-rose-400/30 bg-rose-500/10 p-4 text-sm text-rose-100">{{ $message }}</div>

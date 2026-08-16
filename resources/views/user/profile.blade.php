@@ -1,4 +1,13 @@
 <x-layouts.user :title="'Perfil | '.config('app.name', 'MineVida Network')">
+    @php
+        $roleGlow = match ($user->role) {
+            \App\Enums\UserRole::Owner => 'rgba(250, 204, 21, 0.16)',
+            \App\Enums\UserRole::Admin => 'rgba(125, 211, 252, 0.16)',
+            \App\Enums\UserRole::Reviewer => 'rgba(110, 231, 183, 0.16)',
+            default => 'rgba(148, 163, 184, 0.12)',
+        };
+    @endphp
+
     <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div class="min-w-0">
             <p class="lumoryx-kicker">Cuenta conectada</p>
@@ -9,10 +18,11 @@
     </div>
 
     <section class="mt-8 grid gap-5 xl:grid-cols-[.38fr_.62fr]">
-        <x-lumoryx.card class="p-6">
-            <div class="flex items-start gap-4">
+        <x-lumoryx.card class="relative overflow-hidden p-6">
+            <div class="pointer-events-none absolute inset-0" style="background: radial-gradient(circle at 100% 0%, {{ $roleGlow }}, transparent 55%);"></div>
+            <div class="relative flex items-start gap-4">
                 @if ($user->discordAvatarUrl())
-                    <img class="h-16 w-16 rounded-lg border border-white/10 object-cover" src="{{ $user->discordAvatarUrl() }}" alt="{{ $user->name }}">
+                    <img class="h-16 w-16 rounded-lg border border-white/15 object-cover shadow-panel" src="{{ $user->discordAvatarUrl() }}" alt="{{ $user->name }}">
                 @else
                     <span class="lumoryx-icon-tile h-16 w-16 text-xl font-black text-amber-100">{{ str($user->name)->substr(0, 1)->upper() }}</span>
                 @endif
@@ -59,7 +69,17 @@
                 </div>
                 <div class="divide-y divide-white/10">
                     @forelse ($applications as $application)
-                        <a href="{{ route('applications.show', $application) }}" class="block p-5 transition hover:bg-white/[.04]">
+                        @php
+                            $statusAccent = match ($application->status) {
+                                \App\Enums\ApplicationStatus::Pending => 'border-l-slate-400',
+                                \App\Enums\ApplicationStatus::InReview => 'border-l-amber-400',
+                                \App\Enums\ApplicationStatus::Interview => 'border-l-sky-400',
+                                \App\Enums\ApplicationStatus::Accepted => 'border-l-emerald-400',
+                                \App\Enums\ApplicationStatus::Rejected => 'border-l-rose-400',
+                                \App\Enums\ApplicationStatus::Cancelled => 'border-l-zinc-500',
+                            };
+                        @endphp
+                        <a href="{{ route('applications.show', $application) }}" class="block border-l-4 {{ $statusAccent }} p-5 transition hover:bg-white/[.04]">
                             <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                                 <div class="min-w-0">
                                     <p class="truncate font-semibold text-white">{{ $application->typeLabel() }} - {{ $application->minecraft_nick }}</p>

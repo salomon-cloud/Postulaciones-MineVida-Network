@@ -21,7 +21,7 @@ Route::get('/reglas', RulesController::class)->name('rules');
 
 Route::view('/offline', 'offline')->name('offline');
 
-Route::get('/login', fn () => redirect()->route('login.discord'))->name('login');
+Route::view('/login', 'auth.login')->middleware('guest')->name('login');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login/discord', [DiscordController::class, 'redirect'])

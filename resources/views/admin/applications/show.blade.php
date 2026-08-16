@@ -1,36 +1,47 @@
 <x-layouts.admin :title="'Detalle admin | '.config('app.name', 'MineVida Network')">
     @php
         $latestInterview = $application->interviews->sortByDesc('scheduled_at')->first();
+        $statusGlow = match ($application->status) {
+            \App\Enums\ApplicationStatus::Pending => 'rgba(148, 163, 184, 0.14)',
+            \App\Enums\ApplicationStatus::InReview => 'rgba(250, 204, 21, 0.14)',
+            \App\Enums\ApplicationStatus::Interview => 'rgba(125, 211, 252, 0.16)',
+            \App\Enums\ApplicationStatus::Accepted => 'rgba(110, 231, 183, 0.16)',
+            \App\Enums\ApplicationStatus::Rejected => 'rgba(253, 164, 175, 0.14)',
+            \App\Enums\ApplicationStatus::Cancelled => 'rgba(161, 161, 170, 0.12)',
+        };
     @endphp
 
-    <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-        <div class="min-w-0">
-            <p class="lumoryx-kicker">{{ $application->typeLabel() }}</p>
-            <h1 class="lumoryx-title truncate">{{ $application->minecraft_nick }}</h1>
-            <p class="mt-2 truncate text-sm text-slate-400">{{ $application->user->discord_username }} - {{ $application->created_at->format('Y-m-d H:i') }}</p>
+    <div class="lumoryx-panel-glow relative overflow-hidden p-5 sm:p-6">
+        <div class="pointer-events-none absolute inset-0" style="background: radial-gradient(circle at 12% 0%, {{ $statusGlow }}, transparent 55%);"></div>
+        <div class="relative flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div class="min-w-0">
+                <p class="lumoryx-kicker">{{ $application->typeLabel() }}</p>
+                <h1 class="lumoryx-title truncate">{{ $application->minecraft_nick }}</h1>
+                <p class="mt-2 truncate text-sm text-slate-400">{{ $application->user->discord_username }} - {{ $application->created_at->format('Y-m-d H:i') }}</p>
+            </div>
+            <div class="flex shrink-0 flex-wrap items-center gap-2">
+                <x-status-badge :status="$application->status" />
+                @can('delete', $application)
+                    <form
+                        method="POST"
+                        action="{{ route('admin.applications.destroy', $application) }}"
+                        data-confirm
+                        data-confirm-title="Eliminar postulacion"
+                        data-confirm-message="La postulacion de {{ $application->minecraft_nick }} se ocultara del panel y del usuario. Esta accion conserva el registro interno."
+                        data-confirm-confirm-text="Eliminar"
+                        data-confirm-tone="danger"
+                    >
+                        @csrf
+                        @method('DELETE')
+                        <button class="lumoryx-button-danger px-3 py-2" type="submit">Eliminar</button>
+                    </form>
+                @endcan
+            </div>
         </div>
-        <div class="flex shrink-0 flex-wrap items-center gap-2">
-            <x-status-badge :status="$application->status" />
-            @can('delete', $application)
-                <form
-                    method="POST"
-                    action="{{ route('admin.applications.destroy', $application) }}"
-                    data-confirm
-                    data-confirm-title="Eliminar postulacion"
-                    data-confirm-message="La postulacion de {{ $application->minecraft_nick }} se ocultara del panel y del usuario. Esta accion conserva el registro interno."
-                    data-confirm-confirm-text="Eliminar"
-                    data-confirm-tone="danger"
-                >
-                    @csrf
-                    @method('DELETE')
-                    <button class="lumoryx-button-danger px-3 py-2" type="submit">Eliminar</button>
-                </form>
-            @endcan
-        </div>
-    </div>
 
-    <div class="mt-6">
-        <x-application-progress :status="$application->status" />
+        <div class="relative mt-7">
+            <x-application-progress :status="$application->status" />
+        </div>
     </div>
 
     @if ($latestInterview)
@@ -259,9 +270,12 @@
             </div>
             <div class="divide-y divide-white/10">
                 @foreach ($application->answers as $answer)
-                    <article class="p-5">
-                        <h3 class="lumoryx-break text-sm font-semibold text-amber-100">{{ $answer->question }}</h3>
-                        <p class="lumoryx-break mt-2 whitespace-pre-line text-sm leading-6 text-slate-300">{{ $answer->answer }}</p>
+                    <article class="flex gap-4 p-5 transition hover:bg-white/[.025]">
+                        <span class="lumoryx-icon-tile mt-0.5 h-8 w-8 shrink-0 text-[11px] font-black text-amber-100">Q</span>
+                        <div class="min-w-0 flex-1">
+                            <h3 class="lumoryx-break text-sm font-semibold text-amber-100">{{ $answer->question }}</h3>
+                            <p class="lumoryx-break mt-2 whitespace-pre-line text-sm leading-6 text-slate-300">{{ $answer->answer }}</p>
+                        </div>
                     </article>
                 @endforeach
             </div>

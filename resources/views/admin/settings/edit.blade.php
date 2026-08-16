@@ -16,12 +16,7 @@
 @endphp
 
 <x-layouts.admin :title="'Configuracion | '.config('app.name', 'MineVida Network')">
-    <div class="flex flex-col gap-5 xl:flex-row xl:items-end xl:justify-between">
-        <div class="min-w-0">
-            <p class="lumoryx-kicker">Owner</p>
-            <h1 class="lumoryx-title">Configuracion</h1>
-            <p class="mt-2 max-w-3xl text-sm leading-6 text-slate-400">Ajusta el flujo del sistema, la conexion con Discord y los canales donde se publican anuncios automaticos.</p>
-        </div>
+    <x-lumoryx.page-header kicker="Owner" title="Configuracion" description="Ajusta el flujo del sistema, la conexion con Discord y los canales donde se publican anuncios automaticos." glow="violet" glow2="amber">
         <div class="grid gap-3 sm:grid-cols-3 xl:w-[520px]">
             <div class="rounded-lg border border-white/10 bg-white/[.035] p-4">
                 <p class="text-xs font-black uppercase tracking-wide text-slate-500">Estado</p>
@@ -40,7 +35,7 @@
                 </p>
             </div>
         </div>
-    </div>
+    </x-lumoryx.page-header>
 
     <form class="mt-6 space-y-6" method="POST" action="{{ route('admin.settings.update') }}">
         @csrf

@@ -1,12 +1,5 @@
 <x-layouts.admin :title="'Postulaciones admin | '.config('app.name', 'MineVida Network')">
-    <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-        <div class="min-w-0">
-            <p class="lumoryx-kicker">Panel de administracion</p>
-            <h1 class="mt-2 text-3xl font-black text-white sm:text-4xl">Postulaciones</h1>
-            <p class="mt-2 max-w-3xl text-slate-400">Revisa, filtra y gestiona las postulaciones enviadas al servidor.</p>
-        </div>
-        <p class="text-sm text-slate-500">Admin / Postulaciones</p>
-    </div>
+    <x-lumoryx.page-header kicker="Panel de administracion" title="Postulaciones" description="Revisa, filtra y gestiona las postulaciones enviadas al servidor." glow="amber" glow2="sky" />
 
     <section class="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <x-lumoryx.stat-card label="Pendientes" :value="$stats['pending']" hint="Esperando revision" tone="purple" icon="P" />
@@ -73,70 +66,78 @@
                                 <p class="text-xs text-slate-500">{{ $application->created_at->format('H:i') }}</p>
                             </td>
                             <td>
-                                <div class="flex min-w-max flex-wrap gap-2">
+                                <div class="flex items-center gap-2">
                                     <x-lumoryx.button class="px-3 py-1.5" variant="secondary" :href="route('admin.applications.show', $application)">Ver</x-lumoryx.button>
                                     @can('updateStatus', \App\Models\Application::class)
-                                        <form method="POST" action="{{ route('admin.applications.status', $application) }}">
-                                            @csrf
-                                            @method('PATCH')
-                                            <input type="hidden" name="status" value="pending">
-                                            <button class="lumoryx-button-secondary px-3 py-1.5" type="submit">Pendiente</button>
-                                        </form>
-                                        <form method="POST" action="{{ route('admin.applications.status', $application) }}">
-                                            @csrf
-                                            @method('PATCH')
-                                            <input type="hidden" name="status" value="in_review">
-                                            <button class="lumoryx-button-purple px-3 py-1.5" type="submit">Revision</button>
-                                        </form>
-                                        <form method="POST" action="{{ route('admin.applications.status', $application) }}">
-                                            @csrf
-                                            @method('PATCH')
-                                            <input type="hidden" name="status" value="interview">
-                                            <button class="lumoryx-button-blue px-3 py-1.5" type="submit">Entrevista</button>
-                                        </form>
-                                        <form
-                                            method="POST"
-                                            action="{{ route('admin.applications.status', $application) }}"
-                                            data-confirm
-                                            data-confirm-title="Aceptar postulacion"
-                                            data-confirm-message="La postulacion de {{ $application->minecraft_nick }} quedara aceptada y se enviara la notificacion correspondiente."
-                                            data-confirm-confirm-text="Aceptar"
-                                            data-confirm-tone="success"
-                                        >
-                                            @csrf
-                                            @method('PATCH')
-                                            <input type="hidden" name="status" value="accepted">
-                                            <input type="hidden" name="confirmed" value="1">
-                                            <button class="lumoryx-button-success px-3 py-1.5" type="submit">Aceptar</button>
-                                        </form>
-                                        <form
-                                            method="POST"
-                                            action="{{ route('admin.applications.status', $application) }}"
-                                            data-confirm
-                                            data-confirm-title="Rechazar postulacion"
-                                            data-confirm-message="La postulacion de {{ $application->minecraft_nick }} quedara rechazada y se notificara al usuario."
-                                            data-confirm-confirm-text="Rechazar"
-                                            data-confirm-tone="danger"
-                                        >
-                                            @csrf
-                                            @method('PATCH')
-                                            <input type="hidden" name="status" value="rejected">
-                                            <input type="hidden" name="confirmed" value="1">
-                                            <button class="lumoryx-button-danger px-3 py-1.5" type="submit">Rechazar</button>
-                                        </form>
-                                        <form
-                                            method="POST"
-                                            action="{{ route('admin.applications.destroy', $application) }}"
-                                            data-confirm
-                                            data-confirm-title="Eliminar postulacion"
-                                            data-confirm-message="La postulacion de {{ $application->minecraft_nick }} se ocultara del panel y del usuario. Esta accion conserva el registro interno."
-                                            data-confirm-confirm-text="Eliminar"
-                                            data-confirm-tone="danger"
-                                        >
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="lumoryx-button-danger px-3 py-1.5" type="submit">Eliminar</button>
-                                        </form>
+                                        <x-lumoryx.action-menu label="Mas acciones para {{ $application->minecraft_nick }}">
+                                            <form method="POST" action="{{ route('admin.applications.status', $application) }}">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="pending">
+                                                <button class="lumoryx-action-menu-item" type="submit">Marcar pendiente</button>
+                                            </form>
+                                            <form method="POST" action="{{ route('admin.applications.status', $application) }}">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="in_review">
+                                                <button class="lumoryx-action-menu-item" type="submit">Pasar a revision</button>
+                                            </form>
+                                            <form method="POST" action="{{ route('admin.applications.status', $application) }}">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="interview">
+                                                <button class="lumoryx-action-menu-item" type="submit">Pasar a entrevista</button>
+                                            </form>
+
+                                            <div class="lumoryx-action-menu-divider"></div>
+
+                                            <form
+                                                method="POST"
+                                                action="{{ route('admin.applications.status', $application) }}"
+                                                data-confirm
+                                                data-confirm-title="Aceptar postulacion"
+                                                data-confirm-message="La postulacion de {{ $application->minecraft_nick }} quedara aceptada y se enviara la notificacion correspondiente."
+                                                data-confirm-confirm-text="Aceptar"
+                                                data-confirm-tone="success"
+                                            >
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="accepted">
+                                                <input type="hidden" name="confirmed" value="1">
+                                                <button class="lumoryx-action-menu-item is-success" type="submit">Aceptar</button>
+                                            </form>
+                                            <form
+                                                method="POST"
+                                                action="{{ route('admin.applications.status', $application) }}"
+                                                data-confirm
+                                                data-confirm-title="Rechazar postulacion"
+                                                data-confirm-message="La postulacion de {{ $application->minecraft_nick }} quedara rechazada y se notificara al usuario."
+                                                data-confirm-confirm-text="Rechazar"
+                                                data-confirm-tone="danger"
+                                            >
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="rejected">
+                                                <input type="hidden" name="confirmed" value="1">
+                                                <button class="lumoryx-action-menu-item is-danger" type="submit">Rechazar</button>
+                                            </form>
+
+                                            <div class="lumoryx-action-menu-divider"></div>
+
+                                            <form
+                                                method="POST"
+                                                action="{{ route('admin.applications.destroy', $application) }}"
+                                                data-confirm
+                                                data-confirm-title="Eliminar postulacion"
+                                                data-confirm-message="La postulacion de {{ $application->minecraft_nick }} se ocultara del panel y del usuario. Esta accion conserva el registro interno."
+                                                data-confirm-confirm-text="Eliminar"
+                                                data-confirm-tone="danger"
+                                            >
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="lumoryx-action-menu-item is-danger" type="submit">Eliminar</button>
+                                            </form>
+                                        </x-lumoryx.action-menu>
                                     @endcan
                                 </div>
                             </td>

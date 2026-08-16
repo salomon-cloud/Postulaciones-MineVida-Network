@@ -1,28 +1,23 @@
 <x-layouts.admin :title="'Admin | '.config('app.name', 'MineVida Network')">
-    <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div class="min-w-0">
-            <p class="lumoryx-kicker">Administracion</p>
-            <h1 class="lumoryx-title">Dashboard</h1>
-            <p class="mt-2 max-w-3xl text-sm leading-6 text-slate-400">Vista rapida del movimiento de postulaciones y carga actual del equipo.</p>
-        </div>
+    <x-lumoryx.page-header kicker="Administracion" title="Dashboard" description="Vista rapida del movimiento de postulaciones y carga actual del equipo.">
         <x-lumoryx.button href="{{ route('admin.applications.index') }}">Revisar postulaciones</x-lumoryx.button>
-    </div>
 
-    <section class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6">
-        @foreach ([
-            'total' => 'Total',
-            'pending' => 'Pendientes',
-            'in_review' => 'En revision',
-            'interview' => 'Entrevistas',
-            'accepted' => 'Aceptadas',
-            'rejected' => 'Rechazadas',
-        ] as $key => $label)
-            <div class="lumoryx-stat-card">
-                <p class="text-3xl font-black text-white">{{ $stats[$key] ?? 0 }}</p>
-                <p class="mt-2 text-sm text-slate-400">{{ $label }}</p>
-            </div>
-        @endforeach
-    </section>
+        <x-slot:stats>
+            @foreach ([
+                'total' => 'Total',
+                'pending' => 'Pendientes',
+                'in_review' => 'En revision',
+                'interview' => 'Entrevistas',
+                'accepted' => 'Aceptadas',
+                'rejected' => 'Rechazadas',
+            ] as $key => $label)
+                <div class="border-b border-r border-white/10 p-4 last:border-r-0 lg:border-b-0">
+                    <p class="text-3xl font-black text-white">{{ $stats[$key] ?? 0 }}</p>
+                    <p class="mt-2 text-sm text-slate-400">{{ $label }}</p>
+                </div>
+            @endforeach
+        </x-slot:stats>
+    </x-lumoryx.page-header>
 
     <section class="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
         <div class="lumoryx-stat-card">

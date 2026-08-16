@@ -1,12 +1,7 @@
 <x-layouts.admin :title="'Entrevistas | '.config('app.name', 'MineVida Network')">
-    <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-        <div class="min-w-0">
-            <p class="lumoryx-kicker">Proceso de seleccion</p>
-            <h1 class="lumoryx-title">Entrevistas</h1>
-            <p class="mt-2 max-w-3xl text-sm leading-6 text-slate-400">Agenda, revisa y da seguimiento a las entrevistas programadas para postulantes.</p>
-        </div>
+    <x-lumoryx.page-header kicker="Proceso de seleccion" title="Entrevistas" description="Agenda, revisa y da seguimiento a las entrevistas programadas para postulantes." glow="sky" glow2="amber">
         <x-lumoryx.button href="{{ route('admin.applications.index', ['status' => 'interview']) }}">Ver postulaciones en entrevista</x-lumoryx.button>
-    </div>
+    </x-lumoryx.page-header>
 
     <section class="mt-6 grid gap-5 xl:grid-cols-[.62fr_.38fr]">
         <div class="lumoryx-panel overflow-hidden">

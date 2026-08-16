@@ -16,12 +16,21 @@
                 ->sortBy('scheduled_at')
                 ->first()
             : null;
+        $featuredGlow = $featured ? match ($featured->status) {
+            \App\Enums\ApplicationStatus::Pending => 'rgba(148, 163, 184, 0.14)',
+            \App\Enums\ApplicationStatus::InReview => 'rgba(250, 204, 21, 0.14)',
+            \App\Enums\ApplicationStatus::Interview => 'rgba(125, 211, 252, 0.16)',
+            \App\Enums\ApplicationStatus::Accepted => 'rgba(110, 231, 183, 0.16)',
+            \App\Enums\ApplicationStatus::Rejected => 'rgba(253, 164, 175, 0.14)',
+            \App\Enums\ApplicationStatus::Cancelled => 'rgba(161, 161, 170, 0.12)',
+        } : null;
     @endphp
 
     <section class="mt-8">
         @if ($featured)
-            <x-lumoryx.card class="overflow-hidden p-0">
-                <div class="grid gap-0 lg:grid-cols-[.34fr_.66fr]">
+            <x-lumoryx.card class="relative overflow-hidden p-0">
+                <div class="pointer-events-none absolute inset-0" style="background: radial-gradient(circle at 0% 0%, {{ $featuredGlow }}, transparent 55%);"></div>
+                <div class="relative grid gap-0 lg:grid-cols-[.34fr_.66fr]">
                     <div class="border-b border-white/10 p-6 lg:border-b-0 lg:border-r">
                         <div class="lumoryx-icon-tile h-14 w-14 text-sm font-black text-amber-100">{{ str($featured->typeLabel())->substr(0, 2)->upper() }}</div>
                         <h2 class="mt-5 text-2xl font-black text-white">{{ $featured->typeLabel() }}</h2>
