@@ -28,6 +28,17 @@ class AdminInterviewController extends Controller
             ->limit(12)
             ->get();
 
-        return view('admin.interviews.index', compact('upcoming', 'completed'));
+        $scheduled = ApplicationInterview::query()->where('status', ApplicationInterview::STATUS_SCHEDULED);
+
+        $stats = [
+            'scheduled' => (clone $scheduled)->count(),
+            'today' => (clone $scheduled)->whereDate('scheduled_at', today())->count(),
+            'week' => (clone $scheduled)->whereBetween('scheduled_at', [now(), now()->addWeek()])->count(),
+            'unassigned' => (clone $scheduled)->whereNull('interviewer_id')->count(),
+            'completed' => ApplicationInterview::query()->where('status', ApplicationInterview::STATUS_COMPLETED)->count(),
+            'cancelled' => ApplicationInterview::query()->where('status', ApplicationInterview::STATUS_CANCELLED)->count(),
+        ];
+
+        return view('admin.interviews.index', compact('upcoming', 'completed', 'stats'));
     }
 }

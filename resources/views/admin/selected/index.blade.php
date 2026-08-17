@@ -1,11 +1,17 @@
 <x-layouts.admin :title="'Seleccionados | '.config('app.name', 'MineVida Network')">
     <x-lumoryx.page-header kicker="Anuncio publico" title="Seleccionados" description="Publica en Discord las personas aceptadas que ya fueron seleccionadas para el equipo." glow="emerald" glow2="amber">
-        <div class="lumoryx-panel px-4 py-3 text-sm">
-            <p class="text-slate-400">{{ count($selectedChannels) === 1 ? 'Canal configurado' : 'Canales configurados' }}</p>
-            <p class="mt-1 font-semibold text-white">{{ count($selectedChannels) ?: 'Sin' }} {{ count($selectedChannels) === 1 ? 'canal' : 'canales' }}</p>
-            @if ($selectedChannels)
-                <p class="lumoryx-break mt-2 max-w-xs text-xs text-slate-500">{{ implode(', ', $selectedChannels) }}</p>
-            @endif
+        <div class="lumoryx-channel-badge {{ count($selectedChannels) ? 'is-ready' : 'is-missing' }}">
+            <span class="lumoryx-channel-badge-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16M4 15h16M10 3 8 21M16 3l-2 18"/></svg>
+            </span>
+            <div class="min-w-0">
+                <p class="lumoryx-channel-badge-title">
+                    {{ count($selectedChannels) ?: 'Sin' }} {{ count($selectedChannels) === 1 ? 'canal configurado' : 'canales configurados' }}
+                </p>
+                <p class="lumoryx-channel-badge-sub">
+                    {{ count($selectedChannels) ? 'Listo para publicar en Discord' : 'Configura un canal en Ajustes' }}
+                </p>
+            </div>
         </div>
     </x-lumoryx.page-header>
 
@@ -60,33 +66,69 @@
                 </table>
             </div>
         @else
-            <div class="p-8 text-center">
-                <div class="lumoryx-icon-tile mx-auto h-12 w-12 text-sm font-black text-amber-100">OK</div>
-                <h2 class="mt-4 text-lg font-bold text-white">No hay seleccionados pendientes</h2>
-                <p class="mt-2 text-sm text-slate-400">Cuando aceptes postulaciones, apareceran aqui para anunciarlas en Discord.</p>
+            <div class="p-4">
+                <x-lumoryx.empty-state tone="emerald" title="Todo al dia" body="No hay seleccionados pendientes de anunciar. Cuando aceptes postulaciones, apareceran aqui para publicarlas en Discord.">
+                    <x-slot:icon>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    </x-slot:icon>
+                </x-lumoryx.empty-state>
             </div>
         @endif
     </form>
 
     <section class="lumoryx-panel mt-6 overflow-hidden">
-        <div class="border-b border-white/10 p-5">
-            <h2 class="text-lg font-bold text-white">Anunciados recientemente</h2>
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 border-b border-white/10 p-5">
+            <div>
+                <h2 class="text-lg font-bold text-white">Anunciados recientemente</h2>
+                <p class="mt-1 text-sm text-slate-400">Publicaciones ya enviadas a Discord.</p>
+            </div>
+            <span class="lumoryx-count-chip">{{ $announced->count() }}</span>
         </div>
 
         @if ($announced->isNotEmpty())
-            <div class="divide-y divide-white/10">
+            <div class="d-grid gap-2 p-4">
                 @foreach ($announced as $application)
-                    <article class="d-flex flex-column gap-3 p-5 flex-sm-row align-items-sm-center justify-content-sm-between">
-                        <div class="min-w-0">
-                            <p class="lumoryx-break font-semibold text-white">{{ $application->minecraft_nick }}</p>
-                            <p class="mt-1 text-sm text-slate-400">{{ $application->typeLabel() }} - {{ $application->user?->discord_username ?? 'Sin usuario' }}</p>
+                    @php
+                        $announcedUser = $application->user;
+                        $announcedAvatar = $announcedUser?->discordAvatarUrl();
+                    @endphp
+                    <article class="lumoryx-row-card">
+                        <span class="lumoryx-row-accent" style="background: #6ee7b7;"></span>
+
+                        <div class="lumoryx-row-main">
+                            <span class="lumoryx-user-avatar-shell h-10 w-10">
+                                @if ($announcedAvatar)
+                                    <img class="lumoryx-user-avatar" src="{{ $announcedAvatar }}" alt="">
+                                @else
+                                    <span class="lumoryx-user-avatar-fallback">{{ str($application->minecraft_nick)->substr(0, 2)->upper() }}</span>
+                                @endif
+                            </span>
+                            <div class="min-w-0">
+                                <div class="lumoryx-row-title">
+                                    <h3>{{ $application->minecraft_nick }}</h3>
+                                    <span class="lumoryx-pill lumoryx-pill-emerald">{{ $application->typeLabel() }}</span>
+                                </div>
+                                <p class="lumoryx-row-sub">{{ $announcedUser?->discord_username ?? 'Sin usuario' }}</p>
+                            </div>
                         </div>
-                        <p class="flex-shrink-0 text-sm text-slate-500">{{ $application->selected_announced_at?->format('d/m/Y H:i') }}</p>
+
+                        <dl class="lumoryx-meta-list">
+                            <div class="lumoryx-meta">
+                                <dt>Anunciado</dt>
+                                <dd>{{ $application->selected_announced_at?->format('d/m/Y H:i') ?? '-' }}</dd>
+                            </div>
+                        </dl>
                     </article>
                 @endforeach
             </div>
         @else
-            <p class="p-5 text-sm text-slate-400">Aun no se han publicado seleccionados.</p>
+            <div class="p-4">
+                <x-lumoryx.empty-state title="Sin publicaciones" body="Aun no se han publicado seleccionados en Discord.">
+                    <x-slot:icon>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                    </x-slot:icon>
+                </x-lumoryx.empty-state>
+            </div>
         @endif
     </section>
 </x-layouts.admin>
