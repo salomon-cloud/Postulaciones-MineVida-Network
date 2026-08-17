@@ -1,5 +1,5 @@
 <x-layouts.user :title="'Mis postulaciones | '.config('app.name', 'MineVida Network')">
-    <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <div class="d-flex flex-column gap-4 flex-lg-row align-items-lg-center justify-content-lg-between">
         <div class="min-w-0">
             <h1 class="text-3xl font-black text-white sm:text-4xl">Mis postulaciones</h1>
             <p class="mt-2 max-w-3xl text-slate-400">Consulta el estado de tus procesos y las novedades mas recientes.</p>
@@ -28,9 +28,9 @@
 
     <section class="mt-8">
         @if ($featured)
-            <x-lumoryx.card class="relative overflow-hidden p-0">
-                <div class="pointer-events-none absolute inset-0" style="background: radial-gradient(circle at 0% 0%, {{ $featuredGlow }}, transparent 55%);"></div>
-                <div class="relative grid gap-0 lg:grid-cols-[.34fr_.66fr]">
+            <x-lumoryx.card class="position-relative overflow-hidden p-0">
+                <div class="pointer-events-none position-absolute inset-0" style="background: radial-gradient(circle at 0% 0%, {{ $featuredGlow }}, transparent 55%);"></div>
+                <div style="--gtc: .34fr .66fr;" class="position-relative d-grid gap-0 grid-cols-custom-lg">
                     <div class="border-b border-white/10 p-6 lg:border-b-0 lg:border-r">
                         <div class="lumoryx-icon-tile h-14 w-14 text-sm font-black text-amber-100">{{ str($featured->typeLabel())->substr(0, 2)->upper() }}</div>
                         <h2 class="mt-5 text-2xl font-black text-white">{{ $featured->typeLabel() }}</h2>
@@ -40,9 +40,9 @@
                     <div class="p-6">
                         <h3 class="text-lg font-black text-white">Estado actual</h3>
                         <div class="mt-6"><x-lumoryx.timeline :status="$featured->status" /></div>
-                        <div class="mt-6 grid gap-3 md:grid-cols-2">
+                        <div class="mt-6 d-grid gap-3 grid-cols-md-2">
                             <div class="rounded-lg border border-white/10 bg-white/[.035] p-5">
-                                <div class="flex gap-4">
+                                <div class="d-flex gap-4">
                                     <span class="lumoryx-icon-tile h-10 w-10 text-sm font-black text-amber-100">i</span>
                                     <div class="min-w-0">
                                         <p class="font-bold text-white">{{ $featured->status->label() }}</p>
@@ -56,12 +56,12 @@
                             </div>
                         </div>
                         @if ($featuredInterview)
-                            <a href="{{ route('applications.show', $featured) }}" class="mt-3 block rounded-lg border border-sky-300/25 bg-sky-300/10 p-4 text-sm text-sky-100 transition hover:bg-sky-300/15">
+                            <a href="{{ route('applications.show', $featured) }}" class="mt-3 d-block rounded-lg border border-sky-300/25 bg-sky-300/10 p-4 text-sm text-sky-100 transition hover:bg-sky-300/15">
                                 Entrevista programada para {{ $featuredInterview->scheduled_at->format('d/m/Y H:i') }}.
                                 {{ $featuredInterview->location ?: 'Revisa Discord para las indicaciones.' }}
                             </a>
                         @elseif ($featured->cooldown_until && $featured->cooldown_until->isFuture())
-                            <a href="{{ route('applications.show', $featured) }}" class="mt-3 block rounded-lg border border-amber-300/25 bg-amber-300/10 p-4 text-sm text-amber-100 transition hover:bg-amber-300/15">
+                            <a href="{{ route('applications.show', $featured) }}" class="mt-3 d-block rounded-lg border border-amber-300/25 bg-amber-300/10 p-4 text-sm text-amber-100 transition hover:bg-amber-300/15">
                                 Podras volver a postular {{ $featured->cooldown_until->diffForHumans() }}.
                             </a>
                         @endif
@@ -91,7 +91,7 @@
                                 \App\Enums\ApplicationStatus::Cancelled => 'border-l-zinc-500',
                             };
                         @endphp
-                        <a href="{{ route('applications.show', $application) }}" class="flex min-w-0 items-center justify-between gap-4 border-l-4 {{ $statusAccent }} p-5 transition hover:bg-white/[.04]">
+                        <a href="{{ route('applications.show', $application) }}" class="d-flex min-w-0 align-items-center justify-content-between gap-4 border-l-4 {{ $statusAccent }} p-5 transition hover:bg-white/[.04]">
                             <div class="min-w-0">
                                 <p class="truncate font-semibold text-white">{{ $application->typeLabel() }} - {{ $application->minecraft_nick }}</p>
                                 <p class="text-sm text-slate-400">{{ $application->created_at->format('Y-m-d H:i') }}</p>
@@ -106,12 +106,12 @@
 
     <section class="mt-8">
         <x-lumoryx.card class="overflow-hidden p-0">
-            <div class="flex flex-col gap-4 border-b border-white/10 p-5 sm:flex-row sm:items-center sm:justify-between">
-                <div class="flex min-w-0 items-center gap-4">
+            <div class="d-flex flex-column gap-4 border-b border-white/10 p-5 flex-sm-row align-items-sm-center justify-content-sm-between">
+                <div class="d-flex min-w-0 align-items-center gap-4">
                     <span class="lumoryx-icon-tile h-11 w-11 text-sm font-black text-amber-100">!</span>
                     <h2 class="truncate text-lg font-black text-white">Notificaciones recientes</h2>
                 </div>
-                <x-lumoryx.button class="shrink-0" variant="secondary" href="{{ route('dashboard') }}">Ver resumen</x-lumoryx.button>
+                <x-lumoryx.button class="flex-shrink-0" variant="secondary" href="{{ route('dashboard') }}">Ver resumen</x-lumoryx.button>
             </div>
             <div class="space-y-3 p-5">
                 @forelse ($recentNotifications as $notification)

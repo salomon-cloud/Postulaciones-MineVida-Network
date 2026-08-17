@@ -12,7 +12,7 @@
         <input type="hidden" name="step" value="{{ $fixedStep }}">
     @endif
 
-    <div class="grid gap-4 lg:grid-cols-[1fr_.38fr]">
+    <div style="--gtc: 1fr .38fr;" class="d-grid gap-4 grid-cols-custom-lg">
         <div>
             <x-lumoryx.input
                 name="label"
@@ -31,7 +31,7 @@
         </x-lumoryx.select>
     </div>
 
-    <div class="grid gap-4 md:grid-cols-3">
+    <div class="d-grid gap-4 grid-cols-md-3">
         @if ($fixedStep)
             <div class="rounded-lg border border-white/10 bg-white/[.035] p-4">
                 <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Seccion</p>
@@ -54,16 +54,16 @@
             required
         />
 
-        <label class="flex h-full items-center justify-between gap-3 rounded-lg border border-white/10 bg-white/[.035] p-4 text-sm text-slate-300">
+        <label class="d-flex h-100 align-items-center justify-content-between gap-3 rounded-lg border border-white/10 bg-white/[.035] p-4 text-sm text-slate-300">
             <span>
-                <span class="block font-semibold text-white">Obligatoria</span>
-                <span class="mt-1 block text-slate-400">El usuario debe responderla.</span>
+                <span class="d-block font-semibold text-white">Obligatoria</span>
+                <span class="mt-1 d-block text-slate-400">El usuario debe responderla.</span>
             </span>
-            <input class="lumoryx-toggle-checkbox shrink-0" type="checkbox" name="is_required" value="1" @checked($isRequired)>
+            <input class="lumoryx-toggle-checkbox flex-shrink-0" type="checkbox" name="is_required" value="1" @checked($isRequired)>
         </label>
     </div>
 
-    <div class="grid gap-4 md:grid-cols-2">
+    <div class="d-grid gap-4 grid-cols-md-2">
         <x-lumoryx.input
             name="placeholder"
             label="Ejemplo dentro del campo"
@@ -81,7 +81,7 @@
 
     <details class="rounded-lg border border-white/10 bg-white/[.025] p-4">
         <summary class="cursor-pointer text-sm font-semibold text-white">Opciones y ajustes avanzados</summary>
-        <div class="mt-4 grid gap-4">
+        <div class="mt-4 d-grid gap-4">
             <x-lumoryx.textarea
                 name="options_text"
                 label="Opciones si el tipo es seleccion"
@@ -107,7 +107,7 @@
         </div>
     </details>
 
-    <div class="flex justify-end">
+    <div class="d-flex justify-content-end">
         <button class="lumoryx-button-primary" type="submit">{{ $submitLabel }}</button>
     </div>
 </div>

@@ -22,13 +22,13 @@
 @endphp
 
 <section class="lumoryx-panel overflow-hidden">
-    <div class="relative p-5 sm:p-7">
-        <div class="pointer-events-none absolute inset-0 opacity-80">
-            <div class="absolute -right-24 -top-24 h-64 w-64 rounded-full {{ $glowClass }} blur-3xl"></div>
-            <div class="absolute bottom-0 left-1/3 h-40 w-72 rounded-full {{ $glow2Class }} blur-3xl"></div>
+    <div class="position-relative p-5 sm:p-7">
+        <div class="pointer-events-none position-absolute inset-0 opacity-80">
+            <div class="position-absolute -right-24 -top-24 h-64 w-64 rounded-full {{ $glowClass }} blur-3xl"></div>
+            <div class="position-absolute bottom-0 left-1/3 h-40 w-72 rounded-full {{ $glow2Class }} blur-3xl"></div>
         </div>
 
-        <div class="relative flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div class="position-relative d-flex flex-column gap-4 flex-lg-row align-items-lg-end justify-content-lg-between">
             <div class="min-w-0">
                 <p class="lumoryx-kicker">{{ $kicker }}</p>
                 <h1 class="lumoryx-title mt-2">{{ $title }}</h1>
@@ -38,7 +38,7 @@
             </div>
 
             @if (trim($slot) !== '')
-                <div class="flex shrink-0 flex-col gap-3 sm:flex-row sm:items-center">
+                <div class="d-flex flex-shrink-0 flex-column gap-3 flex-sm-row align-items-sm-center">
                     {{ $slot }}
                 </div>
             @endif
@@ -46,7 +46,7 @@
     </div>
 
     @isset($stats)
-        <div class="grid border-t border-white/10 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6">
+        <div class="d-grid border-t border-white/10 grid-cols-sm-2 grid-cols-lg-3 grid-cols-xxl-6">
             {{ $stats }}
         </div>
     @endisset

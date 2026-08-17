@@ -18,7 +18,7 @@
             <span class="lumoryx-user-presence"></span>
         </span>
     @endif
-    <span class="min-w-0 text-left">
+    <span class="min-w-0 text-start">
         <span class="lumoryx-user-name">{{ $displayName }}</span>
         <span class="lumoryx-user-meta">
             <span class="lumoryx-user-meta-dot"></span>

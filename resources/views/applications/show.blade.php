@@ -11,9 +11,9 @@
         };
     @endphp
 
-    <div class="lumoryx-panel-glow relative overflow-hidden p-5 sm:p-6">
-        <div class="pointer-events-none absolute inset-0" style="background: radial-gradient(circle at 12% 0%, {{ $statusGlow }}, transparent 55%);"></div>
-        <div class="relative flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <div class="lumoryx-panel-glow position-relative overflow-hidden p-5 sm:p-6">
+        <div class="pointer-events-none position-absolute inset-0" style="background: radial-gradient(circle at 12% 0%, {{ $statusGlow }}, transparent 55%);"></div>
+        <div class="position-relative d-flex flex-column gap-4 flex-sm-row align-items-sm-start justify-content-sm-between">
             <div class="min-w-0">
                 <p class="lumoryx-kicker">{{ $application->typeLabel() }}</p>
                 <h1 class="lumoryx-title truncate">{{ $application->minecraft_nick }}</h1>
@@ -22,12 +22,12 @@
             <x-status-badge :status="$application->status" />
         </div>
 
-        <div class="relative mt-7">
+        <div class="position-relative mt-7">
             <x-application-progress :status="$application->status" />
         </div>
     </div>
 
-    <section class="mt-6 grid gap-5 lg:grid-cols-2">
+    <section class="mt-6 d-grid gap-5 grid-cols-lg-2">
         <div class="lumoryx-panel p-5">
             <p class="lumoryx-kicker">Estado actual</p>
             <h2 class="mt-2 text-2xl font-black text-white">{{ $application->status->label() }}</h2>
@@ -48,7 +48,7 @@
 
     @if ($latestInterview)
         <section class="lumoryx-panel-glow mt-6 p-5">
-            <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div class="d-flex flex-column gap-4 flex-sm-row align-items-sm-center justify-content-sm-between">
                 <div class="min-w-0">
                     <p class="lumoryx-kicker">Entrevista {{ $latestInterview->statusLabel() }}</p>
                     <h2 class="mt-1 text-2xl font-black text-white">{{ $latestInterview->scheduled_at?->format('d/m/Y H:i') ?? 'Fecha por definir' }}</h2>
@@ -73,14 +73,14 @@
         </div>
     @endif
 
-    <section class="mt-6 grid gap-5 lg:grid-cols-[.8fr_1.2fr]">
+    <section style="--gtc: .8fr 1.2fr;" class="mt-6 d-grid gap-5 grid-cols-custom-lg">
         <div class="lumoryx-panel p-5">
             <h2 class="text-lg font-bold text-white">Datos</h2>
             <dl class="mt-4 space-y-3 text-sm">
-                <div class="flex justify-between gap-4"><dt class="text-slate-400">Edad</dt><dd class="text-white">{{ $application->age }}</dd></div>
-                <div class="flex justify-between gap-4"><dt class="text-slate-400">Pais</dt><dd class="lumoryx-break text-right text-white">{{ $application->country }}</dd></div>
+                <div class="d-flex justify-content-between gap-4"><dt class="text-slate-400">Edad</dt><dd class="text-white">{{ $application->age }}</dd></div>
+                <div class="d-flex justify-content-between gap-4"><dt class="text-slate-400">Pais</dt><dd class="lumoryx-break text-end text-white">{{ $application->country }}</dd></div>
                 @if ($application->timezone)
-                    <div class="flex justify-between gap-4"><dt class="text-slate-400">Zona horaria</dt><dd class="lumoryx-break text-right text-white">{{ $application->timezone }}</dd></div>
+                    <div class="d-flex justify-content-between gap-4"><dt class="text-slate-400">Zona horaria</dt><dd class="lumoryx-break text-end text-white">{{ $application->timezone }}</dd></div>
                 @endif
                 @if ($application->available_schedule)
                     <div><dt class="text-slate-400">Disponibilidad</dt><dd class="lumoryx-break mt-1 whitespace-pre-line text-white">{{ $application->available_schedule }}</dd></div>
@@ -99,7 +99,7 @@
                     data-confirm-tone="danger"
                 >
                     @csrf
-                    <button class="lumoryx-button-danger w-full" type="submit">Cancelar postulacion</button>
+                    <button class="lumoryx-button-danger w-100" type="submit">Cancelar postulacion</button>
                 </form>
             @endif
         </div>
@@ -117,8 +117,8 @@
                 </div>
                 <div class="divide-y divide-white/10">
                     @foreach ($application->answers as $answer)
-                        <article class="flex gap-4 p-5 transition hover:bg-white/[.025]">
-                            <span class="lumoryx-icon-tile mt-0.5 h-8 w-8 shrink-0 text-[11px] font-black text-amber-100">Q</span>
+                        <article class="d-flex gap-4 p-5 transition hover:bg-white/[.025]">
+                            <span class="lumoryx-icon-tile mt-0.5 h-8 w-8 flex-shrink-0 text-[11px] font-black text-amber-100">Q</span>
                             <div class="min-w-0 flex-1">
                                 <h3 class="lumoryx-break text-sm font-semibold text-amber-100">{{ $answer->question }}</h3>
                                 <p class="lumoryx-break mt-2 whitespace-pre-line text-sm leading-6 text-slate-300">{{ $answer->answer }}</p>

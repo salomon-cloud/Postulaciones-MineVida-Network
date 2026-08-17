@@ -17,7 +17,7 @@
 
 <x-layouts.admin :title="'Configuracion | '.config('app.name', 'MineVida Network')">
     <x-lumoryx.page-header kicker="Owner" title="Configuracion" description="Ajusta el flujo del sistema, la conexion con Discord y los canales donde se publican anuncios automaticos." glow="violet" glow2="amber">
-        <div class="grid gap-3 sm:grid-cols-3 xl:w-[520px]">
+        <div class="d-grid gap-3 grid-cols-sm-3 xl:w-[520px]">
             <div class="rounded-lg border border-white/10 bg-white/[.035] p-4">
                 <p class="text-xs font-black uppercase tracking-wide text-slate-500">Estado</p>
                 <p class="mt-2 text-lg font-black {{ old('applications_open', $settings['applications_open']) ? 'text-emerald-200' : 'text-rose-200' }}">
@@ -42,7 +42,7 @@
         @method('PATCH')
 
         <section class="lumoryx-panel overflow-hidden">
-            <div class="grid gap-0 lg:grid-cols-[300px_1fr]">
+            <div style="--gtc: 300px 1fr;" class="d-grid gap-0 grid-cols-custom-lg">
                 <div class="border-b border-white/10 bg-white/[.025] p-5 lg:border-b-0 lg:border-r">
                     <div class="lumoryx-icon-tile h-12 w-12 text-sm font-black text-amber-100">01</div>
                     <h2 class="mt-4 text-2xl font-black text-white">Estado general</h2>
@@ -50,18 +50,18 @@
                 </div>
 
                 <div class="space-y-5 p-5 sm:p-6">
-                    <label class="group flex flex-col gap-4 rounded-lg border border-white/10 bg-graphite-900/70 p-5 sm:flex-row sm:items-center sm:justify-between">
+                    <label class="group d-flex flex-column gap-4 rounded-lg border border-white/10 bg-graphite-900/70 p-5 flex-sm-row align-items-sm-center justify-content-sm-between">
                         <span class="min-w-0">
-                            <span class="block text-lg font-black text-white">Postulaciones abiertas</span>
-                            <span class="mt-1 block text-sm leading-6 text-slate-400">Cuando cambies este estado, el sistema puede publicar un aviso en Discord si los anuncios estan activos.</span>
+                            <span class="d-block text-lg font-black text-white">Postulaciones abiertas</span>
+                            <span class="mt-1 d-block text-sm leading-6 text-slate-400">Cuando cambies este estado, el sistema puede publicar un aviso en Discord si los anuncios estan activos.</span>
                         </span>
-                        <span class="flex shrink-0 items-center gap-3 rounded-full border border-white/10 bg-black/30 px-4 py-2 text-sm font-black text-white">
+                        <span class="d-flex flex-shrink-0 align-items-center gap-3 rounded-full border border-white/10 bg-black/30 px-4 py-2 text-sm font-black text-white">
                             {{ old('applications_open', $settings['applications_open']) ? 'Activas' : 'Pausadas' }}
                             <input class="lumoryx-toggle-checkbox" type="checkbox" name="applications_open" value="1" @checked(old('applications_open', $settings['applications_open']))>
                         </span>
                     </label>
 
-                    <div class="grid gap-5 md:grid-cols-2">
+                    <div class="d-grid gap-5 grid-cols-md-2">
                         <div>
                             <label class="lumoryx-label" for="minimum_age">Edad minima para postular</label>
                             <input class="lumoryx-input mt-2" id="minimum_age" name="minimum_age" type="number" min="10" max="30" value="{{ old('minimum_age', $settings['minimum_age']) }}" required>
@@ -80,9 +80,9 @@
             </div>
         </section>
 
-        <section class="grid gap-6 xl:grid-cols-[1fr_1.15fr]">
+        <section style="--gtc: 1fr 1.15fr;" class="d-grid gap-6 grid-cols-custom-xl">
             <div class="lumoryx-panel p-5 sm:p-6">
-                <div class="flex items-start gap-4">
+                <div class="d-flex align-items-start gap-4">
                     <div class="lumoryx-icon-tile h-12 w-12 text-sm font-black text-amber-100">02</div>
                     <div>
                         <h2 class="text-2xl font-black text-white">Acceso Discord</h2>
@@ -90,10 +90,10 @@
                     </div>
                 </div>
 
-                <label class="mt-6 flex flex-col gap-4 rounded-lg border border-white/10 bg-white/[.035] p-5 sm:flex-row sm:items-center sm:justify-between">
+                <label class="mt-6 d-flex flex-column gap-4 rounded-lg border border-white/10 bg-white/[.035] p-5 flex-sm-row align-items-sm-center justify-content-sm-between">
                     <span class="min-w-0">
-                        <span class="block font-bold text-white">Verificar pertenencia al servidor</span>
-                        <span class="mt-1 block text-sm leading-6 text-slate-400">Requiere scopes de Discord y el ID del servidor configurado en el entorno.</span>
+                        <span class="d-block font-bold text-white">Verificar pertenencia al servidor</span>
+                        <span class="mt-1 d-block text-sm leading-6 text-slate-400">Requiere scopes de Discord y el ID del servidor configurado en el entorno.</span>
                     </span>
                     <input class="lumoryx-toggle-checkbox" type="checkbox" name="require_discord_guild" value="1" @checked(old('require_discord_guild', $settings['require_discord_guild']))>
                 </label>
@@ -103,8 +103,8 @@
                 </div>
             </div>
 
-            <div class="lumoryx-panel p-5 sm:p-6 xl:col-span-2">
-                <div class="grid gap-6 xl:grid-cols-[320px_1fr]">
+            <div class="lumoryx-panel p-5 sm:p-6 col-span-xl-2">
+                <div style="--gtc: 320px 1fr;" class="d-grid gap-6 grid-cols-custom-xl">
                     <div>
                         <div class="lumoryx-icon-tile h-12 w-12 text-sm font-black text-amber-100">LOG</div>
                         <h2 class="mt-4 text-2xl font-black text-white">Logs del sistema</h2>
@@ -112,16 +112,16 @@
                             Envia registros privados a Discord cuando pase algo importante dentro del sistema de postulaciones.
                         </p>
 
-                        <label class="mt-5 flex items-center justify-between gap-4 rounded-lg border border-white/10 bg-white/[.035] p-4">
+                        <label class="mt-5 d-flex align-items-center justify-content-between gap-4 rounded-lg border border-white/10 bg-white/[.035] p-4">
                             <span>
-                                <span class="block font-bold text-white">Activar auditoria</span>
-                                <span class="mt-1 block text-xs leading-5 text-slate-500">Si lo apagas, no se enviaran logs a Discord.</span>
+                                <span class="d-block font-bold text-white">Activar auditoria</span>
+                                <span class="mt-1 d-block text-xs leading-5 text-slate-500">Si lo apagas, no se enviaran logs a Discord.</span>
                             </span>
                             <input class="lumoryx-toggle-checkbox" type="checkbox" name="discord_system_logs_enabled" value="1" @checked(old('discord_system_logs_enabled', $settings['discord_system_logs_enabled']))>
                         </label>
                     </div>
 
-                    <div class="grid gap-5 lg:grid-cols-[1fr_1.2fr]">
+                    <div style="--gtc: 1fr 1.2fr;" class="d-grid gap-5 grid-cols-custom-lg">
                         <div>
                             <label class="lumoryx-label" for="discord_system_log_channel_id">Canales privados de logs</label>
                             <textarea class="lumoryx-input mt-2 min-h-40" id="discord_system_log_channel_id" name="discord_system_log_channel_id" rows="6" inputmode="numeric" placeholder="123456789012345678&#10;987654321098765432">{{ $systemLogChannels }}</textarea>
@@ -133,12 +133,12 @@
 
                         <div>
                             <p class="lumoryx-label">Eventos que se enviaran</p>
-                            <div class="mt-2 grid gap-2 sm:grid-cols-2">
+                            <div class="mt-2 d-grid gap-2 grid-cols-sm-2">
                                 @foreach ($systemLogEvents as $eventKey => $eventLabel)
-                                    <label class="flex items-start gap-3 rounded-lg border border-white/10 bg-white/[.025] p-3 text-sm text-slate-300">
+                                    <label class="d-flex align-items-start gap-3 rounded-lg border border-white/10 bg-white/[.025] p-3 text-sm text-slate-300">
                                         <input class="mt-1 rounded border-white/10 bg-graphite-950 text-amber-300 focus:ring-amber-300" type="checkbox" name="discord_system_log_events[]" value="{{ $eventKey }}" @checked($systemLogSelectedEvents->contains($eventKey))>
                                         <span>
-                                            <span class="block font-bold text-white">{{ $eventLabel }}</span>
+                                            <span class="d-block font-bold text-white">{{ $eventLabel }}</span>
                                             <span class="text-xs text-slate-500">{{ $eventKey }}</span>
                                         </span>
                                     </label>
@@ -151,21 +151,21 @@
             </div>
 
             <div class="lumoryx-panel p-5 sm:p-6">
-                <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-                    <div class="flex items-start gap-4">
+                <div class="d-flex flex-column gap-4 flex-sm-row align-items-sm-start justify-content-sm-between">
+                    <div class="d-flex align-items-start gap-4">
                         <div class="lumoryx-icon-tile h-12 w-12 text-sm font-black text-amber-100">03</div>
                         <div>
                             <h2 class="text-2xl font-black text-white">Anuncios automaticos</h2>
                             <p class="mt-2 text-sm leading-6 text-slate-400">Publica apertura, cierre y seleccionados en uno o varios canales de Discord.</p>
                         </div>
                     </div>
-                    <label class="flex shrink-0 items-center gap-3 rounded-full border border-white/10 bg-white/[.035] px-4 py-2 text-sm font-black text-white">
+                    <label class="d-flex flex-shrink-0 align-items-center gap-3 rounded-full border border-white/10 bg-white/[.035] px-4 py-2 text-sm font-black text-white">
                         Activar
                         <input class="lumoryx-toggle-checkbox" type="checkbox" name="discord_announce_applications_window" value="1" @checked(old('discord_announce_applications_window', $settings['discord_announce_applications_window']))>
                     </label>
                 </div>
 
-                <div class="mt-6 grid gap-5 lg:grid-cols-2">
+                <div class="mt-6 d-grid gap-5 grid-cols-lg-2">
                     <div>
                         <label class="lumoryx-label" for="discord_announcement_channel_id">Canales para apertura y cierre</label>
                         <textarea class="lumoryx-input mt-2 min-h-32" id="discord_announcement_channel_id" name="discord_announcement_channel_id" rows="5" inputmode="numeric" placeholder="123456789012345678&#10;987654321098765432">{{ $announcementChannels }}</textarea>
@@ -181,7 +181,7 @@
                     </div>
                 </div>
 
-                <div class="mt-5 grid gap-5 lg:grid-cols-2">
+                <div class="mt-5 d-grid gap-5 grid-cols-lg-2">
                     <div>
                         <label class="lumoryx-label" for="discord_announcement_role_id">Rol a mencionar en apertura/cierre</label>
                         <input class="lumoryx-input mt-2" id="discord_announcement_role_id" name="discord_announcement_role_id" inputmode="numeric" value="{{ old('discord_announcement_role_id', $settings['discord_announcement_role_id']) }}" placeholder="ID del rol opcional">
@@ -199,7 +199,7 @@
 
         <section class="lumoryx-panel overflow-hidden">
             <div class="border-b border-white/10 bg-white/[.025] p-5 sm:p-6">
-                <div class="flex items-start gap-4">
+                <div class="d-flex align-items-start gap-4">
                     <div class="lumoryx-icon-tile h-12 w-12 text-sm font-black text-amber-100">04</div>
                     <div>
                         <h2 class="text-2xl font-black text-white">Mensajes de Discord</h2>
@@ -208,7 +208,7 @@
                 </div>
             </div>
 
-            <div class="grid gap-5 p-5 sm:p-6 xl:grid-cols-3">
+            <div class="d-grid gap-5 p-5 sm:p-6 grid-cols-xl-3">
                 <div>
                     <label class="lumoryx-label" for="discord_open_message">Mensaje de apertura</label>
                     <textarea class="lumoryx-input mt-2 min-h-36" id="discord_open_message" name="discord_open_message" rows="6" maxlength="1000" placeholder="Ejemplo: Ya abrimos postulaciones. Revisa los requisitos y envia tu solicitud.">{{ old('discord_open_message', $settings['discord_open_message']) }}</textarea>
@@ -228,7 +228,7 @@
                 </div>
             </div>
 
-            <div class="flex flex-col gap-3 border-t border-white/10 bg-black/20 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+            <div class="d-flex flex-column gap-3 border-t border-white/10 bg-black/20 p-5 flex-sm-row align-items-sm-center justify-content-sm-between sm:p-6">
                 <p class="text-sm leading-6 text-slate-400">Los IDs se guardan limpios y sin duplicados. Puedes volver a esta pantalla para agregar o quitar canales cuando quieras.</p>
                 <button class="lumoryx-button-primary" type="submit">Guardar configuracion</button>
             </div>

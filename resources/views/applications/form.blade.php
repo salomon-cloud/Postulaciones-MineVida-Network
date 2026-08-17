@@ -13,7 +13,7 @@
 @endphp
 
 <x-layouts.user :title="'Formulario '.$definition['label'].' | '.config('app.name', 'MineVida Network')">
-    <div class="mb-7 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <div class="mb-7 d-flex flex-column gap-4 flex-lg-row align-items-lg-center justify-content-lg-between">
         <div class="min-w-0">
             <p class="lumoryx-kicker">{{ $definition['label'] }}</p>
             <h1 class="mt-2 text-3xl font-black text-white sm:text-4xl">Formulario de postulacion</h1>
@@ -36,7 +36,7 @@
             $progressPercent = count($steps) > 1 ? round(($initialStep / (count($steps) - 1)) * 100) : 100;
         @endphp
         <div class="mb-5">
-            <div class="mb-2 flex items-center justify-between text-xs font-semibold text-slate-400">
+            <div class="mb-2 d-flex align-items-center justify-content-between text-xs font-semibold text-slate-400">
                 <span data-progress-label>Paso {{ $initialStep + 1 }} de {{ count($steps) }}</span>
                 <span data-progress-percent>{{ $progressPercent }}%</span>
             </div>
@@ -45,45 +45,45 @@
             </div>
         </div>
 
-        <div class="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <div class="mb-6 d-grid gap-3 grid-cols-sm-2 grid-cols-xl-4">
             @foreach ($steps as $index => $stepData)
                 @php
                     $isCurrent = $index === $initialStep;
                 @endphp
                 <button
-                    class="rounded-lg border p-3 text-left transition {{ $isCurrent ? 'border-amber-300/30 bg-amber-300/10' : 'border-white/10 bg-white/[.025] opacity-70' }}"
+                    class="rounded-lg border p-3 text-start transition {{ $isCurrent ? 'border-amber-300/30 bg-amber-300/10' : 'border-white/10 bg-white/[.025] opacity-70' }}"
                     type="button"
                     data-step-button="{{ $index }}"
                     @disabled($index > $initialStep)
                 >
-                    <div class="flex min-w-0 items-center gap-3">
+                    <div class="d-flex min-w-0 align-items-center gap-3">
                         <span
-                            class="grid h-9 w-9 shrink-0 place-items-center rounded-md border text-sm font-black {{ $isCurrent ? 'border-amber-300/30 bg-amber-300/15 text-amber-100' : 'border-white/10 bg-graphite-950/50 text-slate-400' }}"
+                            class="d-grid h-9 w-9 flex-shrink-0 place-items-center rounded-md border text-sm font-black {{ $isCurrent ? 'border-amber-300/30 bg-amber-300/15 text-amber-100' : 'border-white/10 bg-graphite-950/50 text-slate-400' }}"
                             data-step-number="{{ $index }}"
                         >{{ $index + 1 }}</span>
                         <div class="min-w-0">
                             <p class="truncate text-sm font-semibold {{ $isCurrent ? 'text-white' : 'text-slate-400' }}" data-step-title="{{ $index }}">{{ $stepData['title'] }}</p>
-                            <p class="mt-1 hidden truncate text-xs text-slate-500 lg:block">{{ $stepData['description'] }}</p>
+                            <p class="mt-1 d-none truncate text-xs text-slate-500 d-lg-block">{{ $stepData['description'] }}</p>
                         </div>
                     </div>
                 </button>
             @endforeach
         </div>
 
-        <div class="grid gap-6 xl:grid-cols-[.3fr_.7fr]">
+        <div style="--gtc: .3fr .7fr;" class="d-grid gap-6 grid-cols-custom-xl">
             <aside class="lumoryx-soft-panel p-5">
                 @if (! empty($definition['image_url']))
                     <div class="lumoryx-category-media mb-5 rounded-lg border border-white/10">
                         <img src="{{ $definition['image_url'] }}" alt="">
                     </div>
                 @endif
-                <div class="flex items-start gap-4 xl:block">
+                <div class="d-flex align-items-start gap-4 d-xl-block">
                     @if (! empty($definition['image_url']))
                         <div class="lumoryx-icon-tile h-12 w-12 text-sm font-black text-amber-100 xl:h-14 xl:w-14">{{ str($definition['label'])->substr(0, 2)->upper() }}</div>
                     @else
                         <div class="lumoryx-icon-tile h-12 w-12 text-sm font-black text-amber-100 xl:h-14 xl:w-14">{{ str($definition['label'])->substr(0, 2)->upper() }}</div>
                     @endif
-                    <div class="min-w-0 xl:mt-5">
+                    <div class="min-w-0 mt-xl-5">
                         <h2 class="text-xl font-black text-white">{{ $definition['label'] }}</h2>
                         <p class="mt-3 text-sm leading-6 text-slate-400">{{ $definition['summary'] }}</p>
                     </div>
@@ -110,7 +110,7 @@
                         </div>
 
                         @if ($index === 0)
-                            <div class="mb-5 grid gap-4 md:grid-cols-2">
+                            <div class="mb-5 d-grid gap-4 grid-cols-md-2">
                                 <div class="rounded-lg border border-white/10 bg-white/[.035] p-4">
                                     <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Usuario Discord</p>
                                     <p class="lumoryx-break mt-2 font-semibold text-white">{{ auth()->user()->discord_global_name ?: auth()->user()->discord_username ?: auth()->user()->name }}</p>
@@ -132,7 +132,7 @@
                         @endif
 
                         @if ($stepData['fields'] !== [])
-                            <div class="grid gap-5 md:grid-cols-2">
+                            <div class="d-grid gap-5 grid-cols-md-2">
                                 @foreach ($stepData['fields'] as $key)
                                     @php
                                         $field = $fields[$key];
@@ -149,12 +149,12 @@
 
                                     <div class="{{ $wide ? 'md:col-span-2' : '' }}">
                                         @if ($fieldType === 'checkbox')
-                                            <label class="flex flex-col gap-3 rounded-lg border border-white/10 bg-white/[.035] p-4 text-sm text-slate-300 sm:flex-row sm:items-center sm:justify-between">
-                                                <span class="flex min-w-0 items-start gap-3">
+                                            <label class="d-flex flex-column gap-3 rounded-lg border border-white/10 bg-white/[.035] p-4 text-sm text-slate-300 flex-sm-row align-items-sm-center justify-content-sm-between">
+                                                <span class="d-flex min-w-0 align-items-start gap-3">
                                                     <input class="mt-1 rounded border-white/10 bg-graphite-950 text-amber-300 focus:ring-amber-300" type="checkbox" name="{{ $key }}" value="1" @checked(old($key)) @required($required)>
                                                     <span class="lumoryx-break">{{ $field['label'] }}</span>
                                                 </span>
-                                                <a class="shrink-0 font-semibold text-amber-200 hover:text-white" href="{{ route('rules') }}" target="_blank" rel="noopener noreferrer">Ver reglas</a>
+                                                <a class="flex-shrink-0 font-semibold text-amber-200 hover:text-white" href="{{ route('rules') }}" target="_blank" rel="noopener noreferrer">Ver reglas</a>
                                             </label>
                                             @error($key)<p class="mt-2 text-sm text-rose-200">{{ $message }}</p>@enderror
                                         @elseif (in_array($fieldType, ['textarea', 'textarea_urls'], true))
@@ -209,10 +209,10 @@
                             </div>
                         @endif
 
-                        <div class="mt-7 flex flex-col-reverse gap-3 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
+                        <div class="mt-7 d-flex flex-column-reverse gap-3 border-t border-white/10 pt-5 flex-sm-row align-items-sm-center justify-content-sm-between">
                             <x-lumoryx.button variant="secondary" href="{{ route('applications.create') }}">Salir</x-lumoryx.button>
 
-                            <div class="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+                            <div class="d-flex flex-column-reverse gap-3 flex-sm-row justify-content-sm-end">
                                 @if ($index > 0)
                                     <button class="lumoryx-button-secondary" type="button" data-step-back>Atras</button>
                                 @endif

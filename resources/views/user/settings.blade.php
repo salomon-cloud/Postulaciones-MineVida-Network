@@ -1,5 +1,5 @@
 <x-layouts.user :title="'Ajustes | '.config('app.name', 'MineVida Network')">
-    <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <div class="d-flex flex-column gap-4 flex-lg-row align-items-lg-center justify-content-lg-between">
         <div class="min-w-0">
             <p class="lumoryx-kicker">Preferencias</p>
             <h1 class="mt-2 text-3xl font-black text-white sm:text-4xl">Ajustes</h1>
@@ -8,10 +8,10 @@
         <x-lumoryx.user-dropdown />
     </div>
 
-    <section class="mt-8 grid gap-5 xl:grid-cols-2">
+    <section class="mt-8 d-grid gap-5 grid-cols-xl-2">
         <x-lumoryx.card class="p-6">
-            <div class="flex items-start gap-4">
-                <span class="grid h-12 w-12 shrink-0 place-items-center rounded-lg border text-sm font-black text-white" style="border-color: rgba(88, 101, 242, 0.35); background: linear-gradient(160deg, rgba(88, 101, 242, 0.4), rgba(88, 101, 242, 0.1));">
+            <div class="d-flex align-items-start gap-4">
+                <span class="d-grid h-12 w-12 flex-shrink-0 place-items-center rounded-lg border text-sm font-black text-white" style="border-color: rgba(88, 101, 242, 0.35); background: linear-gradient(160deg, rgba(88, 101, 242, 0.4), rgba(88, 101, 242, 0.1));">
                     <img class="h-6 w-6" src="{{ asset('images/discord-icon-svgrepo-com.svg') }}" alt="" style="filter: brightness(0) invert(1);">
                 </span>
                 <div class="min-w-0">
@@ -20,11 +20,11 @@
                 </div>
             </div>
             <div class="mt-6 space-y-3">
-                <div class="flex items-center justify-between gap-4 rounded-lg border border-white/10 bg-white/[.035] px-4 py-3">
+                <div class="d-flex align-items-center justify-content-between gap-4 rounded-lg border border-white/10 bg-white/[.035] px-4 py-3">
                     <span class="text-sm text-slate-400">Usuario</span>
                     <span class="truncate text-sm font-semibold text-white">{{ $user->discord_username ?: $user->name }}</span>
                 </div>
-                <div class="flex items-center justify-between gap-4 rounded-lg border border-white/10 bg-white/[.035] px-4 py-3">
+                <div class="d-flex align-items-center justify-content-between gap-4 rounded-lg border border-white/10 bg-white/[.035] px-4 py-3">
                     <span class="text-sm text-slate-400">Discord ID</span>
                     <span class="truncate text-sm font-semibold text-white">{{ $user->discord_id ?: 'No disponible' }}</span>
                 </div>
@@ -32,7 +32,7 @@
         </x-lumoryx.card>
 
         <x-lumoryx.card class="p-6">
-            <div class="flex items-start gap-4">
+            <div class="d-flex align-items-start gap-4">
                 <span class="lumoryx-icon-tile h-12 w-12 text-sm font-black text-amber-100">!</span>
                 <div class="min-w-0">
                     <h2 class="text-xl font-black text-white">Notificaciones por Discord</h2>
@@ -45,9 +45,9 @@
             <p class="mt-4 text-sm leading-6 text-slate-400">Si no recibes mensajes, revisa que tengas los mensajes privados habilitados para miembros del servidor.</p>
         </x-lumoryx.card>
 
-        <x-lumoryx.card class="p-6 xl:col-span-2">
-            <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div class="flex items-start gap-4">
+        <x-lumoryx.card class="p-6 col-span-xl-2">
+            <div class="d-flex flex-column gap-4 flex-sm-row align-items-sm-center justify-content-sm-between">
+                <div class="d-flex align-items-start gap-4">
                     <span class="lumoryx-icon-tile h-12 w-12 text-sm font-black text-slate-300">
                         <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><path d="M16 17l5-5-5-5M21 12H9" /></svg>
                     </span>
@@ -58,7 +58,7 @@
                 </div>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button class="lumoryx-button-secondary w-full sm:w-auto" type="submit">Cerrar sesion</button>
+                    <button class="lumoryx-button-secondary w-100 sm:w-auto" type="submit">Cerrar sesion</button>
                 </form>
             </div>
         </x-lumoryx.card>

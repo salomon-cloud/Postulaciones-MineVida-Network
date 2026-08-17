@@ -5,14 +5,14 @@
         $statTotal = max($stats['total'], 1);
     @endphp
 
-    <section class="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+    <section class="mt-8 d-grid gap-4 grid-cols-md-2 grid-cols-xl-4">
         <x-lumoryx.stat-card label="Pendientes" :value="$stats['pending']" hint="Esperando revision" tone="purple" icon="P" :percent="$stats['pending'] / $statTotal * 100" />
         <x-lumoryx.stat-card label="Aceptadas" :value="$stats['accepted']" hint="Historico total" tone="green" icon="A" :percent="$stats['accepted'] / $statTotal * 100" />
         <x-lumoryx.stat-card label="Rechazadas" :value="$stats['rejected']" hint="Historico total" tone="red" icon="R" :percent="$stats['rejected'] / $statTotal * 100" />
         <x-lumoryx.stat-card label="Entrevistas" :value="$stats['interview']" hint="Programadas" tone="blue" icon="E" :percent="$stats['interview'] / $statTotal * 100" />
     </section>
 
-    <form class="lumoryx-panel mt-6 grid gap-4 p-5 md:grid-cols-6" method="GET" action="{{ route('admin.applications.index') }}">
+    <form class="lumoryx-panel mt-6 d-grid gap-4 p-5 grid-cols-md-6" method="GET" action="{{ route('admin.applications.index') }}">
         <x-lumoryx.select name="type" label="Tipo">
             <option value="">Todos</option>
             @foreach ($types as $value => $label)
@@ -27,10 +27,10 @@
         </x-lumoryx.select>
         <x-lumoryx.input name="from" label="Fecha desde" type="date" value="{{ $filters['from'] ?? '' }}" />
         <x-lumoryx.input name="to" label="Fecha hasta" type="date" value="{{ $filters['to'] ?? '' }}" />
-        <div class="md:col-span-2">
+        <div class="col-span-md-2">
             <x-lumoryx.input name="user" label="Buscar por usuario" type="search" value="{{ $filters['user'] ?? '' }}" placeholder="Nick o Discord" />
         </div>
-        <div class="flex flex-col gap-3 md:col-span-6 sm:flex-row sm:justify-end">
+        <div class="d-flex flex-column gap-3 col-span-md-6 flex-sm-row justify-content-sm-end">
             <x-lumoryx.button variant="secondary" href="{{ route('admin.applications.index') }}">Limpiar</x-lumoryx.button>
             <x-lumoryx.button type="submit">Aplicar filtros</x-lumoryx.button>
         </div>
@@ -52,8 +52,8 @@
                     @forelse ($applications as $application)
                         <tr>
                             <td>
-                                <div class="flex min-w-0 items-center gap-3">
-                                    <span class="grid h-10 w-10 shrink-0 place-items-center rounded-md border border-white/10 bg-graphite-850 font-black text-amber-100">{{ str($application->minecraft_nick)->substr(0, 1)->upper() }}</span>
+                                <div class="d-flex min-w-0 align-items-center gap-3">
+                                    <span class="d-grid h-10 w-10 flex-shrink-0 place-items-center rounded-md border border-white/10 bg-graphite-850 font-black text-amber-100">{{ str($application->minecraft_nick)->substr(0, 1)->upper() }}</span>
                                     <div class="min-w-0">
                                         <p class="max-w-48 truncate font-semibold text-white">{{ $application->minecraft_nick }}</p>
                                         <p class="max-w-48 truncate text-xs text-slate-500">{{ $application->user->discord_id }}</p>
@@ -70,7 +70,7 @@
                                 <p class="text-xs text-slate-500">{{ $application->created_at->format('H:i') }}</p>
                             </td>
                             <td>
-                                <div class="flex items-center gap-2">
+                                <div class="d-flex align-items-center gap-2">
                                     <x-lumoryx.button class="px-3 py-1.5" variant="secondary" :href="route('admin.applications.show', $application)">Ver</x-lumoryx.button>
                                     @can('updateStatus', \App\Models\Application::class)
                                         <x-lumoryx.action-menu label="Mas acciones para {{ $application->minecraft_nick }}">

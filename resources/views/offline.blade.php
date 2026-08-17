@@ -1,7 +1,7 @@
 <x-layouts.public :title="'Sin conexion | '.config('app.name', 'MineVida Network')">
-    <section class="grid min-h-[60vh] place-items-center px-4 py-12">
+    <section class="d-grid min-h-[60vh] place-items-center px-4 py-12">
         <div class="lumoryx-panel max-w-lg p-7 text-center sm:p-9">
-            <div class="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-lg border border-amber-200/25 bg-amber-300/10 text-xl font-black text-amber-100 shadow-panel">
+            <div class="mx-auto mb-5 d-grid h-14 w-14 place-items-center rounded-lg border border-amber-200/25 bg-amber-300/10 text-xl font-black text-amber-100 shadow-panel">
                 !
             </div>
             <p class="text-sm font-semibold text-amber-200">OFFLINE</p>
@@ -9,7 +9,7 @@
             <p class="mt-3 text-slate-400">
                 No pudimos conectar con el sistema de postulaciones. Revisa tu internet y vuelve a intentarlo.
             </p>
-            <div class="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+            <div class="mt-6 d-flex flex-column justify-content-center gap-3 flex-sm-row">
                 <button class="lumoryx-button-primary" type="button" onclick="window.location.reload()">Reintentar</button>
                 <a class="lumoryx-button-secondary" href="{{ route('home') }}">Volver al inicio</a>
             </div>

@@ -20,7 +20,7 @@
                 </h1>
 
                 <p class="lumoryx-landing-lead">
-                    Forma parte del equipo que mantiene y mejora<br class="hidden sm:block">
+                    Forma parte del equipo que mantiene y mejora<br class="d-none d-sm-block">
                     nuestra comunidad cada dia.
                 </p>
 
@@ -235,7 +235,7 @@
                 </div>
             </div>
 
-            <div class="mx-auto mt-8 flex justify-center">
+            <div class="mx-auto mt-8 d-flex justify-content-center">
                 <a class="lumoryx-landing-button lumoryx-landing-button-secondary" href="{{ route('rules') }}">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7V3Z" /><path d="M14 3v5h5M10 12h5M10 16h5" /></svg>
                     <span>Ver reglamento completo</span>
@@ -257,12 +257,12 @@
                     <img src="{{ asset('images/discord-icon-svgrepo-com.svg') }}" alt="" aria-hidden="true">
                 </div>
                 <div class="min-w-0 flex-1">
-                    <h2 class="lumoryx-landing-section-title text-left">Unete a nuestra comunidad de Discord</h2>
+                    <h2 class="lumoryx-landing-section-title text-start">Unete a nuestra comunidad de Discord</h2>
                     <p class="mt-2 max-w-xl text-sm leading-6 text-slate-400 sm:text-base">
                         Habla con el equipo, sigue el estado de tu postulacion y entérate primero de anuncios y aperturas de convocatoria.
                     </p>
                 </div>
-                <div class="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+                <div class="d-flex w-100 flex-column gap-3 sm:w-auto flex-sm-row">
                     @auth
                         @if ($discordUrl)
                             <a class="lumoryx-landing-button lumoryx-landing-button-discord" href="{{ $discordUrl }}" target="_blank" rel="noopener noreferrer">

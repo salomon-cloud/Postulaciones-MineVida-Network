@@ -19,7 +19,7 @@
     @keydown.escape.window="open = false"
     @scroll.window="open = false"
     @resize.window="open = false"
-    class="inline-block"
+    class="d-inline-block"
 >
     <button
         type="button"
@@ -30,7 +30,7 @@
         aria-haspopup="true"
         title="{{ $label }}"
     >
-        <span class="sr-only">{{ $label }}</span>
+        <span class="visually-hidden">{{ $label }}</span>
         <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="1.7" /><circle cx="12" cy="12" r="1.7" /><circle cx="12" cy="19" r="1.7" /></svg>
     </button>
 

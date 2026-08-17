@@ -16,7 +16,7 @@
     <form class="lumoryx-panel mt-6 overflow-hidden" method="POST" action="{{ route('admin.selected.publish') }}">
         @csrf
 
-        <div class="flex flex-col gap-4 border-b border-white/10 p-5 sm:flex-row sm:items-center sm:justify-between">
+        <div class="d-flex flex-column gap-4 border-b border-white/10 p-5 flex-sm-row align-items-sm-center justify-content-sm-between">
             <div>
                 <h2 class="text-lg font-bold text-white">Pendientes de anunciar</h2>
                 <p class="mt-1 text-sm text-slate-400">{{ $pending->count() }} persona(s) aceptada(s) sin anuncio publico.</p>
@@ -30,7 +30,7 @@
                     <thead>
                         <tr>
                             <th class="w-10">
-                                <span class="sr-only">Seleccionar</span>
+                                <span class="visually-hidden">Seleccionar</span>
                             </th>
                             <th>Usuario</th>
                             <th>Tipo</th>
@@ -76,12 +76,12 @@
         @if ($announced->isNotEmpty())
             <div class="divide-y divide-white/10">
                 @foreach ($announced as $application)
-                    <article class="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between">
+                    <article class="d-flex flex-column gap-3 p-5 flex-sm-row align-items-sm-center justify-content-sm-between">
                         <div class="min-w-0">
                             <p class="lumoryx-break font-semibold text-white">{{ $application->minecraft_nick }}</p>
                             <p class="mt-1 text-sm text-slate-400">{{ $application->typeLabel() }} - {{ $application->user?->discord_username ?? 'Sin usuario' }}</p>
                         </div>
-                        <p class="shrink-0 text-sm text-slate-500">{{ $application->selected_announced_at?->format('d/m/Y H:i') }}</p>
+                        <p class="flex-shrink-0 text-sm text-slate-500">{{ $application->selected_announced_at?->format('d/m/Y H:i') }}</p>
                     </article>
                 @endforeach
             </div>

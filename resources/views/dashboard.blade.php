@@ -1,5 +1,5 @@
 <x-layouts.user :title="'Dashboard | '.config('app.name', 'MineVida Network')">
-    <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <div class="d-flex flex-column gap-4 flex-lg-row align-items-lg-center justify-content-lg-between">
         <div class="min-w-0">
             <p class="lumoryx-kicker">Panel de usuario</p>
             <h1 class="mt-2 text-3xl font-black text-white sm:text-4xl">Hola, {{ auth()->user()->name }}</h1>
@@ -8,10 +8,10 @@
         <x-lumoryx.user-dropdown />
     </div>
 
-    <section class="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    <section class="mt-8 d-grid gap-4 grid-cols-sm-2 grid-cols-xl-4">
         @foreach ($types as $type => $label)
-            <a class="lumoryx-card block" href="{{ route('applications.create.type', $type) }}">
-                <div class="flex items-center gap-4">
+            <a class="lumoryx-card d-block" href="{{ route('applications.create.type', $type) }}">
+                <div class="d-flex align-items-center gap-4">
                     <span class="lumoryx-icon-tile h-11 w-11 font-black text-amber-100">{{ str($label)->substr(0, 1)->upper() }}</span>
                     <div>
                         <p class="font-black text-white">{{ $label }}</p>
@@ -23,7 +23,7 @@
     </section>
 
     <section class="lumoryx-panel-glow mt-8 overflow-hidden p-0">
-        <div class="grid gap-0 xl:grid-cols-[.95fr_1.05fr]">
+        <div style="--gtc: .95fr 1.05fr;" class="d-grid gap-0 grid-cols-custom-xl">
             <div class="border-b border-white/10 p-5 sm:p-6 xl:border-b-0 xl:border-r">
                 <p class="lumoryx-kicker">Guia de postulacion</p>
                 <h2 class="mt-2 text-2xl font-black text-white">Tu proceso, paso a paso</h2>
@@ -31,7 +31,7 @@
                     Aqui puedes ver que postulaciones siguen abiertas, si tienes una entrevista pendiente y cuando podras volver a postular si alguna fue rechazada.
                 </p>
 
-                <div class="mt-5 grid gap-3 sm:grid-cols-3">
+                <div class="mt-5 d-grid gap-3 grid-cols-sm-3">
                     <div class="rounded-lg border border-white/10 bg-white/[.035] p-4">
                         <p class="text-2xl font-black text-white">{{ $activeCount }}</p>
                         <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500">Procesos activos</p>
@@ -47,9 +47,9 @@
                 </div>
             </div>
 
-            <div class="grid gap-3 p-5 sm:p-6">
+            <div class="d-grid gap-3 p-5 sm:p-6">
                 <div class="rounded-lg border border-white/10 bg-white/[.035] p-4">
-                    <div class="flex items-start gap-3">
+                    <div class="d-flex align-items-start gap-3">
                         <span class="lumoryx-icon-tile h-10 w-10 text-xs font-black text-amber-100">ST</span>
                         <div class="min-w-0">
                             <p class="font-black text-white">Que significa cada estado</p>
@@ -61,7 +61,7 @@
                 </div>
 
                 @if ($nextInterview)
-                    <a href="{{ route('applications.show', $nextInterview->application_id) }}" class="block rounded-lg border border-sky-300/25 bg-sky-300/10 p-4 transition hover:bg-sky-300/15">
+                    <a href="{{ route('applications.show', $nextInterview->application_id) }}" class="d-block rounded-lg border border-sky-300/25 bg-sky-300/10 p-4 transition hover:bg-sky-300/15">
                         <p class="text-xs font-black uppercase tracking-wide text-sky-100">Proxima entrevista</p>
                         <p class="mt-1 text-lg font-black text-white">{{ $nextInterview->scheduled_at->format('d/m/Y H:i') }}</p>
                         <p class="mt-1 text-sm text-sky-100/80">{{ $nextInterview->location ?: 'El equipo te indicara el canal por Discord.' }}</p>
@@ -74,7 +74,7 @@
                 @endif
 
                 @if ($cooldownApplication)
-                    <a href="{{ route('applications.show', $cooldownApplication) }}" class="block rounded-lg border border-amber-300/25 bg-amber-300/10 p-4 transition hover:bg-amber-300/15">
+                    <a href="{{ route('applications.show', $cooldownApplication) }}" class="d-block rounded-lg border border-amber-300/25 bg-amber-300/10 p-4 transition hover:bg-amber-300/15">
                         <p class="text-xs font-black uppercase tracking-wide text-amber-100">Reintento disponible</p>
                         <p class="mt-1 text-sm leading-6 text-amber-50">
                             Podras volver a postular para {{ $cooldownApplication->typeLabel() }} {{ $cooldownApplication->cooldown_until->diffForHumans() }}.
@@ -85,13 +85,13 @@
         </div>
     </section>
 
-    <section class="mt-8 grid gap-5 xl:grid-cols-[.34fr_.66fr]">
+    <section style="--gtc: .34fr .66fr;" class="mt-8 d-grid gap-5 grid-cols-custom-xl">
         <x-lumoryx.card class="p-5">
-            <div class="flex items-center justify-between gap-4">
+            <div class="d-flex align-items-center justify-content-between gap-4">
                 <h2 class="text-lg font-black text-white">Resumen</h2>
                 <x-lumoryx.button class="px-3 py-1.5" variant="secondary" href="{{ route('applications.index') }}">Ver todo</x-lumoryx.button>
             </div>
-            <div class="mt-5 grid grid-cols-2 gap-3">
+            <div class="mt-5 d-grid grid-cols-2 gap-3">
                 <div class="lumoryx-stat-card">
                     <p class="text-3xl font-black text-white">{{ $applications->count() }}</p>
                     <p class="text-sm text-slate-400">Totales</p>
@@ -132,8 +132,8 @@
                             \App\Enums\ApplicationStatus::Cancelled => 'border-l-zinc-500',
                         };
                     @endphp
-                    <a href="{{ route('applications.show', $application) }}" class="block border-l-4 {{ $statusAccent }} p-5 transition hover:bg-white/[.04]">
-                        <div class="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <a href="{{ route('applications.show', $application) }}" class="d-block border-l-4 {{ $statusAccent }} p-5 transition hover:bg-white/[.04]">
+                        <div class="d-flex min-w-0 flex-column gap-3 flex-sm-row align-items-sm-center justify-content-sm-between">
                             <div class="min-w-0">
                                 <p class="truncate font-semibold text-white">{{ $application->typeLabel() }} - {{ $application->minecraft_nick }}</p>
                                 <p class="text-sm text-slate-400">{{ $application->created_at->format('Y-m-d H:i') }}</p>

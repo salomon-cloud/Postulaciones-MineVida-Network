@@ -7,6 +7,6 @@
         <p class="lumoryx-break mt-1 text-sm text-slate-400">{{ $body }}</p>
     </div>
     @if ($time)
-        <span class="shrink-0 text-sm text-slate-500">{{ $time }}</span>
+        <span class="flex-shrink-0 text-sm text-slate-500">{{ $time }}</span>
     @endif
 </div>

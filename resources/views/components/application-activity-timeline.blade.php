@@ -16,20 +16,20 @@
         @php
             $classes = $toneClasses[$item['tone'] ?? 'slate'] ?? $toneClasses['slate'];
         @endphp
-        <article class="lumoryx-timeline-item relative pl-8" style="animation-delay: {{ min($loop->index, 8) * 0.06 }}s">
+        <article class="lumoryx-timeline-item position-relative pl-8" style="animation-delay: {{ min($loop->index, 8) * 0.06 }}s">
             @unless ($loop->last)
-                <div class="absolute left-3 top-8 h-[calc(100%+1rem)] w-px bg-gradient-to-b from-white/15 to-white/[.03]"></div>
+                <div class="position-absolute left-3 top-8 h-[calc(100%+1rem)] w-px bg-gradient-to-b from-white/15 to-white/[.03]"></div>
             @endunless
-            <div class="absolute left-0 top-1 grid h-7 w-7 place-items-center rounded-md border text-[10px] font-black {{ $classes }}">
+            <div class="position-absolute left-0 top-1 d-grid h-7 w-7 place-items-center rounded-md border text-[10px] font-black {{ $classes }}">
                 {{ strtoupper(substr($item['icon'] ?? 'i', 0, 2)) }}
             </div>
             <div class="rounded-lg border border-white/10 bg-white/[.035] p-4 transition hover:border-white/20 hover:bg-white/[.05]">
-                <div class="flex min-w-0 flex-col gap-1 sm:flex-row sm:items-start sm:justify-between">
+                <div class="d-flex min-w-0 flex-column gap-1 flex-sm-row align-items-sm-start justify-content-sm-between">
                     <div class="min-w-0">
                         <h3 class="lumoryx-break font-black text-white">{{ $item['title'] }}</h3>
                         <p class="lumoryx-break mt-1 text-sm leading-6 text-slate-400">{{ $item['body'] }}</p>
                     </div>
-                    <time class="shrink-0 text-xs font-semibold text-slate-500">
+                    <time class="flex-shrink-0 text-xs font-semibold text-slate-500">
                         {{ $item['time']?->format('d/m/Y H:i') }}
                     </time>
                 </div>

@@ -1,5 +1,5 @@
 <x-layouts.public :title="'No encontrado | '.config('app.name', 'MineVida Network')">
-    <section class="grid min-h-[60vh] place-items-center">
+    <section class="d-grid min-h-[60vh] place-items-center">
         <div class="max-w-lg text-center">
             <p class="text-sm font-semibold text-amber-200">404</p>
             <h1 class="mt-2 text-3xl font-black text-white">No encontrado</h1>

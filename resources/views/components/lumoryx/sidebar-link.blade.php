@@ -1,7 +1,7 @@
 @props(['href', 'active' => false, 'badge' => null, 'badgeAlert' => false, 'icon' => null])
 
 <a href="{{ $href }}" {{ $attributes->merge(['class' => 'lumoryx-nav-link '.($active ? 'lumoryx-nav-link-active' : '')]) }}>
-    <span class="flex min-w-0 items-center gap-3">
+    <span class="d-flex min-w-0 align-items-center gap-3">
         @if ($icon)
             <span class="lumoryx-nav-icon">{!! $icon !!}</span>
         @endif

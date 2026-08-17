@@ -11,7 +11,7 @@
 @endphp
 
 <div {{ $attributes->merge(['class' => 'lumoryx-stat-card '.$tones['bg']]) }}>
-    <div class="flex min-w-0 items-center gap-4">
+    <div class="d-flex min-w-0 align-items-center gap-4">
         <div class="lumoryx-icon-tile h-12 w-12 {{ $tones['text'] }} text-base font-black">{{ $icon ?? str($label)->substr(0, 1)->upper() }}</div>
         <div class="min-w-0">
             <p class="text-sm font-black text-white">{{ $label }}</p>
@@ -23,8 +23,8 @@
     </div>
     @if (! is_null($percent))
         <div class="mt-5 h-1.5 overflow-hidden rounded-full bg-white/10">
-            <div class="h-full rounded-full transition-[width] duration-500 {{ $tones['bar'] }}" style="width: {{ max(0, min(100, (float) $percent)) }}%"></div>
+            <div class="h-100 rounded-full transition-[width] duration-500 {{ $tones['bar'] }}" style="width: {{ max(0, min(100, (float) $percent)) }}%"></div>
         </div>
-        <p class="mt-1.5 text-right text-[11px] font-semibold text-slate-500">{{ round($percent) }}% del total</p>
+        <p class="mt-1.5 text-end text-[11px] font-semibold text-slate-500">{{ round($percent) }}% del total</p>
     @endif
 </div>

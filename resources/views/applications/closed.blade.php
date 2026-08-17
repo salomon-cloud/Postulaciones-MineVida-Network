@@ -1,5 +1,5 @@
 <x-layouts.user :title="'Categoria cerrada | '.config('app.name', 'MineVida Network')">
-    <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <div class="d-flex flex-column gap-4 flex-lg-row align-items-lg-center justify-content-lg-between">
         <div class="min-w-0">
             <p class="lumoryx-kicker">Postulaciones</p>
             <h1 class="mt-2 text-3xl font-black text-white sm:text-4xl">{{ $category->name }} esta cerrada</h1>
@@ -8,14 +8,14 @@
         <x-lumoryx.user-dropdown />
     </div>
 
-    <section class="mt-8 grid gap-5 lg:grid-cols-[.36fr_.64fr]">
+    <section style="--gtc: .36fr .64fr;" class="mt-8 d-grid gap-5 grid-cols-custom-lg">
         <x-lumoryx.card class="p-6">
             @if ($category->imageUrl())
                 <div class="lumoryx-category-media mb-5 rounded-lg border border-white/10">
                     <img src="{{ $category->imageUrl() }}" alt="">
                 </div>
             @endif
-            <div class="flex items-start gap-4">
+            <div class="d-flex align-items-start gap-4">
                 @if ($category->imageUrl())
                     <span class="lumoryx-icon-tile h-14 w-14 text-sm font-black text-amber-100">{{ $category->icon ?: str($category->name)->substr(0, 2)->upper() }}</span>
                 @else
@@ -29,7 +29,7 @@
         </x-lumoryx.card>
 
         <x-lumoryx.card class="p-6">
-            <div class="flex items-start gap-4">
+            <div class="d-flex align-items-start gap-4">
                 <span class="lumoryx-icon-tile h-12 w-12 text-sm font-black text-rose-100">!</span>
                 <div class="min-w-0">
                     <h2 class="text-xl font-black text-white">Categoria cerrada temporalmente</h2>
@@ -50,7 +50,7 @@
                 </div>
             </div>
 
-            <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:justify-end">
+            <div class="mt-6 d-flex flex-column gap-3 flex-sm-row justify-content-sm-end">
                 <x-lumoryx.button variant="secondary" href="{{ route('applications.create') }}">Ver otras categorias</x-lumoryx.button>
                 <x-lumoryx.button href="{{ route('dashboard') }}">Ir al panel</x-lumoryx.button>
             </div>

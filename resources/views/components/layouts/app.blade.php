@@ -16,12 +16,12 @@
     @endphp
 
     <div
-        class="lumoryx-bg min-h-screen overflow-x-hidden"
+        class="lumoryx-bg min-vh-100 overflow-x-hidden"
         x-data="{ sidebar: false }"
         style="--lumoryx-sidebar-bg-image: url('{{ asset($sidebarBackground) }}');"
     >
         @guest
-            <header class="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-5 sm:px-6 lg:px-8">
+            <header class="mx-auto d-flex w-100 max-w-7xl align-items-center justify-content-between px-4 py-5 sm:px-6 lg:px-8">
                 <x-lumoryx.brand />
                 <a class="lumoryx-button-discord" href="{{ route('login.discord') }}">Iniciar sesion con Discord</a>
             </header>
@@ -29,10 +29,10 @@
 
         <div class="lumoryx-shell">
             @auth
-            <aside class="lumoryx-sidebar flex flex-col" :class="{ 'translate-x-0': sidebar }">
-                <div class="flex items-center justify-between">
+            <aside class="lumoryx-sidebar d-flex flex-column" :class="{ 'translate-x-0': sidebar }">
+                <div class="d-flex align-items-center justify-content-between">
                     <x-lumoryx.brand />
-                    <button class="lumoryx-button-secondary px-3 py-2 lg:hidden" type="button" @click="sidebar = false">Cerrar</button>
+                    <button class="lumoryx-button-secondary px-3 py-2 d-lg-none" type="button" @click="sidebar = false">Cerrar</button>
                 </div>
 
                 <nav class="mt-8 flex-1 space-y-1 overflow-y-auto pr-1 text-sm">
@@ -65,12 +65,12 @@
                         @endif
                 </nav>
 
-                    <div class="shrink-0 rounded-lg border border-white/10 bg-white/[.06] p-3 pt-3">
-                        <div class="flex items-center gap-3">
+                    <div class="flex-shrink-0 rounded-lg border border-white/10 bg-white/[.06] p-3 pt-3">
+                        <div class="d-flex align-items-center gap-3">
                             @if (auth()->user()->discordAvatarUrl())
                                 <img class="h-10 w-10 rounded-md" src="{{ auth()->user()->discordAvatarUrl() }}" alt="">
                             @else
-                            <span class="grid h-10 w-10 place-items-center rounded-md border border-white/10 bg-graphite-850 text-sm font-bold text-amber-100">{{ str(auth()->user()->name)->substr(0, 1)->upper() }}</span>
+                            <span class="d-grid h-10 w-10 place-items-center rounded-md border border-white/10 bg-graphite-850 text-sm font-bold text-amber-100">{{ str(auth()->user()->name)->substr(0, 1)->upper() }}</span>
                             @endif
                             <div class="min-w-0">
                                 <p class="truncate text-sm font-semibold text-white">{{ auth()->user()->name }}</p>
@@ -79,18 +79,18 @@
                         </div>
                         <form class="mt-3" method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button class="lumoryx-button-secondary w-full" type="submit">Cerrar sesion</button>
+                            <button class="lumoryx-button-secondary w-100" type="submit">Cerrar sesion</button>
                         </form>
                     </div>
             </aside>
             @endauth
 
-            <div class="flex min-w-0 flex-1 flex-col @auth lg:pl-72 @endauth">
-                <header class="sticky top-0 z-30 border-b border-white/10 bg-graphite-950/75 px-4 py-3 backdrop-blur lg:hidden @guest hidden @endguest">
+            <div class="d-flex min-w-0 flex-1 flex-column @auth lg:pl-72 @endauth">
+                <header class="position-sticky top-0 z-30 border-b border-white/10 bg-graphite-950/75 px-4 py-3 backdrop-blur d-lg-none @guest d-none @endguest">
                     <button class="lumoryx-button-secondary" type="button" @click="sidebar = true">Menu</button>
                 </header>
 
-                <main class="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 lg:px-8">
+                <main class="mx-auto w-100 max-w-7xl flex-1 px-4 py-6 sm:px-6 lg:px-8">
                     <x-flash />
                     {{ $slot }}
                 </main>

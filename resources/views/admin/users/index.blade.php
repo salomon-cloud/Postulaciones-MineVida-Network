@@ -21,13 +21,13 @@
 <x-layouts.admin :title="'Usuarios | '.config('app.name', 'MineVida Network')">
     <div class="space-y-6">
         <section class="lumoryx-panel overflow-hidden">
-            <div class="relative p-5 sm:p-7">
-                <div class="pointer-events-none absolute inset-0 opacity-80">
-                    <div class="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-amber-300/10 blur-3xl"></div>
-                    <div class="absolute bottom-0 left-1/4 h-44 w-72 rounded-full bg-sky-300/5 blur-3xl"></div>
+            <div class="position-relative p-5 sm:p-7">
+                <div class="pointer-events-none position-absolute inset-0 opacity-80">
+                    <div class="position-absolute -right-24 -top-24 h-64 w-64 rounded-full bg-amber-300/10 blur-3xl"></div>
+                    <div class="position-absolute bottom-0 left-1/4 h-44 w-72 rounded-full bg-sky-300/5 blur-3xl"></div>
                 </div>
 
-                <div class="relative flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                <div class="position-relative d-flex flex-column gap-4 flex-lg-row align-items-lg-end justify-content-lg-between">
                     <div class="min-w-0">
                         <p class="lumoryx-kicker">Owner</p>
                         <h1 class="lumoryx-title mt-2">Usuarios</h1>
@@ -43,7 +43,7 @@
                 </div>
             </div>
 
-            <div class="grid border-t border-white/10 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6">
+            <div class="d-grid border-t border-white/10 grid-cols-sm-2 grid-cols-lg-3 grid-cols-xxl-6">
                 @foreach ($statCards as $card)
                     <div class="border-b border-r border-white/10 p-4 last:border-r-0 lg:border-b-0">
                         <div class="rounded-lg border {{ $card['tone'] }} p-4">
@@ -56,7 +56,7 @@
             </div>
         </section>
 
-        <form class="lumoryx-panel grid gap-4 p-4 sm:p-5 lg:grid-cols-[1fr_auto_auto]" method="GET" action="{{ route('admin.users.index') }}">
+        <form style="--gtc: 1fr auto auto;" class="lumoryx-panel d-grid gap-4 p-4 p-sm-5 grid-cols-custom-lg" method="GET" action="{{ route('admin.users.index') }}">
             <div>
                 <label class="lumoryx-label" for="q">Buscar usuario</label>
                 <input
@@ -68,16 +68,16 @@
                     placeholder="Nombre, Discord ID o usuario de Discord"
                 >
             </div>
-            <div class="flex items-end">
-                <button class="lumoryx-button-primary min-h-11 w-full lg:w-auto" type="submit">Buscar</button>
+            <div class="d-flex align-items-end">
+                <button class="lumoryx-button-primary min-h-11 w-100 lg:w-auto" type="submit">Buscar</button>
             </div>
-            <div class="flex items-end">
-                <x-lumoryx.button class="min-h-11 w-full lg:w-auto" variant="secondary" href="{{ route('admin.users.index') }}">Limpiar</x-lumoryx.button>
+            <div class="d-flex align-items-end">
+                <x-lumoryx.button class="min-h-11 w-100 lg:w-auto" variant="secondary" href="{{ route('admin.users.index') }}">Limpiar</x-lumoryx.button>
             </div>
         </form>
 
         <section class="space-y-3">
-            <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div class="d-flex flex-column gap-2 flex-sm-row align-items-sm-end justify-content-sm-between">
                 <div>
                     <h2 class="text-2xl font-black text-white">Directorio de permisos</h2>
                     <p class="mt-1 text-sm text-slate-500">Los cambios de rol se aplican al guardar cada usuario.</p>
@@ -92,10 +92,10 @@
                     $avatarUrl = $user->discordAvatarUrl();
                 @endphp
 
-                <article class="relative overflow-hidden rounded-lg border border-white/10 bg-white/[.035] shadow-panel transition hover:border-amber-300/20 hover:bg-white/[.055]">
-                    <div class="absolute inset-y-0 left-0 w-1 bg-amber-300/60"></div>
-                    <div class="grid gap-5 p-5 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,.9fr)_minmax(21rem,.7fr)] lg:items-center">
-                        <div class="flex min-w-0 items-center gap-4">
+                <article class="position-relative overflow-hidden rounded-lg border border-white/10 bg-white/[.035] shadow-panel transition hover:border-amber-300/20 hover:bg-white/[.055]">
+                    <div class="position-absolute inset-y-0 left-0 w-1 bg-amber-300/60"></div>
+                    <div style="--gtc: minmax(0,1.2fr) minmax(0,.9fr) minmax(21rem,.7fr);" class="d-grid gap-5 p-5 grid-cols-custom-lg align-items-lg-center">
+                        <div class="d-flex min-w-0 align-items-center gap-4">
                             <span class="lumoryx-user-avatar-shell h-14 w-14">
                                 @if ($avatarUrl)
                                     <img class="lumoryx-user-avatar" src="{{ $avatarUrl }}" alt="">
@@ -106,7 +106,7 @@
                             </span>
 
                             <div class="min-w-0">
-                                <div class="flex flex-wrap items-center gap-2">
+                                <div class="d-flex flex-wrap align-items-center gap-2">
                                     <h3 class="max-w-full truncate text-lg font-black text-white">{{ $displayName }}</h3>
                                     <span class="rounded-full border px-2.5 py-1 text-xs font-black {{ $roleBadgeClasses($user->role) }}">
                                         {{ $user->role->label() }}
@@ -120,7 +120,7 @@
                             </div>
                         </div>
 
-                        <dl class="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+                        <dl class="d-grid gap-3 grid-cols-sm-3 grid-cols-lg-1">
                             <div class="rounded-lg border border-white/10 bg-graphite-950/35 px-4 py-3">
                                 <dt class="text-xs font-semibold uppercase tracking-wider text-slate-500">Discord ID</dt>
                                 <dd class="mt-1 truncate text-sm font-semibold text-slate-200">{{ $user->discord_id ?: '-' }}</dd>
@@ -129,7 +129,7 @@
                                 <dt class="text-xs font-semibold uppercase tracking-wider text-slate-500">Ultimo login</dt>
                                 <dd class="mt-1 text-sm font-semibold text-slate-200">{{ $user->last_login_at?->format('d/m/Y H:i') ?? 'Sin registro' }}</dd>
                             </div>
-                            <div class="grid grid-cols-2 gap-3">
+                            <div class="d-grid grid-cols-2 gap-3">
                                 <div class="rounded-lg border border-white/10 bg-graphite-950/35 px-4 py-3">
                                     <dt class="text-xs font-semibold uppercase tracking-wider text-slate-500">Post.</dt>
                                     <dd class="mt-1 text-xl font-black text-white">{{ $user->applications_count }}</dd>
@@ -155,13 +155,13 @@
                             @method('PATCH')
 
                             <label class="lumoryx-label" for="role-{{ $user->id }}">Rol del usuario</label>
-                            <div class="mt-2 flex flex-col gap-3 sm:flex-row">
+                            <div class="mt-2 d-flex flex-column gap-3 flex-sm-row">
                                 <select id="role-{{ $user->id }}" class="lumoryx-input min-h-11 flex-1" name="role">
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->value }}" @selected($user->role === $role)>{{ $role->label() }}</option>
                                     @endforeach
                                 </select>
-                                <button class="lumoryx-button-secondary min-h-11 shrink-0 px-4" type="submit">Guardar</button>
+                                <button class="lumoryx-button-secondary min-h-11 flex-shrink-0 px-4" type="submit">Guardar</button>
                             </div>
                         </form>
                     </div>

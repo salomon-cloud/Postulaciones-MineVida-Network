@@ -24,15 +24,15 @@
     @endphp
 
     <div
-        class="lumoryx-bg min-h-screen overflow-x-hidden"
+        class="lumoryx-bg min-vh-100 overflow-x-hidden"
         x-data="{ sidebar: false }"
         style="--lumoryx-sidebar-bg-image: url('{{ asset($sidebarBackground) }}');"
     >
         <div class="lumoryx-shell max-w-none">
-            <aside class="lumoryx-sidebar flex flex-col" :class="{ 'translate-x-0': sidebar }">
-                <div class="flex items-center justify-between">
+            <aside class="lumoryx-sidebar d-flex flex-column" :class="{ 'translate-x-0': sidebar }">
+                <div class="d-flex align-items-center justify-content-between">
                     <x-lumoryx.brand large />
-                    <button class="lumoryx-button-secondary px-3 py-2 lg:hidden" type="button" @click="sidebar = false">Cerrar</button>
+                    <button class="lumoryx-button-secondary px-3 py-2 d-lg-none" type="button" @click="sidebar = false">Cerrar</button>
                 </div>
 
                 <nav class="mt-8 flex-1 space-y-2 overflow-y-auto pr-1">
@@ -44,23 +44,23 @@
                     <x-lumoryx.sidebar-link icon="<svg viewBox='0 0 24 24'><circle cx='12' cy='12' r='3'/><path d='M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z'/></svg>" :href="route('user.settings')" :active="request()->routeIs('user.settings')">Ajustes</x-lumoryx.sidebar-link>
                 </nav>
 
-                <div class="shrink-0 space-y-4 pt-5">
+                <div class="flex-shrink-0 space-y-4 pt-5">
                     <div class="rounded-lg border border-white/10 bg-white/[.035] p-5">
                         <p class="text-sm font-semibold text-white">Gracias por ser parte de {{ config('app.name', 'MineVida Network') }}</p>
                         <p class="mt-2 text-xs leading-5 text-slate-400">Tu comunidad, tu aventura.</p>
                     </div>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button class="lumoryx-button-secondary w-full" type="submit">Cerrar sesion</button>
+                        <button class="lumoryx-button-secondary w-100" type="submit">Cerrar sesion</button>
                     </form>
                 </div>
             </aside>
 
-            <div class="flex min-w-0 flex-1 flex-col lg:pl-72">
-                <header class="sticky top-0 z-30 border-b border-white/10 bg-graphite-950/70 px-4 py-3 backdrop-blur lg:hidden">
+            <div class="d-flex min-w-0 flex-1 flex-column lg:pl-72">
+                <header class="position-sticky top-0 z-30 border-b border-white/10 bg-graphite-950/70 px-4 py-3 backdrop-blur d-lg-none">
                     <button class="lumoryx-button-secondary" type="button" @click="sidebar = true">Menu</button>
                 </header>
-                <main class="mx-auto w-full max-w-7xl flex-1 px-4 py-7 sm:px-8 lg:px-10">
+                <main class="mx-auto w-100 max-w-7xl flex-1 px-4 py-7 sm:px-8 lg:px-10">
                     <x-flash />
                     {{ $slot }}
                 </main>

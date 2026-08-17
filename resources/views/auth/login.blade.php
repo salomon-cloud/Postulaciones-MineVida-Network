@@ -1,11 +1,11 @@
 <x-layouts.public :title="'Iniciar sesion | '.config('app.name', 'MineVida Network')" :compact="true">
-    <section class="grid min-h-[calc(100svh-5.45rem)] place-items-center px-4 py-12">
-        <div class="w-full max-w-md">
-            <div class="lumoryx-panel-glow relative overflow-hidden p-7 text-center sm:p-9">
-                <div class="pointer-events-none absolute inset-0" style="background: radial-gradient(circle at 50% 0%, rgba(88, 101, 242, 0.16), transparent 60%);"></div>
+    <section class="d-grid min-h-[calc(100svh-5.45rem)] place-items-center px-4 py-12">
+        <div class="w-100 max-w-md">
+            <div class="lumoryx-panel-glow position-relative overflow-hidden p-7 text-center sm:p-9">
+                <div class="pointer-events-none position-absolute inset-0" style="background: radial-gradient(circle at 50% 0%, rgba(88, 101, 242, 0.16), transparent 60%);"></div>
 
-                <div class="relative">
-                    <div class="mx-auto mb-5 grid h-16 w-16 place-items-center rounded-2xl border" style="border-color: rgba(88, 101, 242, 0.35); background: linear-gradient(160deg, rgba(88, 101, 242, 0.35), rgba(88, 101, 242, 0.08));">
+                <div class="position-relative">
+                    <div class="mx-auto mb-5 d-grid h-16 w-16 place-items-center rounded-2xl border" style="border-color: rgba(88, 101, 242, 0.35); background: linear-gradient(160deg, rgba(88, 101, 242, 0.35), rgba(88, 101, 242, 0.08));">
                         <img class="h-8 w-8" src="{{ asset('images/discord-icon-svgrepo-com.svg') }}" alt="" style="filter: brightness(0) invert(1);">
                     </div>
 
@@ -15,7 +15,7 @@
                         Usamos tu cuenta de Discord para identificarte, dar seguimiento a tus postulaciones y que el equipo pueda contactarte.
                     </p>
 
-                    <a class="lumoryx-landing-button lumoryx-landing-button-discord mt-7 w-full" href="{{ route('login.discord') }}">
+                    <a class="lumoryx-landing-button lumoryx-landing-button-discord mt-7 w-100" href="{{ route('login.discord') }}">
                         <img src="{{ asset('images/discord-icon-svgrepo-com.svg') }}" alt="" aria-hidden="true">
                         <span>Continuar con Discord</span>
                     </a>

@@ -66,7 +66,7 @@
             @if ($categoryAgeOverrides->isNotEmpty())
                 <div class="mx-auto mt-8 max-w-2xl">
                     <p class="text-center text-xs font-black uppercase tracking-wide text-slate-500">Edades minimas por area</p>
-                    <div class="mt-3 flex flex-wrap justify-center gap-2">
+                    <div class="mt-3 d-flex flex-wrap justify-content-center gap-2">
                         @foreach ($categoryAgeOverrides as $category)
                             <span class="lumoryx-landing-category-badge">{{ $category->name }}: {{ $category->minimum_age }}+ anos</span>
                         @endforeach
@@ -84,7 +84,7 @@
                 <p class="lumoryx-landing-section-lead">Estas normas aplican a todos los miembros, sean staff o no. El incumplimiento puede afectar tu proceso o tu estadia en la comunidad.</p>
             </div>
 
-            <div class="mx-auto mt-10 grid max-w-3xl gap-3">
+            <div class="mx-auto mt-10 d-grid max-w-3xl gap-3">
                 @foreach ([
                     'Respeta a jugadores y staff. Los insultos, el acoso o la discriminacion no se toleran.',
                     'No uses hacks, trampas, exploits o cualquier ventaja injusta dentro del servidor.',
@@ -93,8 +93,8 @@
                     'La informacion que envies en tu postulacion debe ser real y verificable.',
                     'Las reglas del servidor de Discord aplican igual que las del juego.',
                 ] as $rule)
-                    <div class="flex items-start gap-3 rounded-lg border border-white/10 bg-white/[.03] p-4">
-                        <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full border border-amber-300/25 bg-amber-300/10 text-xs font-black text-amber-200">✓</span>
+                    <div class="d-flex align-items-start gap-3 rounded-lg border border-white/10 bg-white/[.03] p-4">
+                        <span class="mt-0.5 d-grid h-6 w-6 flex-shrink-0 place-items-center rounded-full border border-amber-300/25 bg-amber-300/10 text-xs font-black text-amber-200">✓</span>
                         <p class="text-sm leading-6 text-slate-300">{{ $rule }}</p>
                     </div>
                 @endforeach
@@ -119,10 +119,10 @@
                     <svg viewBox="0 0 24 24" aria-hidden="true" class="h-8 w-8 text-amber-100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7V3Z" /><path d="M14 3v5h5M10 12h5M10 16h5" /></svg>
                 </div>
                 <div class="min-w-0 flex-1">
-                    <h2 class="lumoryx-landing-section-title text-left">Ya revisaste las reglas?</h2>
+                    <h2 class="lumoryx-landing-section-title text-start">Ya revisaste las reglas?</h2>
                     <p class="mt-2 max-w-xl text-sm leading-6 text-slate-400 sm:text-base">Si cumples los requisitos, el siguiente paso es elegir un area y enviar tu postulacion.</p>
                 </div>
-                <div class="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+                <div class="d-flex w-100 flex-column gap-3 sm:w-auto flex-sm-row">
                     <a class="lumoryx-landing-button lumoryx-landing-button-primary" href="{{ $postulationsUrl }}">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7V3Z" /><path d="M14 3v5h5M10 12h5M10 16h5" /></svg>
                         <span>Ver postulaciones</span>

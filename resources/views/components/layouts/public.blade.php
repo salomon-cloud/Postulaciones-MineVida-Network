@@ -74,7 +74,7 @@
         ];
     @endphp
     <div
-        class="lumoryx-public-bg min-h-screen overflow-x-hidden"
+        class="lumoryx-public-bg min-vh-100 overflow-x-hidden"
         style="--lumoryx-public-bg-image: url('{{ asset($publicBackground) }}');"
     >
         <header
@@ -86,7 +86,7 @@
             @close-mobile-nav.window="mobileNavOpen = false"
             :class="{ 'is-scrolled': scrolled }"
         >
-            <div class="lumoryx-page-frame flex items-center justify-between py-4 transition-[padding]" :class="scrolled ? 'lg:py-2.5' : 'lg:py-4'">
+            <div class="lumoryx-page-frame d-flex align-items-center justify-content-between py-4 transition-[padding]" :class="scrolled ? 'lg:py-2.5' : 'lg:py-4'">
                 <x-lumoryx.brand />
                 <x-lumoryx.navbar>
                     <a class="lumoryx-public-nav-link {{ request()->routeIs('home') ? 'lumoryx-public-nav-link-active' : '' }}" href="{{ route('home') }}#inicio">Inicio</a>
@@ -96,11 +96,11 @@
                     <a class="lumoryx-public-nav-link" href="{{ $discordUrl }}">Discord</a>
                     <a class="lumoryx-public-nav-link" href="{{ $panelUrl }}">Panel</a>
                 </x-lumoryx.navbar>
-                <div class="flex items-center gap-2">
+                <div class="d-flex align-items-center gap-2">
                     @auth
-                        <x-lumoryx.button class="lumoryx-public-login-action hidden sm:inline-flex" href="{{ route('dashboard') }}">Ir al panel</x-lumoryx.button>
+                        <x-lumoryx.button class="lumoryx-public-login-action d-none d-inline-sm-flex" href="{{ route('dashboard') }}">Ir al panel</x-lumoryx.button>
                     @else
-                        <x-lumoryx.button variant="discord" class="lumoryx-public-login-action hidden sm:inline-flex" href="{{ route('login.discord') }}">
+                        <x-lumoryx.button variant="discord" class="lumoryx-public-login-action d-none d-inline-sm-flex" href="{{ route('login.discord') }}">
                             <img class="h-4 w-4" src="{{ asset('images/discord-icon-svgrepo-com.svg') }}" alt="" aria-hidden="true">
                             <span>Iniciar sesion</span>
                         </x-lumoryx.button>
@@ -108,7 +108,7 @@
 
                     <button
                         type="button"
-                        class="lumoryx-public-menu-toggle lg:hidden"
+                        class="lumoryx-public-menu-toggle d-lg-none"
                         @click="mobileNavOpen = !mobileNavOpen"
                         :aria-expanded="mobileNavOpen ? 'true' : 'false'"
                         aria-controls="lumoryx-mobile-nav"
@@ -122,7 +122,7 @@
 
             <div
                 id="lumoryx-mobile-nav"
-                class="lumoryx-public-mobile-nav lg:hidden"
+                class="lumoryx-public-mobile-nav d-lg-none"
                 x-show="mobileNavOpen"
                 x-cloak
                 x-transition:enter="transition ease-out duration-200"
@@ -168,7 +168,7 @@
                             Comunidad, postulaciones y soporte conectados en un solo lugar. Entra al servidor, revisa tu proceso y mantente cerca del equipo.
                         </p>
 
-                        <div class="mt-6 grid gap-3 sm:max-w-sm">
+                        <div class="mt-6 d-grid gap-3 sm:max-w-sm">
                             <div class="lumoryx-footer-action-card">
                                 <span class="lumoryx-footer-action-icon">IP</span>
                                 <div class="min-w-0">
@@ -206,8 +206,8 @@
                                 <a class="lumoryx-footer-social-link" href="{{ $link['url'] }}" target="_blank" rel="noopener noreferrer">
                                     <span class="lumoryx-footer-social">{{ $link['abbr'] }}</span>
                                     <span class="min-w-0">
-                                        <span class="block truncate text-sm font-black text-white">{{ $link['label'] }}</span>
-                                        <span class="block truncate text-xs text-slate-500">{{ $link['description'] }}</span>
+                                        <span class="d-block truncate text-sm font-black text-white">{{ $link['label'] }}</span>
+                                        <span class="d-block truncate text-xs text-slate-500">{{ $link['description'] }}</span>
                                     </span>
                                 </a>
                             @empty
@@ -239,7 +239,7 @@
                                         @endif
                                         <div class="min-w-0">
                                             <p class="truncate text-sm font-black text-white">{{ $acceptedName }}</p>
-                                            <div class="mt-1 flex flex-wrap items-center gap-2">
+                                            <div class="mt-1 d-flex flex-wrap align-items-center gap-2">
                                                 <span class="lumoryx-footer-role-chip">{{ $application->typeLabel() }}</span>
                                                 <span class="text-[11px] text-slate-500">Aceptado {{ $acceptedAt }}</span>
                                             </div>
@@ -255,9 +255,9 @@
 
                 <div class="lumoryx-footer-bottom">
                     <p>&copy; {{ date('Y') }} {{ config('app.name', 'MineVida Network') }}. Todos los derechos reservados.</p>
-                    <div class="flex flex-wrap items-center gap-3 sm:justify-end">
+                    <div class="d-flex flex-wrap align-items-center gap-3 justify-content-sm-end">
                         <span>Sistema de postulaciones</span>
-                        <span class="hidden h-1 w-1 rounded-full bg-slate-600 sm:block"></span>
+                        <span class="d-none h-1 w-1 rounded-full bg-slate-600 d-sm-block"></span>
                         <span>Conectado con Discord</span>
                     </div>
                 </div>

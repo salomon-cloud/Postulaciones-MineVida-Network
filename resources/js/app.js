@@ -1,4 +1,5 @@
 import './bootstrap';
+import 'bootstrap/dist/js/bootstrap.bundle.js';
 
 import Alpine from 'alpinejs';
 

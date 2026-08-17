@@ -42,18 +42,18 @@
             <div class="rounded-lg border border-rose-300/20 bg-rose-950/40 p-4 text-sm text-rose-100">{{ $message }}</div>
         @enderror
 
-        <section class="lumoryx-panel p-3 sm:p-4">
-            <div class="grid gap-2 sm:grid-cols-2 xl:grid-cols-4">
+        <section class="lumoryx-panel p-3 p-sm-4">
+            <div class="d-grid gap-2 grid-cols-sm-2 grid-cols-xl-4">
                 @foreach ($tabs as $key => $tab)
                     <a
                         class="rounded-lg border p-4 transition {{ $activeTab === $key ? 'border-amber-300/40 bg-amber-300/10' : 'border-white/10 bg-white/[.025] hover:border-white/20 hover:bg-white/[.045]' }}"
                         href="{{ $editUrl($key, $key === 'questions' ? $activeSection : null) }}"
                     >
-                        <span class="flex min-w-0 gap-3">
-                            <span class="grid h-10 w-10 shrink-0 place-items-center rounded-md border border-white/10 bg-graphite-950/55 text-sm font-black text-amber-100">{{ $tab['number'] }}</span>
+                        <span class="d-flex min-w-0 gap-3">
+                            <span class="d-grid h-10 w-10 flex-shrink-0 place-items-center rounded-md border border-white/10 bg-graphite-950/55 text-sm font-black text-amber-100">{{ $tab['number'] }}</span>
                             <span class="min-w-0">
-                                <span class="block truncate font-black text-white">{{ $tab['label'] }}</span>
-                                <span class="mt-1 block text-xs leading-5 text-slate-500">{{ $tab['description'] }}</span>
+                                <span class="d-block truncate font-black text-white">{{ $tab['label'] }}</span>
+                                <span class="mt-1 d-block text-xs leading-5 text-slate-500">{{ $tab['description'] }}</span>
                             </span>
                         </span>
                     </a>
@@ -62,12 +62,12 @@
         </section>
 
         @if ($activeTab === 'info')
-            <section class="grid gap-6 xl:grid-cols-[1fr_.34fr]">
+            <section style="--gtc: 1fr .34fr;" class="d-grid gap-6 grid-cols-custom-xl">
                 <form class="lumoryx-panel p-5 sm:p-6" method="POST" action="{{ route('admin.categories.update', $category) }}" x-data="{ accentColor: '{{ old('accent_color', $category->accent_color ?: '#facc15') }}' }">
                     @csrf
                     @method('PATCH')
 
-                    <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                    <div class="d-flex flex-column gap-2 flex-sm-row align-items-sm-start justify-content-sm-between">
                         <div>
                             <h2 class="text-2xl font-black text-white">Informacion principal</h2>
                             <p class="mt-2 text-sm leading-6 text-slate-400">
@@ -79,28 +79,28 @@
                         </span>
                     </div>
 
-                    <div class="mt-6 grid gap-5 lg:grid-cols-2">
+                    <div class="mt-6 d-grid gap-5 grid-cols-lg-2">
                         <x-lumoryx.input name="name" label="Nombre visible" value="{{ old('name', $category->name) }}" required />
                         <x-lumoryx.input name="icon" label="Icono corto" value="{{ old('icon', $category->icon) }}" maxlength="8" placeholder="ST" />
-                        <div class="lg:col-span-2">
+                        <div class="col-span-lg-2">
                             <x-lumoryx.textarea name="summary" label="Resumen para el usuario" rows="4" required>{{ old('summary', $category->summary) }}</x-lumoryx.textarea>
                         </div>
                     </div>
 
                     <details class="mt-5 rounded-lg border border-white/10 bg-white/[.025] p-4">
                         <summary class="cursor-pointer text-sm font-semibold text-white">Ajustes avanzados</summary>
-                        <div class="mt-4 grid gap-4 sm:grid-cols-2">
+                        <div class="mt-4 d-grid gap-4 grid-cols-sm-2">
                             <x-lumoryx.input name="slug" label="URL interna" value="{{ old('slug', $category->slug) }}" :disabled="$category->applications_count > 0" required />
                             <div>
                                 <label class="lumoryx-label" for="accent_color">Color</label>
-                                <div class="mt-2 flex items-center gap-3">
-                                    <span class="h-11 w-11 shrink-0 rounded-md border border-white/15" :style="{ backgroundColor: accentColor }"></span>
+                                <div class="mt-2 d-flex align-items-center gap-3">
+                                    <span class="h-11 w-11 flex-shrink-0 rounded-md border border-white/15" :style="{ backgroundColor: accentColor }"></span>
                                     <input id="accent_color" class="lumoryx-input" type="text" name="accent_color" x-model="accentColor" placeholder="#facc15">
                                 </div>
                             </div>
                             <x-lumoryx.input name="minimum_age" label="Edad minima propia" type="number" min="10" max="80" value="{{ old('minimum_age', $category->minimum_age) }}" />
                             <x-lumoryx.input name="sort_order" label="Orden en listado" type="number" min="0" value="{{ old('sort_order', $category->sort_order) }}" required />
-                            <div class="sm:col-span-2">
+                            <div class="col-span-sm-2">
                                 <x-lumoryx.textarea name="description" label="Notas internas" rows="3">{{ old('description', $category->description) }}</x-lumoryx.textarea>
                             </div>
                         </div>
@@ -112,15 +112,15 @@
                     @endforeach
                     <input type="hidden" name="is_open" value="{{ $category->is_open ? 1 : 0 }}">
 
-                    <div class="mt-6 flex justify-end">
+                    <div class="mt-6 d-flex justify-content-end">
                         <button class="lumoryx-button-primary" type="submit">Guardar informacion</button>
                     </div>
                 </form>
 
                 <aside class="lumoryx-panel h-fit p-5">
                     <p class="lumoryx-kicker">Vista rapida</p>
-                    <div class="mt-4 flex items-start gap-4 rounded-lg border border-white/10 bg-white/[.025] p-4">
-                        <span class="grid h-14 w-14 shrink-0 place-items-center rounded-md border border-white/10 bg-graphite-950/60 text-lg font-black text-amber-100">
+                    <div class="mt-4 d-flex align-items-start gap-4 rounded-lg border border-white/10 bg-white/[.025] p-4">
+                        <span class="d-grid h-14 w-14 flex-shrink-0 place-items-center rounded-md border border-white/10 bg-graphite-950/60 text-lg font-black text-amber-100">
                             {{ $category->icon ?: str($category->name)->substr(0, 2)->upper() }}
                         </span>
                         <div class="min-w-0">
@@ -128,16 +128,16 @@
                             <p class="mt-2 text-sm leading-6 text-slate-400">{{ $category->summary }}</p>
                         </div>
                     </div>
-                    <dl class="mt-4 grid gap-3 text-sm">
-                        <div class="flex items-center justify-between rounded-lg border border-white/10 bg-white/[.025] px-4 py-3">
+                    <dl class="mt-4 d-grid gap-3 text-sm">
+                        <div class="d-flex align-items-center justify-content-between rounded-lg border border-white/10 bg-white/[.025] px-4 py-3">
                             <dt class="text-slate-400">Estado</dt>
                             <dd class="{{ $category->is_open ? 'text-emerald-200' : 'text-rose-200' }}">{{ $category->is_open ? 'Abierta' : 'Cerrada' }}</dd>
                         </div>
-                        <div class="flex items-center justify-between rounded-lg border border-white/10 bg-white/[.025] px-4 py-3">
+                        <div class="d-flex align-items-center justify-content-between rounded-lg border border-white/10 bg-white/[.025] px-4 py-3">
                             <dt class="text-slate-400">Fases</dt>
                             <dd class="text-white">{{ count($steps) }}</dd>
                         </div>
-                        <div class="flex items-center justify-between rounded-lg border border-white/10 bg-white/[.025] px-4 py-3">
+                        <div class="d-flex align-items-center justify-content-between rounded-lg border border-white/10 bg-white/[.025] px-4 py-3">
                             <dt class="text-slate-400">Preguntas</dt>
                             <dd class="text-white">{{ $category->questions->count() }}</dd>
                         </div>
@@ -147,7 +147,7 @@
         @endif
 
         @if ($activeTab === 'availability')
-            <section class="grid gap-6 xl:grid-cols-[.58fr_.42fr]">
+            <section style="--gtc: .58fr .42fr;" class="d-grid gap-6 grid-cols-custom-xl">
                 <form class="lumoryx-panel p-5 sm:p-6" method="POST" action="{{ route('admin.categories.availability', $category) }}">
                     @csrf
                     @method('PATCH')
@@ -159,24 +159,24 @@
                         </p>
                     </div>
 
-                    <div class="mt-6 grid gap-4">
-                        <label class="flex items-start gap-4 rounded-lg border border-emerald-300/20 bg-emerald-300/10 p-5 text-sm text-emerald-100">
+                    <div class="mt-6 d-grid gap-4">
+                        <label class="d-flex align-items-start gap-4 rounded-lg border border-emerald-300/20 bg-emerald-300/10 p-5 text-sm text-emerald-100">
                             <input class="mt-1 border-white/10 bg-graphite-950 text-amber-300 focus:ring-amber-300" type="radio" name="is_open" value="1" @checked($category->is_open)>
                             <span>
-                                <span class="block text-lg font-black text-white">Abierta</span>
-                                <span class="mt-2 block leading-6 text-emerald-100/80">Los usuarios pueden enviar postulaciones nuevas.</span>
+                                <span class="d-block text-lg font-black text-white">Abierta</span>
+                                <span class="mt-2 d-block leading-6 text-emerald-100/80">Los usuarios pueden enviar postulaciones nuevas.</span>
                             </span>
                         </label>
-                        <label class="flex items-start gap-4 rounded-lg border border-rose-300/20 bg-rose-300/10 p-5 text-sm text-rose-100">
+                        <label class="d-flex align-items-start gap-4 rounded-lg border border-rose-300/20 bg-rose-300/10 p-5 text-sm text-rose-100">
                             <input class="mt-1 border-white/10 bg-graphite-950 text-amber-300 focus:ring-amber-300" type="radio" name="is_open" value="0" @checked(! $category->is_open)>
                             <span>
-                                <span class="block text-lg font-black text-white">Cerrada temporalmente</span>
-                                <span class="mt-2 block leading-6 text-rose-100/80">El usuario no podra postular hasta que la reabras.</span>
+                                <span class="d-block text-lg font-black text-white">Cerrada temporalmente</span>
+                                <span class="mt-2 d-block leading-6 text-rose-100/80">El usuario no podra postular hasta que la reabras.</span>
                             </span>
                         </label>
                     </div>
 
-                    <div class="mt-6 grid gap-5">
+                    <div class="mt-6 d-grid gap-5">
                         <x-lumoryx.input
                             name="closed_until"
                             label="Fecha estimada de reapertura"
@@ -191,7 +191,7 @@
                         >{{ old('closed_message', $category->closed_message) }}</x-lumoryx.textarea>
                     </div>
 
-                    <div class="mt-6 flex justify-end">
+                    <div class="mt-6 d-flex justify-content-end">
                         <button class="lumoryx-button-primary" type="submit">Guardar disponibilidad</button>
                     </div>
                 </form>
@@ -226,7 +226,7 @@
                 <input type="hidden" name="description" value="{{ old('description', $category->description) }}">
                 <input type="hidden" name="is_open" value="{{ $category->is_open ? 1 : 0 }}">
 
-                <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div class="d-flex flex-column gap-3 flex-sm-row align-items-sm-start justify-content-sm-between">
                     <div class="max-w-3xl">
                         <h2 class="text-2xl font-black text-white">Fases del formulario</h2>
                         <p class="mt-2 text-sm leading-6 text-slate-400">
@@ -236,14 +236,14 @@
                     <a class="lumoryx-button-secondary" href="{{ $editUrl('questions', $activeSection) }}">Ir a preguntas</a>
                 </div>
 
-                <div class="mt-6 grid gap-4">
+                <div class="mt-6 d-grid gap-4">
                     @for ($stepIndex = 0; $stepIndex < $visibleStepSlots; $stepIndex++)
                         @php
                             $step = $steps[$stepIndex] ?? ['title' => '', 'description' => ''];
                             $questionCount = $questionsByStep->get($stepIndex + 1, collect())->count();
                         @endphp
                         <div class="rounded-lg border border-white/10 bg-white/[.025] p-4">
-                            <div class="grid gap-4 lg:grid-cols-[10rem_1fr_1fr] lg:items-end">
+                            <div style="--gtc: 10rem 1fr 1fr;" class="d-grid gap-4 grid-cols-custom-lg align-items-lg-end">
                                 <div>
                                     <p class="font-black text-white">Fase {{ $stepIndex + 1 }}</p>
                                     <p class="mt-1 text-sm text-slate-500">{{ $questionCount }} preguntas</p>
@@ -265,7 +265,7 @@
                     @endfor
                 </div>
 
-                <div class="mt-6 flex justify-end">
+                <div class="mt-6 d-flex justify-content-end">
                     <button class="lumoryx-button-primary" type="submit">Guardar fases</button>
                 </div>
             </form>
@@ -274,7 +274,7 @@
         @if ($activeTab === 'questions')
             <section class="space-y-6">
                 <div class="lumoryx-panel p-5 sm:p-6">
-                    <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div class="d-flex flex-column gap-3 flex-sm-row align-items-sm-start justify-content-sm-between">
                         <div>
                             <h2 class="text-2xl font-black text-white">Preguntas por fase</h2>
                             <p class="mt-2 text-sm leading-6 text-slate-400">
@@ -284,7 +284,7 @@
                         <a class="lumoryx-button-secondary" href="{{ $editUrl('steps') }}">Editar fases</a>
                     </div>
 
-                    <div class="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                    <div class="mt-6 d-grid gap-3 grid-cols-sm-2 grid-cols-xl-3">
                         @foreach ($steps as $index => $step)
                             @php
                                 $stepNumber = $index + 1;
@@ -293,11 +293,11 @@
                                 class="rounded-lg border p-4 transition {{ $activeSection === $stepNumber ? 'border-amber-300/40 bg-amber-300/10' : 'border-white/10 bg-white/[.025] hover:border-white/20 hover:bg-white/[.045]' }}"
                                 href="{{ $editUrl('questions', $stepNumber) }}"
                             >
-                                <span class="flex min-w-0 items-center gap-3">
-                                    <span class="grid h-10 w-10 shrink-0 place-items-center rounded-md border border-white/10 bg-graphite-950/50 text-sm font-black text-amber-100">{{ $stepNumber }}</span>
+                                <span class="d-flex min-w-0 align-items-center gap-3">
+                                    <span class="d-grid h-10 w-10 flex-shrink-0 place-items-center rounded-md border border-white/10 bg-graphite-950/50 text-sm font-black text-amber-100">{{ $stepNumber }}</span>
                                     <span class="min-w-0">
-                                        <span class="block truncate font-black text-white">{{ $step['title'] }}</span>
-                                        <span class="mt-1 block text-sm text-slate-500">{{ $questionsByStep->get($stepNumber, collect())->count() }} preguntas</span>
+                                        <span class="d-block truncate font-black text-white">{{ $step['title'] }}</span>
+                                        <span class="mt-1 d-block text-sm text-slate-500">{{ $questionsByStep->get($stepNumber, collect())->count() }} preguntas</span>
                                     </span>
                                 </span>
                             </a>
@@ -313,12 +313,12 @@
 
                 <details class="lumoryx-panel p-5 sm:p-6">
                     <summary class="cursor-pointer list-none">
-                        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <div class="d-flex flex-column gap-3 flex-sm-row align-items-sm-center justify-content-sm-between">
                             <div>
                                 <h3 class="text-xl font-black text-white">Agregar pregunta a {{ $activeStep['title'] }}</h3>
                                 <p class="mt-2 text-sm leading-6 text-slate-400">Abre esta seccion solo cuando quieras crear una pregunta nueva.</p>
                             </div>
-                            <span class="lumoryx-button-primary inline-flex">Agregar pregunta</span>
+                            <span class="lumoryx-button-primary d-inline-flex">Agregar pregunta</span>
                         </div>
                     </summary>
                     <form class="mt-5 border-t border-white/10 pt-5" method="POST" action="{{ route('admin.categories.questions.store', $category) }}">
@@ -336,7 +336,7 @@
                 </details>
 
                 <section class="lumoryx-panel p-5 sm:p-6">
-                    <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                    <div class="d-flex flex-column gap-2 flex-sm-row align-items-sm-center justify-content-sm-between">
                         <h3 class="text-xl font-black text-white">Preguntas de {{ $activeStep['title'] }}</h3>
                         <span class="w-fit rounded-full border border-white/10 bg-white/[.035] px-3 py-1 text-xs font-semibold text-slate-300">{{ $activeQuestions->count() }} total</span>
                     </div>
@@ -345,7 +345,7 @@
                         @forelse ($activeQuestions as $question)
                             <details class="rounded-lg border border-white/10 bg-white/[.035] p-4">
                                 <summary class="cursor-pointer list-none">
-                                    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                                    <div class="d-flex flex-column gap-3 flex-sm-row align-items-sm-center justify-content-sm-between">
                                         <div class="min-w-0">
                                             <p class="lumoryx-break text-lg font-black text-white">{{ $question->label }}</p>
                                             <p class="mt-1 text-xs text-slate-500">
@@ -372,7 +372,7 @@
                                         ])
                                     </form>
                                     <form
-                                        class="mt-3 flex justify-end"
+                                        class="mt-3 d-flex justify-content-end"
                                         method="POST"
                                         action="{{ route('admin.categories.questions.destroy', [$category, $question]) }}"
                                         data-confirm

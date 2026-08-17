@@ -11,15 +11,15 @@
         };
     @endphp
 
-    <div class="lumoryx-panel-glow relative overflow-hidden p-5 sm:p-6">
-        <div class="pointer-events-none absolute inset-0" style="background: radial-gradient(circle at 12% 0%, {{ $statusGlow }}, transparent 55%);"></div>
-        <div class="relative flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+    <div class="lumoryx-panel-glow position-relative overflow-hidden p-5 sm:p-6">
+        <div class="pointer-events-none position-absolute inset-0" style="background: radial-gradient(circle at 12% 0%, {{ $statusGlow }}, transparent 55%);"></div>
+        <div class="position-relative d-flex flex-column gap-3 flex-sm-row align-items-sm-start justify-content-sm-between">
             <div class="min-w-0">
                 <p class="lumoryx-kicker">{{ $application->typeLabel() }}</p>
                 <h1 class="lumoryx-title truncate">{{ $application->minecraft_nick }}</h1>
                 <p class="mt-2 truncate text-sm text-slate-400">{{ $application->user->discord_username }} - {{ $application->created_at->format('Y-m-d H:i') }}</p>
             </div>
-            <div class="flex shrink-0 flex-wrap items-center gap-2">
+            <div class="d-flex flex-shrink-0 flex-wrap align-items-center gap-2">
                 <x-status-badge :status="$application->status" />
                 @can('delete', $application)
                     <form
@@ -39,14 +39,14 @@
             </div>
         </div>
 
-        <div class="relative mt-7">
+        <div class="position-relative mt-7">
             <x-application-progress :status="$application->status" />
         </div>
     </div>
 
     @if ($latestInterview)
         <section class="lumoryx-panel-glow mt-6 p-5">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div class="d-flex flex-column gap-4 flex-lg-row align-items-lg-center justify-content-lg-between">
                 <div class="min-w-0">
                     <p class="lumoryx-kicker">Entrevista {{ $latestInterview->statusLabel() }}</p>
                     <h2 class="mt-1 text-2xl font-black text-white">{{ $latestInterview->scheduled_at?->format('d/m/Y H:i') ?? 'Fecha por definir' }}</h2>
@@ -64,16 +64,16 @@
         </section>
     @endif
 
-    <section class="mt-6 grid gap-5 xl:grid-cols-[.36fr_.64fr]">
+    <section style="--gtc: .36fr .64fr;" class="mt-6 d-grid gap-5 grid-cols-custom-xl">
         <div class="space-y-5">
             <div class="lumoryx-panel p-5">
                 <h2 class="text-lg font-bold text-white">Resumen</h2>
                 <dl class="mt-4 space-y-3 text-sm">
-                    <div class="flex justify-between gap-4"><dt class="text-slate-400">Discord ID</dt><dd class="lumoryx-break text-right text-white">{{ $application->user->discord_id }}</dd></div>
-                    <div class="flex justify-between gap-4"><dt class="text-slate-400">Edad</dt><dd class="text-white">{{ $application->age }}</dd></div>
-                    <div class="flex justify-between gap-4"><dt class="text-slate-400">Pais</dt><dd class="lumoryx-break text-right text-white">{{ $application->country }}</dd></div>
+                    <div class="d-flex justify-content-between gap-4"><dt class="text-slate-400">Discord ID</dt><dd class="lumoryx-break text-end text-white">{{ $application->user->discord_id }}</dd></div>
+                    <div class="d-flex justify-content-between gap-4"><dt class="text-slate-400">Edad</dt><dd class="text-white">{{ $application->age }}</dd></div>
+                    <div class="d-flex justify-content-between gap-4"><dt class="text-slate-400">Pais</dt><dd class="lumoryx-break text-end text-white">{{ $application->country }}</dd></div>
                     @if ($application->timezone)
-                        <div class="flex justify-between gap-4"><dt class="text-slate-400">Zona horaria</dt><dd class="lumoryx-break text-right text-white">{{ $application->timezone }}</dd></div>
+                        <div class="d-flex justify-content-between gap-4"><dt class="text-slate-400">Zona horaria</dt><dd class="lumoryx-break text-end text-white">{{ $application->timezone }}</dd></div>
                     @endif
                     @if ($application->available_schedule)
                         <div><dt class="text-slate-400">Disponibilidad</dt><dd class="lumoryx-break mt-1 whitespace-pre-line text-white">{{ $application->available_schedule }}</dd></div>
@@ -91,13 +91,13 @@
                         <p class="mt-1 text-sm leading-6 text-slate-400">Agrega una respuesta opcional y cambia el estado desde aqui.</p>
                     </div>
 
-                    <label class="lumoryx-label mt-5 block" for="admin_response">Respuesta para el postulante</label>
+                    <label class="lumoryx-label mt-5 d-block" for="admin_response">Respuesta para el postulante</label>
                     <textarea class="lumoryx-input mt-2" id="admin_response" name="admin_response" rows="5" maxlength="2500" placeholder="Mensaje opcional para explicar la decision.">{{ old('admin_response', $application->admin_response) }}</textarea>
                     @error('admin_response')
                         <p class="mt-2 text-sm text-rose-200">{{ $message }}</p>
                     @enderror
 
-                    <label class="mt-4 flex items-start gap-3 rounded-lg border border-white/10 bg-white/[.03] p-3 text-sm text-slate-200">
+                    <label class="mt-4 d-flex align-items-start gap-3 rounded-lg border border-white/10 bg-white/[.03] p-3 text-sm text-slate-200">
                         <input class="mt-0.5 rounded border-white/10 bg-graphite-950 text-amber-300 focus:ring-amber-300" type="checkbox" name="confirmed" value="1" @checked(old('confirmed'))>
                         <span>Confirmo esta decision si estoy aceptando o rechazando la postulacion.</span>
                     </label>
@@ -108,20 +108,20 @@
                         <p class="mt-2 text-sm text-rose-200">{{ $message }}</p>
                     @enderror
 
-                    <div class="mt-5 grid gap-2 sm:grid-cols-2">
-                        <button class="lumoryx-button-secondary justify-center px-3 py-2" type="submit" name="status" value="pending">Pendiente</button>
-                        <button class="lumoryx-button-purple justify-center px-3 py-2" type="submit" name="status" value="in_review">En revision</button>
-                        <button class="lumoryx-button-blue justify-center px-3 py-2" type="submit" name="status" value="interview">Entrevista</button>
-                        <button class="lumoryx-button-secondary justify-center px-3 py-2" type="submit" name="status" value="cancelled">Cancelar</button>
-                        <button class="lumoryx-button-success justify-center px-3 py-2" type="submit" name="status" value="accepted">Aceptar</button>
-                        <button class="lumoryx-button-danger justify-center px-3 py-2" type="submit" name="status" value="rejected">Rechazar</button>
+                    <div class="mt-5 d-grid gap-2 grid-cols-sm-2">
+                        <button class="lumoryx-button-secondary justify-content-center px-3 py-2" type="submit" name="status" value="pending">Pendiente</button>
+                        <button class="lumoryx-button-purple justify-content-center px-3 py-2" type="submit" name="status" value="in_review">En revision</button>
+                        <button class="lumoryx-button-blue justify-content-center px-3 py-2" type="submit" name="status" value="interview">Entrevista</button>
+                        <button class="lumoryx-button-secondary justify-content-center px-3 py-2" type="submit" name="status" value="cancelled">Cancelar</button>
+                        <button class="lumoryx-button-success justify-content-center px-3 py-2" type="submit" name="status" value="accepted">Aceptar</button>
+                        <button class="lumoryx-button-danger justify-content-center px-3 py-2" type="submit" name="status" value="rejected">Rechazar</button>
                     </div>
                 </form>
             @endcan
 
             @can('updateStatus', \App\Models\Application::class)
                 <div class="lumoryx-panel p-5">
-                    <div class="flex items-start gap-4">
+                    <div class="d-flex align-items-start gap-4">
                         <span class="lumoryx-icon-tile h-11 w-11 text-sm font-black text-sky-100">IN</span>
                         <div>
                             <h2 class="text-lg font-bold text-white">Entrevista</h2>
@@ -162,7 +162,7 @@
                             @error('notes')<p class="mt-2 text-sm text-rose-200">{{ $message }}</p>@enderror
                         </div>
 
-                        <button class="lumoryx-button-primary w-full" type="submit">Programar entrevista</button>
+                        <button class="lumoryx-button-primary w-100" type="submit">Programar entrevista</button>
                     </form>
 
                     @if ($application->interviews->isNotEmpty())
@@ -172,7 +172,7 @@
                                 @foreach ($application->interviews->sortByDesc('scheduled_at') as $interview)
                                     <details class="rounded-lg border border-white/10 bg-white/[.035] p-4">
                                         <summary class="cursor-pointer list-none">
-                                            <div class="flex items-center justify-between gap-4">
+                                            <div class="d-flex align-items-center justify-content-between gap-4">
                                                 <div class="min-w-0">
                                                     <p class="truncate font-bold text-white">{{ $interview->scheduled_at?->format('d/m/Y H:i') ?? 'Fecha por definir' }}</p>
                                                     <p class="mt-1 text-xs text-slate-500">{{ $interview->interviewer?->name ?? 'Sin entrevistador' }} - {{ $interview->statusLabel() }}</p>
@@ -224,7 +224,7 @@
                                                 <textarea class="lumoryx-input mt-2" id="interview-{{ $interview->id }}-result-notes" name="result_notes" rows="3" maxlength="2500" placeholder="Resumen de la entrevista, puntos fuertes o motivo de cancelacion.">{{ old('result_notes', $interview->result_notes) }}</textarea>
                                             </div>
 
-                                            <button class="lumoryx-button-primary w-full" type="submit">Guardar entrevista</button>
+                                            <button class="lumoryx-button-primary w-100" type="submit">Guardar entrevista</button>
                                         </form>
                                     </details>
                                 @endforeach
@@ -240,7 +240,7 @@
                     <form class="mt-4" method="POST" action="{{ route('admin.applications.notes', $application) }}">
                         @csrf
                         <textarea class="lumoryx-input" name="note" rows="3" required minlength="5" maxlength="2000" placeholder="Solo visible para el equipo.">{{ old('note') }}</textarea>
-                        <div class="mt-3 flex justify-end">
+                        <div class="mt-3 d-flex justify-content-end">
                             <button class="lumoryx-button-primary" type="submit">Guardar nota</button>
                         </div>
                     </form>
@@ -270,8 +270,8 @@
             </div>
             <div class="divide-y divide-white/10">
                 @foreach ($application->answers as $answer)
-                    <article class="flex gap-4 p-5 transition hover:bg-white/[.025]">
-                        <span class="lumoryx-icon-tile mt-0.5 h-8 w-8 shrink-0 text-[11px] font-black text-amber-100">Q</span>
+                    <article class="d-flex gap-4 p-5 transition hover:bg-white/[.025]">
+                        <span class="lumoryx-icon-tile mt-0.5 h-8 w-8 flex-shrink-0 text-[11px] font-black text-amber-100">Q</span>
                         <div class="min-w-0 flex-1">
                             <h3 class="lumoryx-break text-sm font-semibold text-amber-100">{{ $answer->question }}</h3>
                             <p class="lumoryx-break mt-2 whitespace-pre-line text-sm leading-6 text-slate-300">{{ $answer->answer }}</p>

@@ -12,7 +12,9 @@ class SecurityHeaders
     {
         $response = $next($request);
 
-        $scriptSources = ["'self'", "'unsafe-inline'"];
+        // 'unsafe-eval' is required by Alpine.js, which evaluates x-data
+        // expressions via the Function constructor internally.
+        $scriptSources = ["'self'", "'unsafe-inline'", "'unsafe-eval'"];
         $styleSources = ["'self'", "'unsafe-inline'"];
         $connectSources = ["'self'"];
 
