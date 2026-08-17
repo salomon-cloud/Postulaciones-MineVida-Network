@@ -1592,7 +1592,34 @@ a.lumoryx-footer-action-card:hover{border-color:hsla(48,97%,77%,.3);--tw-text-op
 
 .admin-applications-shell { display: flex; flex-direction: column; gap: 1.5rem; }
 .admin-applications-panel { position: relative; overflow: hidden; }
-.admin-applications-filter-panel { border-color: rgba(250, 204, 21, .12); }
+.admin-applications-filter-panel {
+    border-color: rgba(250, 204, 21, .12);
+    background: linear-gradient(180deg, rgba(12,12,14,.96), rgba(9,9,11,.92));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.04), 0 26px 52px rgba(0,0,0,.28), 0 0 0 1px rgba(250,204,21,.04);
+}
+.admin-applications-filter-head {
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+}
+.admin-applications-filter-title {
+    margin: 0;
+    font-size: clamp(1.5rem, 2vw, 2.1rem);
+    line-height: 1.1;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    font-weight: 900;
+    color: #f8fafc;
+    text-shadow: 0 0 24px rgba(250,204,21,.14);
+}
+.admin-applications-filter-count {
+    min-height: 2.5rem;
+    padding: 0 .9rem;
+    border-color: rgba(255,255,255,.12);
+    background: rgba(255,255,255,.04);
+    color: #f8fafc;
+    font-size: .9rem;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+}
 .admin-applications-filter-panel .lumoryx-input,
 .admin-applications-filter-panel .lumoryx-label { position: relative; z-index: 1; }
 .admin-applications-filter-panel .d-flex { align-items: stretch; }
@@ -1602,14 +1629,77 @@ a.lumoryx-footer-action-card:hover{border-color:hsla(48,97%,77%,.3);--tw-text-op
 .admin-applications-filter-panel .lumoryx-filter-field-wide > div {
     width: 100%;
 }
+.admin-applications-filter-panel .lumoryx-label {
+    display: inline-block;
+    margin-bottom: .55rem;
+    font-size: .9rem;
+    font-weight: 700;
+    letter-spacing: .01em;
+    color: rgba(226,232,240,.96);
+}
 .admin-applications-filter-panel .lumoryx-input {
-    background: rgba(8, 10, 12, .72);
-    border-color: rgba(255,255,255,.12);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.04), 0 10px 24px rgba(0,0,0,.14);
+    width: 100%;
+    min-height: 3.1rem;
+    padding: .72rem .9rem;
+    border-radius: .8rem;
+    border: 1px solid rgba(255,255,255,.1);
+    background:
+        linear-gradient(180deg, rgba(15,15,17,.92), rgba(8,8,10,.8)),
+        rgba(8,10,12,.72);
+    color: #f8fafc;
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.03), 0 12px 26px rgba(0,0,0,.15);
+    transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: none;
+}
+.admin-applications-filter-panel select.lumoryx-input {
+    background-image:
+        linear-gradient(45deg, transparent 50%, rgba(226,232,240,.8) 50%),
+        linear-gradient(135deg, rgba(226,232,240,.8) 50%, transparent 50%);
+    background-position:
+        calc(100% - 18px) calc(50% - 2px),
+        calc(100% - 13px) calc(50% - 2px);
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 2.4rem;
+}
+.admin-applications-filter-panel input[type="date"].lumoryx-input {
+    color-scheme: dark;
+    background-image:
+        linear-gradient(180deg, rgba(255,255,255,.03), transparent),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23cbd5e1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'/%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3Cline x1='8' y1='2' x2='8' y2='6'/%3E%3Cline x1='3' y1='10' x2='21' y2='10'/%3E%3C/svg%3E");
+    background-repeat: no-repeat, no-repeat;
+    background-position: right 0.85rem center, right 0.85rem center;
+    background-size: 1rem, 1rem;
+    padding-right: 2.6rem;
+}
+.admin-applications-filter-panel .lumoryx-input::placeholder {
+    color: rgba(148,163,184,.85);
 }
 .admin-applications-filter-panel .lumoryx-input:focus {
-    border-color: rgba(250,204,21,.55);
-    box-shadow: 0 0 0 3px rgba(250,204,21,.12), inset 0 1px 0 rgba(255,255,255,.06);
+    border-color: rgba(250,204,21,.58);
+    box-shadow: 0 0 0 3px rgba(250,204,21,.12), inset 0 1px 0 rgba(255,255,255,.04);
+    transform: translateY(-1px);
+}
+.admin-applications-filter-panel .lumoryx-input option {
+    background: #111317;
+    color: #f8fafc;
+}
+.admin-applications-filter-panel .d-flex.flex-column.gap-3.mt-4.pt-4.border-top.border-white\/10 {
+    border-top-color: rgba(255,255,255,.14) !important;
+    padding-top: 1.2rem !important;
+    margin-top: 1.2rem !important;
+}
+.admin-applications-filter-panel .lumoryx-button-primary,
+.admin-applications-filter-panel .lumoryx-button-secondary {
+    min-height: 2.9rem;
+    padding: .75rem 1.25rem;
+    border-radius: .8rem;
+    font-weight: 800;
 }
 .admin-applications-list { gap: .8rem; }
 .admin-applications-row-card { padding-inline: 1.2rem; }
@@ -1618,6 +1708,10 @@ a.lumoryx-footer-action-card:hover{border-color:hsla(48,97%,77%,.3);--tw-text-op
 @media (max-width: 767.98px) {
     .admin-applications-row-card { padding-block: .9rem; }
     .admin-applications-row-card .lumoryx-meta-list { width: 100%; margin-left: 0; }
+    .admin-applications-filter-title {
+        font-size: 1.4rem;
+        letter-spacing: .04em;
+    }
 }
 
 /* Pills */

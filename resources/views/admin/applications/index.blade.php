@@ -42,9 +42,9 @@
     </section>
 
     <section class="lumoryx-panel admin-applications-panel admin-applications-filter-panel mt-5 p-4 p-sm-5">
-        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 pb-4">
-            <h2 class="text-sm font-black uppercase tracking-wide text-slate-400">Filtrar postulaciones</h2>
-            <span class="lumoryx-count-chip">{{ $applications->total() }} resultado{{ $applications->total() === 1 ? '' : 's' }}</span>
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 pb-4 admin-applications-filter-head">
+            <h2 class="admin-applications-filter-title">Filtrar postulaciones</h2>
+            <span class="lumoryx-count-chip admin-applications-filter-count">{{ $applications->total() }} resultado{{ $applications->total() === 1 ? '' : 's' }}</span>
         </div>
 
         <form method="GET" action="{{ route('admin.applications.index') }}">
