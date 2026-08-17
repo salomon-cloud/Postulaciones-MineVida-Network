@@ -27,12 +27,19 @@ class AdminApplicationController extends Controller
     {
         $this->authorize('viewAdmin', Application::class);
 
+        $statusCounts = Application::query()
+            ->selectRaw('status, count(*) as aggregate')
+            ->groupBy('status')
+            ->pluck('aggregate', 'status');
+
         $stats = [
-            'pending' => Application::query()->where('status', ApplicationStatus::Pending->value)->count(),
-            'accepted' => Application::query()->where('status', ApplicationStatus::Accepted->value)->count(),
-            'rejected' => Application::query()->where('status', ApplicationStatus::Rejected->value)->count(),
-            'interview' => Application::query()->where('status', ApplicationStatus::Interview->value)->count(),
-            'total' => Application::query()->count(),
+            'pending' => (int) ($statusCounts[ApplicationStatus::Pending->value] ?? 0),
+            'in_review' => (int) ($statusCounts[ApplicationStatus::InReview->value] ?? 0),
+            'interview' => (int) ($statusCounts[ApplicationStatus::Interview->value] ?? 0),
+            'accepted' => (int) ($statusCounts[ApplicationStatus::Accepted->value] ?? 0),
+            'rejected' => (int) ($statusCounts[ApplicationStatus::Rejected->value] ?? 0),
+            'cancelled' => (int) ($statusCounts[ApplicationStatus::Cancelled->value] ?? 0),
+            'total' => (int) $statusCounts->sum(),
         ];
 
         $applications = Application::query()
